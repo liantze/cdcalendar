@@ -6,6 +6,13 @@ Colours, illustrations, fonts etc are customisable. The calendars can be marked 
 
 Localisation possible with languages supported by babel/translator/datetime2.
 
-Tested with british, spanish, french, ngerman, italian, portuges, polish, croatian, greek. (Use lualatex for french. If using pdflatex for greek, remember to load LGR,T1 for fontenc.)
+Tested with british, spanish, french, ngerman, italian, portuges, polish, croatian, greek, bahasai.
+
+bahasai (Indonesian) works with the following new or modified files in this project:
+- translator-language-mappings.tex
+- translator-months-dictionary-Indonesian.dict
+- datetime2-bahasai.ldf
+
+(Use lualatex for french. If using pdflatex for greek, remember to load LGR,T1 for fontenc.)
 
 See [this blog post](https://www.overleaf.com/blog/217-a-multilingual-customisable-cd-slash-floppy-disk-jewel-case-calendar-with-latex) for more information, or open and edit a [CD-sized](https://www.overleaf.com/read/htkctjjgmxjx) or [floppy disk-sized](https://www.overleaf.com/latex/examples/desktop-calendar-fits-3-dot-5-floppy-disk-jewel-case) calendar template on Overleaf.
