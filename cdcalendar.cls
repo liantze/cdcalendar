@@ -1,8 +1,17 @@
-\ProvidesClass{cdcalendar}[2015/08/02 CD Calendar by Lian Tze LIM (liantze@gmail.com)]
+\ProvidesClass{cdcalendar}[2016/02/01 CD Calendar 1.1 by LianTze LIM (liantze@gmail.com)]
+
 
 \newif\if@smallcal\@smallcalfalse
+\newif\if@giantcal\@giantcalfalse
+
 \DeclareOption{small}{
   \@smallcaltrue
+  \@giantcalfalse
+}
+
+\DeclareOption{giant}{
+  \@smallcalfalse
+  \@giantcaltrue
 }
 
 \newif\if@sundayweek\@sundayweekfalse
@@ -12,55 +21,67 @@
   \def\@daynumlist{0/6,1/0,2/1,3/2,4/3,5/4,6/5}
 }
 
-\ExecuteOptions{10pt}
+\if@giantcal
+  \ExecuteOptions{20pt}
+\else
+  \ExecuteOptions{10pt}
+\fi
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{extarticle}}
 \ProcessOptions\relax
 \LoadClass{extarticle}
 
 \RequirePackage[dvipsnames,svgnames]{xcolor}
-\newlength{\@marginlen}
+\newlength{\CalPageMargin}
+\newlength{\EventLineWidth}
 
-\if@smallcal
-  \setlength{\@marginlen}{0.3cm}
-  \RequirePackage[paperheight=9.5cm,paperwidth=9cm,margin=\@marginlen]{geometry}
-  \RequirePackage{pgfpages}
-  \pgfpagesuselayout{4 on 1}[a4paper]
-  \pgfpageslogicalpageoptions{1}{
-      resized width=9cm,
-      resized height=9.5cm,
-      border code=\pgfsetlinewidth{0.4pt}\pgfstroke
-  }
-  \pgfpageslogicalpageoptions{2}{
-      resized width=9cm,
-      resized height=9.5cm,
-      border code=\pgfsetlinewidth{0.4pt}\pgfstroke
-  }
-  \pgfpageslogicalpageoptions{3}{
-      resized width=9cm,
-      resized height=9.5cm,
-      border code=\pgfsetlinewidth{0.4pt}\pgfstroke
-  }
-  \pgfpageslogicalpageoptions{4}{
-      resized width=9cm,
-      resized height=9.5cm,
-      border code=\pgfsetlinewidth{0.4pt}\pgfstroke
-  }
-
+\if@giantcal
+  \setlength{\CalPageMargin}{1cm}
+  \setlength{\EventLineWidth}{6in}
+  \RequirePackage[margin=\CalPageMargin]{geometry}
 \else
-  \setlength{\@marginlen}{0.5cm}
-  \RequirePackage[paperheight=13.65cm,paperwidth=11.7cm,margin=\@marginlen]{geometry}
-  \RequirePackage{pgfpages}
-  \pgfpagesuselayout{2 on 1}[a4paper,landscape]
-  \pgfpageslogicalpageoptions{1}{
-      resized width=11.7cm,
-      resized height=13.65cm,
-      border code=\pgfsetlinewidth{0.4pt}\pgfstroke
-  }
-  \pgfpageslogicalpageoptions{2}{
-      resized width=11.7cm,
-      resized height=13.65cm,
-      border code=\pgfsetlinewidth{0.4pt}\pgfstroke
-  }
+  \setlength{\EventLineWidth}{3in}
+  \if@smallcal
+    \setlength{\CalPageMargin}{0.3cm}
+    \RequirePackage[paperheight=9.5cm,paperwidth=9cm,margin=\CalPageMargin]{geometry}
+    \RequirePackage{pgfpages}
+    \pgfpagesuselayout{4 on 1}[a4paper]
+    \pgfpageslogicalpageoptions{1}{
+        resized width=9cm,
+        resized height=9.5cm,
+        border code=\pgfsetlinewidth{0.4pt}\pgfstroke
+    }
+    \pgfpageslogicalpageoptions{2}{
+        resized width=9cm,
+        resized height=9.5cm,
+        border code=\pgfsetlinewidth{0.4pt}\pgfstroke
+    }
+    \pgfpageslogicalpageoptions{3}{
+        resized width=9cm,
+        resized height=9.5cm,
+        border code=\pgfsetlinewidth{0.4pt}\pgfstroke
+    }
+    \pgfpageslogicalpageoptions{4}{
+        resized width=9cm,
+        resized height=9.5cm,
+        border code=\pgfsetlinewidth{0.4pt}\pgfstroke
+    }
+
+  \else
+    \setlength{\CalPageMargin}{0.5cm}
+    \RequirePackage[paperheight=13.65cm,paperwidth=11.7cm,margin=\CalPageMargin]{geometry}
+    \RequirePackage{pgfpages}
+    \pgfpagesuselayout{2 on 1}[a4paper,landscape]
+    \pgfpageslogicalpageoptions{1}{
+        resized width=11.7cm,
+        resized height=13.65cm,
+        border code=\pgfsetlinewidth{0.4pt}\pgfstroke
+    }
+    \pgfpageslogicalpageoptions{2}{
+        resized width=11.7cm,
+        resized height=13.65cm,
+        border code=\pgfsetlinewidth{0.4pt}\pgfstroke
+    }
+  \fi
 \fi
 
 
@@ -76,6 +97,7 @@
 
 \RequirePackage{translator}
 \languagealias{british}{English}
+\languagealias{bahasai}{Indonesian}
 
 \RequirePackage{tikz}
 \usetikzlibrary{calendar,positioning,backgrounds}
@@ -197,14 +219,14 @@ inner sep=2ex] at (current page.south east) {\@coverTitleText};
 
 \newcommand{\monthCalendar}[2]{
 \begin{tikzpicture}[overlay,remember picture]
-\node[anchor=north east,at=(current page.south east),rotate=-90,transform shape,monthTitleOptions, inner sep=\@marginlen]
+\node[anchor=north east,at=(current page.south east),rotate=-90,transform shape,monthTitleOptions, inner sep=\CalPageMargin]
 {\pgfcalendarmonthname{#2} #1};
 \node[anchor=south west] at (current page.south west)
 {
 \tikz \calendar (cdCal-\thepage) [
              dates=#1-#2-01 to #1-#2-last,
              month text = {\%mt \%y-},
-             inner sep=\@marginlen,
+             inner sep=\CalPageMargin,
              \if@sundayweek week list sunday\else week list\fi,
              day xshift=2.75em,
              day letter headings
@@ -230,7 +252,7 @@ inner sep=2ex] at (current page.south east) {\@coverTitleText};
 
 \newcommand{\oneDayEvent}[2]{%
 	\markCalendar{#1}%
-	\begin{minipage}[t]{3in}\@eventStyle#2: \DTMdate{#1}\end{minipage}\par%
+	\begin{minipage}[t]{\EventLineWidth}\@eventStyle#2: \DTMdate{#1}\end{minipage}\par%
 }
 
 \newcommand{\multiDayEvent}[3]{%
@@ -244,7 +266,7 @@ inner sep=2ex] at (current page.south east) {\@coverTitleText};
   	\DTMmakeglobal{tmp}%
   	\markCalendar{\DTMfetchyear{tmp}-\DTMfetchmonth{tmp}-\DTMfetchday{tmp}}%
 	}%
-	\begin{minipage}[t]{3in}\@eventStyle#3: \DTMdate{#1} -- \DTMusedate{tmp}\end{minipage}\par%
+	\begin{minipage}[t]{\EventLineWidth}\@eventStyle#3: \DTMdate{#1} -- \DTMusedate{tmp}\end{minipage}\par%
 }
 
 \newcommand{\multiDayEventWithEnd}[3]{%

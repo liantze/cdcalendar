@@ -1,4 +1,4 @@
-% \title{Desktop Calendar (fits CD jewel case)}
+% \title{Wall Calendar version of CD calendars}
 
 %%% The calendars are printed 2-up to fit CD jewel cases,
 %%% or 4-up to fit 3" floppy disk jewel cases. OR, now a
@@ -9,17 +9,20 @@
 %%% Tested with british, spanish, french, ngerman,
 %%% italian, portuges, polish, croatian, greek, bahasai.
 %%%
-%%% bahasai (Indonesian) works with the following new or
-%%% modified files in this project:
+%%% bahasai (Indonesian) works with the following new or modified files in this project:
 %%% - translator-language-mappings.tex
 %%% - translator-months-dictionary-Indonesian.dict
 %%% - datetime2-bahasai.ldf
 %%%
 %%% (Use lualatex for french. If using pdflatex for greek,
 %%% Remember to load LGR,T1 for fontenc.)
-\documentclass[12pt,british]{cdcalendar}
+%%%
+%%% NOTE: If you get an error when you change the language,
+%%% click on the "compile from scratch" option in the error
+%%% message window.
+\documentclass[20pt,british,giant]{cdcalendar}
 %%% Use the sundayweek option for weeks to start on Sundays.
-% \documentclass[12pt,british,sundayweek]{cdcalendar}
+% \documentclass[20pt,british,sundayweek,giant]{cdcalendar}
 
 %% If using pdfLaTeX %%%%%%%%%%
 \usepackage[utf8]{inputenc}
@@ -41,6 +44,10 @@
 \usepackage{graphicx}
 \usepackage{wallpaper}
 \graphicspath{{img/}}
+% Default values -- change if needed
+% \setlength{\CalPageMargin}{1cm}
+% \setlength{\EventLineWidth}{6in}
+% \geometry{a4paper}
 
 \begin{document}
 
@@ -49,19 +56,20 @@
 %%%%%%
 \coverBgColor{RoyalBlue!40!black}
 \coverImage{LuncheonoftheBoatingParty}
-\coverTitle[font=\fontsize{30pt}{32pt}\sffamily\bfseries,text=white,text width=\linewidth,align=flush right]{Coventry City Council 2015/16 School Year}
+\coverTitle[font=\fontsize{48pt}{50pt}\sffamily\bfseries,text=white,text width=\linewidth,align=flush right]{Coventry City Council 2015/16 School Year}
 
 \makeCover
 
 %%%% Remove this page if you don't need it --
-%%%% just to show the actual output
-{\centering
-\includegraphics[width=\textwidth]{actual}
-\par}
+%%%% just to show the actual output for the jewel case
+%%%% calendars
+% {\centering
+% \includegraphics[width=\textwidth]{actual}
+% \par}
 
-Here are the actual printed calendars. The smaller calendar (9cm $\times$ 9.5cm) fits floppy disk jewel cases; while the bigger one (11.7cm $\times$ 13.65cm) fits CD jewel cases.
+% Here are the actual printed calendars. The smaller calendar (9cm $\times$ 9.5cm) fits floppy disk jewel cases; while the bigger one (11.7cm $\times$ 13.65cm) fits CD jewel cases.
 
-\clearpage
+% \clearpage
 %%%%
 
 
@@ -70,7 +78,7 @@ Here are the actual printed calendars. The smaller calendar (9cm $\times$ 9.5cm)
 %%%%%%
 \dayHeadingStyle{font=\sffamily\color{gray!90}}
 \sundayColor{red}
-\monthTitleStyle{font={\fontsize{42pt}{44pt}\bfseries\sffamily\itshape\selectfont}, red!50!RedViolet}
+\monthTitleStyle{font={\fontsize{40pt}{42pt}\bfseries\sffamily\itshape\selectfont}, red!50!RedViolet}
 \eventStyle{\scriptsize\sffamily}
 
 % Remove this line if you feel the background pattern is too annoying
@@ -84,7 +92,7 @@ Here are the actual printed calendars. The smaller calendar (9cm $\times$ 9.5cm)
 %%%%%%
 % September 2015
 %%%%%%
-\illustration[Vincent van Gogh, `The Starry Night', 1889. Public Domain. \url{http://commons.wikimedia.org}]{8.5cm}{StarryNight}
+\illustration[Vincent van Gogh, `The Starry Night', 1889. Public Domain. \url{http://commons.wikimedia.org}]{\linewidth}{StarryNight}
 
 \monthCalendar{2015}{09}
 
@@ -101,7 +109,7 @@ Here are the actual printed calendars. The smaller calendar (9cm $\times$ 9.5cm)
 %%%%%%
 % Oct 2015
 %%%%%%
-\illustration[John Constable, `Salisbury Cathedral from the Bishop's Grounds', 1823. Public Domain. \url{http://commons.wikimedia.org}]{8.5cm}{SalisburyCathedral}
+\illustration[John Constable, `Salisbury Cathedral from the Bishop's Grounds', 1823. Public Domain. \url{http://commons.wikimedia.org}]{\linewidth}{SalisburyCathedral}
 
 \monthCalendar{2015}{10}
 
@@ -118,7 +126,7 @@ Here are the actual printed calendars. The smaller calendar (9cm $\times$ 9.5cm)
 %%%%%%
 % Nov 2015
 %%%%%%
-\illustration[Jin Nong, `Flower', 1754. Public Domain. \url{http://commons.wikimedia.org}]{8.5cm}{Flower_JinNong}
+\illustration[Jin Nong, `Flower', 1754. Public Domain. \url{http://commons.wikimedia.org}]{\linewidth}{Flower_JinNong}
 
 \monthCalendar{2015}{11}
 
@@ -128,7 +136,7 @@ Here are the actual printed calendars. The smaller calendar (9cm $\times$ 9.5cm)
 %%%%%%
 % Dec 2015
 %%%%%%
-\illustration[Hendrick Avercamp, `Winter Landscape with Ice Skaters', c.~1608. Public Domain. \url{http://commons.wikimedia.org}]{8.5cm}{WinterLandscape}
+\illustration[Hendrick Avercamp, `Winter Landscape with Ice Skaters', c.~1608. Public Domain. \url{http://commons.wikimedia.org}]{\linewidth}{WinterLandscape}
 
 \monthCalendar{2015}{12}
 
@@ -144,7 +152,7 @@ Here are the actual printed calendars. The smaller calendar (9cm $\times$ 9.5cm)
 % January 2016
 %%%%%%
 \illustration[Auguste Renoir, `Oarsmen at Chatou', 1879. Open Access. \url{https://images.nga.gov}]%
-{8.5cm}{A17050}
+{\linewidth}{A17050}
 
 \monthCalendar{2016}{01}
 
@@ -158,7 +166,7 @@ Here are the actual printed calendars. The smaller calendar (9cm $\times$ 9.5cm)
 % February 2016
 %%%%%%
 \illustration[Cariani, `Concert', c.~1518--1520. Open Access. \url{https://images.nga.gov}]%
-{8.5cm}{A10623}
+{\linewidth}{A10623}
 
 \monthCalendar{2016}{02}
 
@@ -170,7 +178,7 @@ Here are the actual printed calendars. The smaller calendar (9cm $\times$ 9.5cm)
 %%%%%%
 % March 2016
 %%%%%%
-\illustration[Henri Rosseau, `The Sleeping Gypsy', 1897. Public Domain. \url{http://commons.wikimedia.org}]{8.5cm}{SleepingGypsy}
+\illustration[Henri Rosseau, `The Sleeping Gypsy', 1897. Public Domain. \url{http://commons.wikimedia.org}]{\linewidth}{SleepingGypsy}
 
 \monthCalendar{2016}{03}
 
@@ -183,6 +191,7 @@ Here are the actual printed calendars. The smaller calendar (9cm $\times$ 9.5cm)
 
 %% Note if a multi-day event extends to the next month,
 %% you'll have to list it again in the next month.
+%% This event starts on March 25 and ends on April 8.
 \event[2016-04-08]{2016-03-25}{Easter holiday}
 
 \clearpage
@@ -191,7 +200,7 @@ Here are the actual printed calendars. The smaller calendar (9cm $\times$ 9.5cm)
 %%%%%%
 % April 2016
 %%%%%%
-\illustration[Katsushika Hokusai, `The Great Wave of Kanagawa', 1823--1829. Public Domain. \url{http://commons.wikimedia.org}]{8.5cm}{Tsunami}
+\illustration[Katsushika Hokusai, `The Great Wave of Kanagawa', 1823--1829. Public Domain. \url{http://commons.wikimedia.org}]{\linewidth}{Tsunami}
 
 \monthCalendar{2016}{04}
 
@@ -202,7 +211,7 @@ Here are the actual printed calendars. The smaller calendar (9cm $\times$ 9.5cm)
 %%%%%%
 % May 2016
 %%%%%%
-\illustration[John Everett Millais, `Ophelia', circa 1851. Public Domain. \url{http://commons.wikimedia.org}]{8.5cm}{Ophelia}
+\illustration[John Everett Millais, `Ophelia', circa 1851. Public Domain. \url{http://commons.wikimedia.org}]{\linewidth}{Ophelia}
 
 \monthCalendar{2016}{05}
 
@@ -219,7 +228,7 @@ Here are the actual printed calendars. The smaller calendar (9cm $\times$ 9.5cm)
 %%%%%%
 % {\huge\color{BurntOrange} Deep summer is when laziness finds respectability.\par}
 % {\raggedleft -- Sam Keen\par}
-\illustration[J.M.W.~Turner, `The Fighting Temeraire tugged to her last berth to be broken up', 1839. Public Domain. \url{http://commons.wikimedia.org}]{8.5cm}{FightingTemeraire}
+\illustration[J.M.W.~Turner, `The Fighting Temeraire tugged to her last berth to be broken up', 1839. Public Domain. \url{http://commons.wikimedia.org}]{\linewidth}{FightingTemeraire}
 
 \monthCalendar{2016}{06}
 
@@ -230,7 +239,7 @@ Here are the actual printed calendars. The smaller calendar (9cm $\times$ 9.5cm)
 %%%%%%
 % July 2016
 %%%%%%
-\illustration[Édouard Manet, `A Bar at the Folies-Bergère', 1881 -- 1882. Public Domain. \url{http://commons.wikimedia.org}]{8.5cm}{BarAtTheFoliesBergere}
+\illustration[Édouard Manet, `A Bar at the Folies-Bergère', 1881 -- 1882. Public Domain. \url{http://commons.wikimedia.org}]{\linewidth}{BarAtTheFoliesBergere}
 
 \monthCalendar{2016}{07}
 
@@ -240,7 +249,7 @@ Here are the actual printed calendars. The smaller calendar (9cm $\times$ 9.5cm)
 %%%%%%
 % August 2016
 %%%%%%
-\illustration[Georges Seurat, `A Sunday Afternoon on the Island of La Grande Jatte', 1884 -- 1886. Public Domain. \url{http://commons.wikimedia.org}]{8.5cm}{SundayOnLaGrandeJatte}
+\illustration[Georges Seurat, `A Sunday Afternoon on the Island of La Grande Jatte', 1884 -- 1886. Public Domain. \url{http://commons.wikimedia.org}]{\linewidth}{SundayOnLaGrandeJatte}
 
 \monthCalendar{2016}{08}
 
