@@ -1,4 +1,4 @@
-\ProvidesClass{cdcalendar}[2016/02/01 CD Calendar 1.1 by LianTze LIM (liantze@gmail.com)]
+\ProvidesClass{cdcalendar}[2016/02/26 CD Calendar 1.1.1 by LianTze LIM (liantze@gmail.com)]
 
 
 \newif\if@smallcal\@smallcalfalse
@@ -98,6 +98,7 @@
 \RequirePackage{translator}
 \languagealias{british}{English}
 \languagealias{bahasai}{Indonesian}
+\languagealias{bahasam}{Malaysian}
 
 \RequirePackage{tikz}
 \usetikzlibrary{calendar,positioning,backgrounds}

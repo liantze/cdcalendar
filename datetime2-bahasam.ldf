@@ -1,0 +1,331 @@
+\ProvidesDateTimeModule{bahasam}[2016/02/26 v1.0 (NLCT)]
+\newcommand*{\DTMbahasamordinal}[1]{%
+  \number#1 % space intended
+}
+\newcommand*{\DTMbahasamfmtordsuffix}[1]{}
+\newcommand*{\DTMbahasammonthname}[1]{%
+  \ifcase#1
+  \or
+  Januari%
+  \or
+  Februari%
+  \or
+  Mac%
+  \or
+  April%
+  \or
+  Mei%
+  \or
+  Jun%
+  \or
+  Julai%
+  \or
+  Ogos%
+  \or
+  September%
+  \or
+  Oktober%
+  \or
+  November%
+  \or
+  Disember%
+  \fi
+}
+\newcommand*{\DTMbahasamshortmonthname}[1]{%
+  \ifcase#1
+  \or
+  Jan%
+  \or
+  Feb%
+  \or
+  Mac%
+  \or
+  Apr%
+  \or
+  Mei%
+  \or
+  Jun%
+  \or
+  Jul%
+  \or
+  Ogo%
+  \or
+  Sep%
+  \or
+  Okt%
+  \or
+  Nov%
+  \or
+  Dis%
+  \fi
+}
+\newcommand*{\DTMbahasamweekdayname}[1]{%
+  \ifcase#1
+  Isnin%
+  \or
+  Selasa%
+  \or
+  Rabu%
+  \or
+  Khamis%
+  \or
+  Jumaat%
+  \or
+  Sabtu%
+  \or
+  Ahad%
+  \fi
+}
+\newcommand*{\DTMbahasamshortweekdayname}[1]{%
+  \ifcase#1
+  Isn%
+  \or
+  Sel%
+  \or
+  Rab%
+  \or
+  Kha%
+  \or
+  Jum%
+  \or
+  Sab%
+  \or
+  Aha%
+  \fi
+}
+\newcommand*\DTMbahasamam{am}%
+\newcommand*\DTMbahasampm{pm}%
+\newcommand*\DTMbahasammidnight{t.m.}%
+\newcommand*\DTMbahasamnoon{t.h.}%
+\newcommand*{\DTMbahasamampmfmt}[1]{#1}
+\newcommand*{\DTMbahasamtimesep}{\DTMsep{hourmin}}
+\DTMnewtimestyle
+ {bahasamampm}% label
+ {%
+    \renewcommand*\DTMdisplaytime[3]{%
+      \ifnum##2=0
+        \ifnum##1=12
+          \DTMtexorpdfstring
+            {\DTMbahasamampmfmt{\DTMbahasamnoon}}%
+            {\DTMbahasamnoon}%
+        \else
+          \ifnum##1=0
+            \DTMtexorpdfstring
+            {\DTMbahasamampmfmt{\DTMbahasammidnight}}%
+            {\DTMbahasammidnight}%
+          \else
+            \ifnum##1=24
+              \DTMtexorpdfstring
+              {\DTMbahasamampmfmt{\DTMbahasammidnight}}%
+              {\DTMbahasammidnight}%
+            \else
+              \ifnum##1<12
+                \number##1
+                \DTMtexorpdfstring
+                {\DTMbahasamampmfmt{\DTMbahasamam}}%
+                {\DTMbahasamam}%
+              \else
+                \number\numexpr##1-12\relax
+                \DTMtexorpdfstring
+                {\DTMbahasamampmfmt{\DTMbahasampm}}%
+                {\DTMbahasampm}%
+              \fi
+            \fi
+          \fi
+        \fi
+      \else
+        \ifnum##1<13
+          \ifnum##1=0
+            12%
+          \else
+            \number##1
+          \fi
+          \DTMbahasamtimesep\DTMtwodigits{##2}%
+          \ifnum##1=12
+            \DTMtexorpdfstring
+            {\DTMbahasamampmfmt{\DTMbahasampm}}%
+            {\DTMbahasampm}%
+          \else
+            \DTMtexorpdfstring
+            {\DTMbahasamampmfmt{\DTMbahasamam}}%
+            {\DTMbahasamam}%
+          \fi
+        \else
+          \number\numexpr##1-12\relax
+          \DTMbahasamtimesep\DTMtwodigits{##2}%
+          \ifnum##1=24
+            \DTMtexorpdfstring
+            {\DTMbahasamampmfmt{\DTMbahasamam}}%
+            {\DTMbahasamam}%
+          \else
+            \DTMtexorpdfstring
+            {\DTMbahasamampmfmt{\DTMbahasampm}}%
+            {\DTMbahasampm}%
+          \fi
+        \fi
+      \fi
+    }%
+ }%
+\newcommand*{\DTMbahasamdaymonthsep}{%
+ \DTMtexorpdfstring{\protect~}{\space}}
+\newcommand*{\DTMbahasammonthyearsep}{\space}
+\newcommand*{\DTMbahasamdatetimesep}{\space}
+\newcommand*{\DTMbahasamtimezonesep}{\space}
+\newcommand*{\DTMbahasamdatesep}{/}
+%\newcommand*{\DTMbahasamtimesep}{:}
+\DTMdefkey{bahasam}{daymonthsep}{\renewcommand*{\DTMbahasamdaymonthsep}{#1}}
+\DTMdefkey{bahasam}{monthyearsep}{\renewcommand*{\DTMbahasammonthyearsep}{#1}}
+\DTMdefkey{bahasam}{datetimesep}{\renewcommand*{\DTMbahasamdatetimesep}{#1}}
+\DTMdefkey{bahasam}{timezonesep}{\renewcommand*{\DTMbahasamtimezonesep}{#1}}
+\DTMdefkey{bahasam}{datesep}{\renewcommand*{\DTMbahasamdatesep}{#1}}
+\DTMdefkey{bahasam}{timesep}{\renewcommand*{\DTMbahasamtimesep}{#1}}
+\DTMdefboolkey{bahasam}{mapzone}[true]{}
+\DTMsetbool{bahasam}{mapzone}{true}
+\DTMdefboolkey{bahasam}{abbr}[true]{}
+\DTMsetbool{bahasam}{abbr}{true}
+\DTMdefboolkey{bahasam}{showdayofmonth}[true]{}
+\DTMsetbool{bahasam}{showdayofmonth}{true}
+\DTMdefboolkey{bahasam}{showyear}[true]{}
+\DTMsetbool{bahasam}{showyear}{true}
+\DTMnewstyle
+ {bahasam}% label
+ {% date style
+   \renewcommand*\DTMdisplaydate[4]{%
+     \DTMifbool{bahasam}{showdayofmonth}
+     {\DTMbahasamordinal{##3}\DTMbahasamdaymonthsep}%
+     {}%
+     \DTMifbool{bahasam}{abbr}%
+       {\DTMbahasamshortmonthname{##2}}%
+       {\DTMbahasammonthname{##2}}%
+     \DTMifbool{bahasam}{showyear}%
+     {%
+       \DTMbahasammonthyearsep
+       \number##1 % space intended
+     }%
+     {}%
+     \ifDTMshowdow
+       \ifnum##4>-1
+         \space(%
+         \DTMifbool{bahasam}{abbr}%
+         {\DTMbahasamshortweekdayname{##4}}%
+         {\DTMbahasamweekdayname{##4}})%
+       \fi
+     \fi
+   }%
+   \renewcommand*\DTMDisplaydate{\DTMdisplaydate}%
+ }%
+ {% time style (use default)
+   \DTMsettimestyle{default}%
+ }%
+ {% zone style
+   \DTMresetzones
+   \DTMbahasamzonemaps
+   \renewcommand*{\DTMdisplayzone}[2]{%
+     \DTMifbool{bahasam}{mapzone}%
+     {\DTMusezonemapordefault{##1}{##2}}%
+     {%
+       \ifnum##1<0\else+\fi\DTMtwodigits{##1}%
+       \ifDTMshowzoneminutes\DTMbahasamtimesep\DTMtwodigits{##2}\fi
+     }%
+   }%
+ }%
+ {% full style
+   \renewcommand*{\DTMdisplay}[9]{%
+    \ifDTMshowdate
+     \DTMdisplaydate{##1}{##2}{##3}{##4}%
+     \DTMbahasamdatetimesep
+    \fi
+    \DTMdisplaytime{##5}{##6}{##7}%
+    \ifDTMshowzone
+     \DTMbahasamtimezonesep
+     \DTMdisplayzone{##8}{##9}%
+    \fi
+   }%
+   \renewcommand*{\DTMDisplay}{\DTMdisplay}%
+ }%
+\DTMnewstyle
+ {bahasam-numeric}% label
+ {% date style
+    \renewcommand*\DTMdisplaydate[4]{%
+      \DTMifbool{bahasam}{showdayofmonth}%
+      {%
+        \number##3 % space intended
+        \DTMbahasamdatesep
+      }%
+      {}%
+      \number##2 % space intended
+      \DTMifbool{bahasam}{showyear}%
+      {%
+        \DTMbahasamdatesep
+        \number##1 % space intended
+      }%
+      {}%
+    }%
+    \renewcommand*{\DTMDisplaydate}{\DTMdisplaydate}%
+ }%
+ {% time style
+    \renewcommand*\DTMdisplaytime[3]{%
+      \number##1
+      \DTMbahasamtimesep\DTMtwodigits{##2}%
+      \ifDTMshowseconds\DTMbahasamtimesep\DTMtwodigits{##3}\fi
+    }%
+ }%
+ {% zone style
+   \DTMresetzones
+   \DTMbahasamzonemaps
+   \renewcommand*{\DTMdisplayzone}[2]{%
+     \DTMifbool{bahasam}{mapzone}%
+     {\DTMusezonemapordefault{##1}{##2}}%
+     {%
+       \ifnum##1<0\else+\fi\DTMtwodigits{##1}%
+       \ifDTMshowzoneminutes\DTMbahasamtimesep\DTMtwodigits{##2}\fi
+     }%
+   }%
+ }%
+ {% full style
+   \renewcommand*{\DTMdisplay}[9]{%
+    \ifDTMshowdate
+     \DTMdisplaydate{##1}{##2}{##3}{##4}%
+     \DTMbahasamdatetimesep
+    \fi
+    \DTMdisplaytime{##5}{##6}{##7}%
+    \ifDTMshowzone
+     \DTMbahasamtimezonesep
+     \DTMdisplayzone{##8}{##9}%
+    \fi
+   }%
+   \renewcommand*{\DTMDisplay}{\DTMdisplay}%
+ }
+\newcommand*{\DTMbahasamzonemaps}{%
+}
+
+\DTMifcaseregional
+{}% do nothing
+{\DTMsetstyle{bahasam}}
+{\DTMsetstyle{bahasam-numeric}}
+\ifcsundef{date\CurrentTrackedDialect}
+{%
+  \ifundef\datebahasam
+  {% do nothing
+  }%
+  {%
+    \def\datebahasam{%
+      \DTMifcaseregional
+      {}% do nothing
+      {\DTMsetstyle{bahasam}}%
+      {\DTMsetstyle{bahasam-numeric}}%
+    }%
+  }%
+}%
+{%
+  \csdef{date\CurrentTrackedDialect}{%
+    \DTMifcaseregional
+    {}% do nothing
+    {\DTMsetstyle{bahasam}}%
+    {\DTMsetstyle{bahasam-numeric}}
+  }%
+}%
+
+\endinput
+%%
+%% End of file `datetime2-bahasam-base.ldf'.
