@@ -1,4 +1,4 @@
-\ProvidesClass{cdcalendar}[2016/02/26 CD Calendar 1.1.1 by LianTze LIM (liantze@gmail.com)]
+\ProvidesClass{cdcalendar}[2016/12/15 CD Calendar 1.2 by LianTze LIM (liantze@gmail.com)]
 
 
 \newif\if@smallcal\@smallcalfalse
@@ -107,6 +107,8 @@
 \RequirePackage{url}
 \urlstyle{rm}
 \RequirePackage{xpatch}
+\RequirePackage{xargs}
+\RequirePackage{pgfkeys}
 
 \def\@coverBgColor{white}
 \def\@coverImage{}
@@ -121,15 +123,15 @@
 \newcommand\coverImage[1]{\def\@coverImage{#1}}
 \newcommand\coverTitle[2][]{
     \notblank{#1}{\tikzset{coverTitleOptions/.style={#1}}}{}
-	\def\@coverTitleText{#2}
+  \def\@coverTitleText{#2}
 }
 
 \newcommand\makeCover{
 \pagecolor{\@coverBgColor}
 \begin{tikzpicture}[overlay,remember picture]
   \ifdefempty{\@coverImage}{}{
-	  \node[anchor=north west,inner sep=0pt] at (current page.north west) {
-	  \includegraphics[width=\paperwidth]{\@coverImage}
+    \node[anchor=north west,inner sep=0pt] at (current page.north west) {
+    \includegraphics[width=\paperwidth]{\@coverImage}
       };
   }
 \node[anchor=south east, coverTitleOptions,
@@ -176,41 +178,41 @@ inner sep=2ex] at (current page.south east) {\@coverTitleText};
 % Code from http://www.texample.net/tikz/examples/changing-the-default-calendar-layout/
 % for weeks to start on Sunday
 \tikzstyle{week list sunday}=[
-        % Note that we cannot extend from week list,
-        % the execute before day scope is cumulative
-        execute before day scope={%
-               \ifdate{day of month=1}{\ifdate{equals=\pgfcalendarbeginiso}{}{
-               % On first of month, except when first date in calendar.
-                   \pgfmathsetlength{\pgf@y}{\tikz@lib@cal@month@yshift}%
-                   \pgftransformyshift{-\pgf@y}
-               }}{}%
-        },
-        execute at begin day scope={%
-            % Because for TikZ Monday is 0 and Sunday is 6,
-            % we can't directly use \pgfcalendercurrentweekday,
-            % but instead we define \c@pgf@counta (basically) as:
-            % (\pgfcalendercurrentweekday + 1) % 7
-            \pgfmathsetlength\pgf@x{\tikz@lib@cal@xshift}%
-            \ifnum\pgfcalendarcurrentweekday=6
-                \c@pgf@counta=0
-            \else
-                \c@pgf@counta=\pgfcalendarcurrentweekday
-                \advance\c@pgf@counta by 1
-            \fi
-            \pgf@x=\c@pgf@counta\pgf@x
-            % Shift to the right position for the day.
-            \pgftransformxshift{\pgf@x}
-        },
-        execute after day scope={
-            % Week is done, shift to the next line.
-            \ifdate{Saturday}{
-                \pgfmathsetlength{\pgf@y}{\tikz@lib@cal@yshift}%
-                \pgftransformyshift{-\pgf@y}
-            }{}%
-        },
-        % This should be defined, glancing from the source code.
-        tikz@lib@cal@width=7
-    ]
+  % Note that we cannot extend from week list,
+  % the execute before day scope is cumulative
+  execute before day scope={%
+    \ifdate{day of month=1}{\ifdate{equals=\pgfcalendarbeginiso}{}{
+    % On first of month, except when first date in calendar.
+       \pgfmathsetlength{\pgf@y}{\tikz@lib@cal@month@yshift}%
+       \pgftransformyshift{-\pgf@y}
+    }}{}%
+  },
+  execute at begin day scope={%
+    % Because for TikZ Monday is 0 and Sunday is 6,
+    % we can't directly use \pgfcalendercurrentweekday,
+    % but instead we define \c@pgf@counta (basically) as:
+    % (\pgfcalendercurrentweekday + 1) % 7
+    \pgfmathsetlength\pgf@x{\tikz@lib@cal@xshift}%
+    \ifnum\pgfcalendarcurrentweekday=6
+      \c@pgf@counta=0
+    \else
+      \c@pgf@counta=\pgfcalendarcurrentweekday
+      \advance\c@pgf@counta by 1
+    \fi
+    \pgf@x=\c@pgf@counta\pgf@x
+    % Shift to the right position for the day.
+    \pgftransformxshift{\pgf@x}
+  },
+  execute after day scope={
+    % Week is done, shift to the next line.
+    \ifdate{Saturday}{
+      \pgfmathsetlength{\pgf@y}{\tikz@lib@cal@yshift}%
+      \pgftransformyshift{-\pgf@y}
+    }{}%
+  },
+  % This should be defined, glancing from the source code.
+  tikz@lib@cal@width=7
+]
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand\dayHeadingStyle[1]{\tikzset{dayHeadingsOptions/.style={#1}}}
@@ -218,71 +220,111 @@ inner sep=2ex] at (current page.south east) {\@coverTitleText};
 \newcommand\monthTitleStyle[1]{\tikzset{monthTitleOptions/.style={#1}}}
 \newcommand\eventStyle[1]{\def\@eventStyle{#1}}
 
-\newcommand{\monthCalendar}[2]{
-\begin{tikzpicture}[overlay,remember picture]
-\node[anchor=north east,at=(current page.south east),rotate=-90,transform shape,monthTitleOptions, inner sep=\CalPageMargin]
-{\pgfcalendarmonthname{#2} #1};
-\node[anchor=south west] at (current page.south west)
-{
-\tikz \calendar (cdCal-\thepage) [
-             dates=#1-#2-01 to #1-#2-last,
-             month text = {\%mt \%y-},
-             inner sep=\CalPageMargin,
-             \if@sundayweek week list sunday\else week list\fi,
-             day xshift=2.75em,
-             day letter headings
-             ]
-  if (Sunday) [\@sundayColor];
-};
-\end{tikzpicture}%
+\pgfkeys{
+  /eventmark/.is family, /eventmark,
+  default/.style = {
+    marker = {},
+    mark style = {}
+  },
+  marker/.store in = \event@marker,
+  mark style/.store in = \event@markstyle
+}%
+
+% \newcommand{\monthCalendar}[2]{%
+\def\@eventlist{}
+\newenvironment{monthCalendar}[2]{%
+  \begin{tikzpicture}[overlay,remember picture]
+  \node[anchor=north east,at=(current page.south east),rotate=-90,transform shape,monthTitleOptions, inner sep=\CalPageMargin]
+  {\pgfcalendarmonthname{#2} #1};
+  \node[anchor=south west] at (current page.south west)
+  {
+  \tikz \calendar (cdCal-\thepage) [
+    dates=#1-#2-01 to #1-#2-last,
+    month text = {\%mt \%y-},
+    inner sep=\CalPageMargin,
+    \if@sundayweek week list sunday\else week list\fi,
+    day xshift=2.75em,
+    day letter headings
+    ]
+    if (Sunday) [\@sundayColor];
+  };%
+
+  \gdef\@eventlist{}
+
+  \newcommand{\markCalendar}[2][]{%
+    \pgfkeys{/eventmark,default,##1}%
+    \DTMsavedate{tmp}{##2}%
+    \@ifundefined{pgf@sh@ns@cdCal-\thepage-##2}{}{%
+      % \begin{tikzpicture}[overlay,remember picture]%
+      \begin{scope}[on background layer]
+      \node[inner sep=1.25ex,\event@markstyle]
+        at (cdCal-\thepage-##2) {\event@marker};%
+      \end{scope}%
+      % \end{tikzpicture}%
+    }%
+  }
+
+  % #1=style; #2=startdate; #3=enddate or days; #4=name
+  \newcommand{\event}[4][mark style=default mark]{%
+    \ifblank{##3}{\oneDayEvent[##1]{##2}{##4}}%
+                 {\multiDayEvent[##1]{##2}{##3}{##4}}%
+  }
+
+  % #1=style; #2=startdate; #4=name
+  \newcommand{\oneDayEvent}[3][mark style=default mark]{%
+    \markCalendar[##1]{##2}%
+    \gappto{\@eventlist}{{##3: \DTMdate{##2}\par}}
+  }
+
+  % #1=style; #2=startdate; #3=enddate or days; #4=name
+  \newcommand{\multiDayEvent}[4][mark style=default mark]{%
+    \IfInteger{##3}%
+      {\multiDayEventWithDuration[##1]{##2}{##3}{##4}}%
+      {\multiDayEventWithEnd[##1]{##2}{##3}{##4}}%
+  }
+
+  % #1=style; #2=startdate; #3=days; #4=name
+  \newcommand{\multiDayEventWithDuration}[4][mark style=default mark]{%
+    \pgfmathparse{##3-1}%
+    \foreach \d in {0,...,\pgfmathresult}{%
+    	\DTMsavedate{tmp}{##2+\d}%
+    	\DTMmakeglobal{tmp}%
+    	\markCalendar[##1]{\DTMfetchyear{tmp}-\DTMfetchmonth{tmp}-\DTMfetchday{tmp}}%
+    }%
+    \gappto{\@eventlist}{{##4: \DTMdate{##2}-- \DTMusedate{tmp}\par}}
+  }
+
+  % #1=style; #2=startdate; #3=enddate; #4=name
+  \newcommand{\multiDayEventWithEnd}[4][mark style=default mark]{%
+    \DTMsavedate{startdate}{##2}%
+    \DTMsavedate{enddate}{##3+1}%
+    \newcount\myct%
+    \DTMsaveddatediff{enddate}{startdate}{\myct}%
+    \multiDayEventWithDuration[##1]{##2}{\myct}{##4}%
+  }
+
+}{%
+  \end{tikzpicture}
+
+  \begin{minipage}[t]{\EventLineWidth}\@eventStyle%
+  \setlength{\parskip}{0.5ex}%
+  \@eventlist%
+  \end{minipage}%
 }
 
 
-\newcommand{\markCalendar}[1]{%
-  \DTMsavedate{tmp}{#1}%
-  \@ifundefined{pgf@sh@ns@cdCal-\thepage-#1}{}{%
-    \tikz[overlay,remember picture]%
-    \node[circle,draw=red!50,inner sep=1.25ex] at (cdCal-\thepage-#1) {};%
-  }%
-}
-
-
-\newcommand{\event}[3][]{%
-	\ifblank{#1}{\oneDayEvent{#2}{#3}}{\multiDayEvent{#2}{#1}{#3}}
-}
-
-\newcommand{\oneDayEvent}[2]{%
-	\markCalendar{#1}%
-	\begin{minipage}[t]{\EventLineWidth}\@eventStyle#2: \DTMdate{#1}\end{minipage}\par%
-}
-
-\newcommand{\multiDayEvent}[3]{%
-  \IfInteger{#2}{\multiDayEventWithDuration{#1}{#2}{#3}}{\multiDayEventWithEnd{#1}{#2}{#3}}%
-}
-
-\newcommand{\multiDayEventWithDuration}[3]{%
-	\pgfmathparse{#2-1}%
-	\foreach \d in {0,...,\pgfmathresult}{%
-  	\DTMsavedate{tmp}{#1+\d}%
-  	\DTMmakeglobal{tmp}%
-  	\markCalendar{\DTMfetchyear{tmp}-\DTMfetchmonth{tmp}-\DTMfetchday{tmp}}%
-	}%
-	\begin{minipage}[t]{\EventLineWidth}\@eventStyle#3: \DTMdate{#1} -- \DTMusedate{tmp}\end{minipage}\par%
-}
-
-\newcommand{\multiDayEventWithEnd}[3]{%
-  \DTMsavedate{startdate}{#1}%
-  \DTMsavedate{enddate}{#2+1}%
-  \newcount\myct%
-  \DTMsaveddatediff{enddate}{startdate}{\myct}%
-  \multiDayEventWithDuration{#1}{\myct}{#3}%
-}
+\tikzset{default mark/.style={circle,draw=red!50}}
 
 \newlength\lessIllusSkip
 \setlength{\lessIllusSkip}{1ex}
 
 \newcommand{\illustration}[3][1]{%
 \includegraphics[width=#2]{#3}\\[-1.5ex]%
+\begin{minipage}[t]{#2}\raggedright\itshape\tiny #1\end{minipage}\par\vspace*{-\lessIllusSkip}%
+}
+
+\newcommand{\otherstuff}[3][1]{%
+\begin{minipage}[t]{#2}{#3}\end{minipage}\\% Whatever you like!
 \begin{minipage}[t]{#2}\raggedright\itshape\tiny #1\end{minipage}\par\vspace*{-\lessIllusSkip}%
 }
 
