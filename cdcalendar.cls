@@ -14,6 +14,11 @@
   \@giantcaltrue
 }
 
+\newif\if@babel\@babeltrue
+\DeclareOption{nobabel}{
+  \@babelfalse
+}
+
 \newif\if@sundayweek\@sundayweekfalse
 \def\@daynumlist{0/0,1/1,2/2,3/3,4/4,5/5,6/6}
 \DeclareOption{sundayweek}{
@@ -93,12 +98,15 @@
   Compile using lualatex instead.}
 \fi
 
-\RequirePackage{babel}
-
-\RequirePackage{translator}
-\languagealias{british}{English}
-\languagealias{bahasai}{Indonesian}
-\languagealias{bahasam}{Malaysian}
+\if@babel
+  \RequirePackage{babel}
+  \RequirePackage{translator}
+  \languagealias{british}{English}
+  \languagealias{bahasai}{Indonesian}
+  \languagealias{bahasam}{Malaysian}
+\else
+  \RequirePackage{translator}
+\fi
 
 \RequirePackage{tikz}
 \usetikzlibrary{calendar,positioning,backgrounds}
@@ -143,15 +151,16 @@ inner sep=2ex] at (current page.south east) {\@coverTitleText};
 
 %%%%%%%%
 % Using code from http://tex.stackexchange.com/a/245279/226
-\let\xpgfcalendarweekdayname\pgfcalendarweekdayname
-\xpatchcmd{\xpgfcalendarweekdayname}
- {\translate}
- {\xtranslate}
- {}{\ddt}
-\newcommand{\xtranslate}[1]{%
-  \csname tr@@@\csname tr@ml@\languagename\endcsname @#1\endcsname
-}
-
+\if@babel
+  \let\xpgfcalendarweekdayname\pgfcalendarweekdayname
+  \xpatchcmd{\xpgfcalendarweekdayname}
+   {\translate}
+   {\xtranslate}
+   {}{\ddt}
+  \newcommand{\xtranslate}[1]{%
+    \csname tr@@@\csname tr@ml@\languagename\endcsname @#1\endcsname
+  }
+\fi
 
 %%%%%%%%%
 % Code from http://tex.stackexchange.com/a/10199/226
@@ -162,7 +171,12 @@ inner sep=2ex] at (current page.south east) {\@coverTitleText};
       \pgfmathsetlength\pgf@xa{\tikz@lib@cal@xshift}%
       \pgftransformyshift{-\pgf@ya}
       \foreach \n/\d in \@daynumlist {
-        \StrLeft{\xpgfcalendarweekdayname{\d}}{1}[\theD]
+        \if@babel
+          \StrLeft{\xpgfcalendarweekdayname{\d}}{1}[\theD]
+        \else
+          % TODO
+          \def\theD{\pgfcalendarweekdayname{\d}}
+        \fi
         \pgf@xa=\n\pgf@xa%
         \pgftransformxshift{\pgf@xa}%
         \pgftransformyshift{\pgf@ya}%
@@ -230,8 +244,10 @@ inner sep=2ex] at (current page.south east) {\@coverTitleText};
   mark style/.store in = \event@markstyle
 }%
 
-% \newcommand{\monthCalendar}[2]{%
+\newcommand{\printdate}[1]{\DTMdate{#1}}
+
 \def\@eventlist{}
+
 \newenvironment{monthCalendar}[2]{%
   \begin{tikzpicture}[overlay,remember picture]
   \node[anchor=north east,at=(current page.south east),rotate=-90,transform shape,monthTitleOptions, inner sep=\CalPageMargin]
@@ -272,8 +288,15 @@ inner sep=2ex] at (current page.south east) {\@coverTitleText};
 
   % #1=style; #2=startdate; #4=name
   \newcommand{\oneDayEvent}[3][mark style=default mark]{%
+    \pgfkeys{/eventmark,default,##1}%
     \markCalendar[##1]{##2}%
-    \gappto{\@eventlist}{{##3: \DTMdate{##2}\par}}
+    \protected@xappto{\@eventlist}{%
+      \makebox[1.75em][c]{\protect\tikz%
+        \protect\node[\event@markstyle,font=\fontsize{1em}{1em},%
+        \ifdefempty{\event@marker}{inner sep=0.5ex}{inner sep=0pt},
+]{\event@marker};}%
+      \textbf{##3:} \DTMdate{##2}\par%
+    }{}{}
   }
 
   % #1=style; #2=startdate; #3=enddate or days; #4=name
@@ -285,13 +308,19 @@ inner sep=2ex] at (current page.south east) {\@coverTitleText};
 
   % #1=style; #2=startdate; #3=days; #4=name
   \newcommand{\multiDayEventWithDuration}[4][mark style=default mark]{%
+    \pgfkeys{/eventmark,default,##1}%
     \pgfmathparse{##3-1}%
     \foreach \d in {0,...,\pgfmathresult}{%
     	\DTMsavedate{tmp}{##2+\d}%
-    	\DTMmakeglobal{tmp}%
+      \DTMmakeglobal{tmp}%
     	\markCalendar[##1]{\DTMfetchyear{tmp}-\DTMfetchmonth{tmp}-\DTMfetchday{tmp}}%
     }%
-    \gappto{\@eventlist}{{##4: \DTMdate{##2}-- \DTMusedate{tmp}\par}}
+    \protected@xappto{\@eventlist}{%
+      \makebox[1.75em][c]{\protect\tikz%
+        \protect\node[\event@markstyle,font=\fontsize{1em}{1em},%
+        \ifdefempty{\event@marker}{inner sep=0.5ex}{inner sep=0pt},
+        ]{\event@marker};}%
+      \textbf{##4:} \DTMdate{##2}-- \DTMusedate{tmp}\par}{}{}
   }
 
   % #1=style; #2=startdate; #3=enddate; #4=name
