@@ -106,6 +106,13 @@
   \languagealias{bahasam}{Malaysian}
 \else
   \RequirePackage{translator}
+  \providetranslation{Sunday}{S}
+  \providetranslation{Monday}{S}
+  \providetranslation{Tuesday}{T}
+  \providetranslation{Wednesday}{W}
+  \providetranslation{Thursday}{T}
+  \providetranslation{Friday}{F}
+  \providetranslation{Saturday}{S}
 \fi
 
 \RequirePackage{tikz}
@@ -292,7 +299,7 @@ inner sep=2ex] at (current page.south east) {\@coverTitleText};
     \markCalendar[##1]{##2}%
     \protected@xappto{\@eventlist}{%
       \makebox[1.75em][c]{\protect\tikz%
-        \protect\node[\event@markstyle,font=\fontsize{1em}{1em},%
+        \protect\node[\event@markstyle,font=\@eventStyle,%
         \ifdefempty{\event@marker}{inner sep=0.5ex}{inner sep=0pt},
 ]{\event@marker};}%
       \textbf{##3:} \DTMdate{##2}\par%

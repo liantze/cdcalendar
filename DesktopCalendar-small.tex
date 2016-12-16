@@ -46,7 +46,11 @@
 
 \usepackage{graphicx}
 \usepackage{wallpaper}
+\usepackage{fontawesome}
 \graphicspath{{img/}}
+
+\tikzset{blue icon/.style={text=SkyBlue,font=\Large}}
+\tikzset{orange icon/.style={text=orange!60,font=\Large}}
 
 \begin{document}
 
@@ -90,14 +94,16 @@ Here are the actual printed calendars. The smaller calendar (9cm $\times$ 9.5cm)
 %%%%%%
 \illustration[Vincent van Gogh, `The Starry Night', 1889. Public Domain. \url{http://commons.wikimedia.org}]{5.5cm}{StarryNight}
 
-\monthCalendar{2015}{09}
+\begin{monthCalendar}{2015}{09}
 
-%%% events must be given AFTER \monthCalendar
+%%% events must be given AFTER \begin{monthCalendar}
 %%% Currently you must give events on the same page
 %%% as the monthly calendar.
 
 %% This is an one-day event
-\event{2015-09-02}{Autumn school term starts}
+\event[mark style=orange icon, marker=\faBook]{2015-09-02}{}{Autumn school term starts}
+
+\end{monthCalendar}
 
 \clearpage
 
@@ -107,15 +113,17 @@ Here are the actual printed calendars. The smaller calendar (9cm $\times$ 9.5cm)
 %%%%%%
 \illustration[John Constable, `Salisbury Cathedral from the Bishop's Grounds', 1823. Public Domain. \url{http://commons.wikimedia.org}]{5.5cm}{SalisburyCathedral}
 
-\monthCalendar{2015}{10}
+\begin{monthCalendar}{2015}{10}
 
-\event{2015-10-25}{Daylight saving time ends}
+\event[mark style=blue icon, marker=\faClockO]{2015-10-25}{}{Daylight saving time ends}
 
 %% This is a 5-day event starting Oct 26th
-\event[5]{2015-10-26}{Autumn half-term holiday}
+\event{2015-10-26}{5}{Autumn half-term holiday}
 
 %% You could also write
-%\event[2015-10-30]{2015-10-26}{Autumn half-term holiday}
+%\event{2015-10-26}{2015-10-30}{Autumn half-term holiday}
+
+\end{monthCalendar}
 
 \clearpage
 
@@ -124,7 +132,9 @@ Here are the actual printed calendars. The smaller calendar (9cm $\times$ 9.5cm)
 %%%%%%
 \illustration[Jin Nong, `Flower', 1754. Public Domain. \url{http://commons.wikimedia.org}]{5.5cm}{Flower_JinNong}
 
-\monthCalendar{2015}{11}
+\begin{monthCalendar}{2015}{11}
+
+\end{monthCalendar}
 
 \clearpage
 
@@ -134,13 +144,15 @@ Here are the actual printed calendars. The smaller calendar (9cm $\times$ 9.5cm)
 %%%%%%
 \illustration[Hendrick Avercamp, `Winter Landscape with Ice Skaters', c.~1608. Public Domain. \url{http://commons.wikimedia.org}]{5.5cm}{WinterLandscape}
 
-\monthCalendar{2015}{12}
+\begin{monthCalendar}{2015}{12}
 
-\event{2015-12-18}{Last day of Autumn term}
+\event{2015-12-18}{}{Last day of Autumn term}
 
-\event{2015-12-25}{Christmas Day}
+\event{2015-12-25}{}{Christmas Day}
 
-\event{2015-12-28}{Boxing Day (substitute)}
+\event{2015-12-28}{}{Boxing Day (substitute)}
+
+\end{monthCalendar}
 
 \clearpage
 
@@ -150,11 +162,13 @@ Here are the actual printed calendars. The smaller calendar (9cm $\times$ 9.5cm)
 \illustration[Auguste Renoir, `Oarsmen at Chatou', 1879. Open Access. \url{https://images.nga.gov}]%
 {5.5cm}{A17050}
 
-\monthCalendar{2016}{01}
+\begin{monthCalendar}{2016}{01}
 
-\event{2016-01-01}{New Year's Day}
+\event{2016-01-01}{}{New Year's Day}
 
-\event{2016-01-04}{Spring term starts}
+\event[mark style=orange icon, marker=\faBook]{2016-01-04}{}{Spring term starts}
+
+\end{monthCalendar}
 
 \clearpage
 
@@ -164,10 +178,12 @@ Here are the actual printed calendars. The smaller calendar (9cm $\times$ 9.5cm)
 \illustration[Cariani, `Concert', c.~1518--1520. Open Access. \url{https://images.nga.gov}]%
 {5.5cm}{A10623}
 
-\monthCalendar{2016}{02}
+\begin{monthCalendar}{2016}{02}
 
 %% This is a 5-day event starting on Feb 15
-\event[5]{2016-02-15}{Spring half-term holiday}
+\event{2016-02-15}{5}{Spring half-term holiday}
+
+\end{monthCalendar}
 
 \clearpage
 
@@ -176,18 +192,20 @@ Here are the actual printed calendars. The smaller calendar (9cm $\times$ 9.5cm)
 %%%%%%
 \illustration[Henri Rosseau, `The Sleeping Gypsy', 1897. Public Domain. \url{http://commons.wikimedia.org}]{5.5cm}{SleepingGypsy}
 
-\monthCalendar{2016}{03}
+\begin{monthCalendar}{2016}{03}
 
-\event{2016-03-25}{Good Friday}
+\event{2016-03-25}{}{Good Friday}
 
-\event{2016-03-27}{Daylight Saving Time starts}
+\event[mark style=blue icon, marker=\faClockO]{2016-03-27}{}{Daylight Saving Time starts}
 
-\event{2016-03-28}{Easter Monday}
+\event{2016-03-28}{}{Easter Monday}
 
 
 %% Note if a multi-day event extends to the next month,
 %% you'll have to list it again in the next month.
-\event[2016-04-08]{2016-03-25}{Easter holiday}
+\event{2016-03-25}{2016-04-08}{Easter holiday}
+
+\end{monthCalendar}
 
 \clearpage
 
@@ -197,9 +215,11 @@ Here are the actual printed calendars. The smaller calendar (9cm $\times$ 9.5cm)
 %%%%%%
 \illustration[Katsushika Hokusai, `The Great Wave of Kanagawa', 1823--1829. Public Domain. \url{http://commons.wikimedia.org}]{5.5cm}{Tsunami}
 
-\monthCalendar{2016}{04}
+\begin{monthCalendar}{2016}{04}
 
-\event[2016-04-08]{2016-03-25}{Easter holiday}
+\event{2016-03-25}{2016-04-08}{Easter holiday}
+
+\end{monthCalendar}
 
 \clearpage
 
@@ -208,13 +228,15 @@ Here are the actual printed calendars. The smaller calendar (9cm $\times$ 9.5cm)
 %%%%%%
 \illustration[John Everett Millais, `Ophelia', circa 1851. Public Domain. \url{http://commons.wikimedia.org}]{5.5cm}{Ophelia}
 
-\monthCalendar{2016}{05}
+\begin{monthCalendar}{2016}{05}
 
-\event{2016-05-02}{Early May bank holiday}
+\event[mark style=blue icon, marker=\faBank]{2016-05-02}{}{Early May bank holiday}
 
-\event{2016-05-30}{Spring Bank Holiday}
+\event[mark style=blue icon, marker=\faBank]{2016-05-30}{}{Spring Bank Holiday}
 
-\event[5]{2016-05-30}{Summer half-term holiday}
+\event{2016-05-30}{5}{Summer half-term holiday}
+
+\end{monthCalendar}
 
 \clearpage
 
@@ -225,9 +247,11 @@ Here are the actual printed calendars. The smaller calendar (9cm $\times$ 9.5cm)
 % {\raggedleft -- Sam Keen\par}
 \illustration[J.M.W.~Turner, `The Fighting Temeraire tugged to her last berth to be broken up', 1839. Public Domain. \url{http://commons.wikimedia.org}]{5.5cm}{FightingTemeraire}
 
-\monthCalendar{2016}{06}
+\begin{monthCalendar}{2016}{06}
 
-\event[5]{2016-05-30}{Summer half-term holiday}
+\event{2016-05-30}{5}{Summer half-term holiday}
+
+\end{monthCalendar}
 
 \clearpage
 
@@ -236,9 +260,11 @@ Here are the actual printed calendars. The smaller calendar (9cm $\times$ 9.5cm)
 %%%%%%
 \illustration[Édouard Manet, `A Bar at the Folies-Bergère', 1881 -- 1882. Public Domain. \url{http://commons.wikimedia.org}]{5.5cm}{BarAtTheFoliesBergere}
 
-\monthCalendar{2016}{07}
+\begin{monthCalendar}{2016}{07}
 
-\event{2016-07-21}{Summer holiday begins}
+\event{2016-07-21}{}{Summer holiday begins}
+\end{monthCalendar}
+
 \clearpage
 
 %%%%%%
@@ -246,10 +272,12 @@ Here are the actual printed calendars. The smaller calendar (9cm $\times$ 9.5cm)
 %%%%%%
 \illustration[Georges Seurat, `A Sunday Afternoon on the Island of La Grande Jatte', 1884 -- 1886. Public Domain. \url{http://commons.wikimedia.org}]{5.5cm}{SundayOnLaGrandeJatte}
 
-\monthCalendar{2016}{08}
+\begin{monthCalendar}{2016}{08}
 
-\event{2016-08-29}{Summer bank holiday}
-\event{2016-09-06}{New school year begins}
+\event[mark style=blue icon, marker=\faBank]{2016-08-29}{}{Summer bank holiday}
+\event[mark style=blue icon, marker=\faBank]{2016-09-06}{}{New school year begins}
+
+\end{monthCalendar}
 
 \clearpage
 
