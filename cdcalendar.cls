@@ -101,9 +101,14 @@
 \if@babel
   \RequirePackage{babel}
   \RequirePackage{translator}
+  \providetranslation{Sunday}{S}
+  \providetranslation{Monday}{S}
+  \providetranslation{Tuesday}{T}
+  \providetranslation{Wednesday}{W}
+  \providetranslation{Thursday}{T}
+  \providetranslation{Friday}{F}
+  \providetranslation{Saturday}{S}
   \languagealias{british}{English}
-  \languagealias{bahasai}{Indonesian}
-  \languagealias{bahasam}{Malaysian}
 \else
   \RequirePackage{translator}
   \providetranslation{Sunday}{S}
@@ -113,29 +118,34 @@
   \providetranslation{Thursday}{T}
   \providetranslation{Friday}{F}
   \providetranslation{Saturday}{S}
+  \AtBeginDocument{\renewcommand*{\DTMdisplaydate}[4]{\number#3/\number#2}}
 \fi
 
 \RequirePackage{tikz}
-\usetikzlibrary{calendar,positioning,backgrounds}
+\usetikzlibrary{calendar,positioning,backgrounds,shapes}
 \RequirePackage[useregional,showdow]{datetime2}
 \DTMlangsetup{abbr,ord=raise,showyear=false}
 \RequirePackage{url}
-\urlstyle{rm}
+% \urlstyle{rm}
+\renewcommand{\UrlFont}{\rmfamily}
 \RequirePackage{xpatch}
 \RequirePackage{xargs}
 \RequirePackage{pgfkeys}
 
 \def\@coverBgColor{white}
 \def\@coverImage{}
+\def\@coverImageCaption{}
 \def\@coverTitleText{}
 \tikzset{coverTitleOptions/.style={font=\Huge\sffamily}}
 \tikzset{dayHeadingsOptions/.style={font=\sffamily\bfseries,gray!90}}
 \def\@sundayColor{red}
 \tikzset{monthTitleOptions/.style={font={\fontsize{40pt}{42pt}\bfseries\sffamily\itshape\selectfont}, red!50!RedViolet}}
 \def\@eventStyle{}
+\newcommand\printeventname[1]{\textbf{#1}}
+\def\eventSep{: }
 
 \newcommand\coverBgColor[1]{\def\@coverBgColor{#1}}
-\newcommand\coverImage[1]{\def\@coverImage{#1}}
+\newcommand\coverImage[2][]{\def\@coverImageCaption{#1}\def\@coverImage{#2}}
 \newcommand\coverTitle[2][]{
     \notblank{#1}{\tikzset{coverTitleOptions/.style={#1}}}{}
   \def\@coverTitleText{#2}
@@ -145,9 +155,15 @@
 \pagecolor{\@coverBgColor}
 \begin{tikzpicture}[overlay,remember picture]
   \ifdefempty{\@coverImage}{}{
-    \node[anchor=north west,inner sep=0pt] at (current page.north west) {
+    \node[rectangle split, rectangle split parts=2,
+    rectangle split part align={left,left},
+    text width=\dimexpr\paperwidth-1em\relax,
+    % textwidth=\paperwidth,align=left,
+    font=\tiny\itshape,
+    anchor=north west,inner sep=0pt,] at (current page.north west) {
     \includegraphics[width=\paperwidth]{\@coverImage}
-      };
+    \nodepart{second} \space\@coverImageCaption};
+    % \node[font=\tiny\itshape,below of=img.south]{\@coverImageCaption};
   }
 \node[anchor=south east, coverTitleOptions,
 inner sep=2ex] at (current page.south east) {\@coverTitleText};
@@ -158,7 +174,7 @@ inner sep=2ex] at (current page.south east) {\@coverTitleText};
 
 %%%%%%%%
 % Using code from http://tex.stackexchange.com/a/245279/226
-\if@babel
+% \if@babel
   \let\xpgfcalendarweekdayname\pgfcalendarweekdayname
   \xpatchcmd{\xpgfcalendarweekdayname}
    {\translate}
@@ -167,7 +183,7 @@ inner sep=2ex] at (current page.south east) {\@coverTitleText};
   \newcommand{\xtranslate}[1]{%
     \csname tr@@@\csname tr@ml@\languagename\endcsname @#1\endcsname
   }
-\fi
+% \fi
 
 %%%%%%%%%
 % Code from http://tex.stackexchange.com/a/10199/226
@@ -181,7 +197,6 @@ inner sep=2ex] at (current page.south east) {\@coverTitleText};
         \if@babel
           \StrLeft{\xpgfcalendarweekdayname{\d}}{1}[\theD]
         \else
-          % TODO
           \def\theD{\pgfcalendarweekdayname{\d}}
         \fi
         \pgf@xa=\n\pgf@xa%
@@ -302,7 +317,7 @@ inner sep=2ex] at (current page.south east) {\@coverTitleText};
         \protect\node[\event@markstyle,font=\@eventStyle,%
         \ifdefempty{\event@marker}{inner sep=0.5ex}{inner sep=0pt},
 ]{\event@marker};}%
-      \textbf{##3:} \DTMdate{##2}\par%
+      \printeventname{##3\eventSep}\DTMdate{##2}\par%
     }{}{}
   }
 
@@ -327,7 +342,7 @@ inner sep=2ex] at (current page.south east) {\@coverTitleText};
         \protect\node[\event@markstyle,font=\fontsize{1em}{1em},%
         \ifdefempty{\event@marker}{inner sep=0.5ex}{inner sep=0pt},
         ]{\event@marker};}%
-      \textbf{##4:} \DTMdate{##2}-- \DTMusedate{tmp}\par}{}{}
+      \printeventname{##4\eventSep}\DTMdate{##2}-- \DTMusedate{tmp}\par}{}{}
   }
 
   % #1=style; #2=startdate; #3=enddate; #4=name
@@ -354,14 +369,20 @@ inner sep=2ex] at (current page.south east) {\@coverTitleText};
 \newlength\lessIllusSkip
 \setlength{\lessIllusSkip}{1ex}
 
-\newcommand{\illustration}[3][1]{%
-\includegraphics[width=#2]{#3}\\[-1.5ex]%
-\begin{minipage}[t]{#2}\raggedright\itshape\tiny #1\end{minipage}\par\vspace*{-\lessIllusSkip}%
+\newcommand{\illustration}[3][]{%
+  \tikz\node[rectangle split, rectangle split parts=2,
+    rectangle split part align={left,left},
+    text width=#2,inner sep=0pt,font=\itshape\tiny]
+  {\includegraphics[width=#2]{#3} \nodepart{second} #1};
+\vspace*{-\lessIllusSkip}%
 }
 
 \newcommand{\otherstuff}[3][1]{%
-\begin{minipage}[t]{#2}{#3}\end{minipage}\\% Whatever you like!
-\begin{minipage}[t]{#2}\raggedright\itshape\tiny #1\end{minipage}\par\vspace*{-\lessIllusSkip}%
+  \tikz\node[rectangle split, rectangle split parts=2,
+    rectangle split part align={left,left},
+    text width=#2,inner xsep=0pt,font=\itshape\tiny]
+  {#3 \nodepart{second} #1};
+  \vspace*{-\lessIllusSkip}%
 }
 
 \pagestyle{empty}

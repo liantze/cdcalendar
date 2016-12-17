@@ -25,6 +25,8 @@
 \newcommand{\zhwkday}[1]
 {\ifcase#1一\or 二\or 三\or 四\or 五\or 六\or 日\fi}
 
+\renewcommand{\eventSep}{：}
+
 % 在此向专业的排版员、美术设计人员叩头请罪，以下直排实现方法实在简单粗暴、罪孽深重
 \patchcmd{\monthCalendar}
 {anchor=north east,at=(current page.south east),rotate=-90,transform shape,}
@@ -39,4 +41,4 @@
 {}{}
 
 \patchcmd{\monthCalendar}{--}{—}{}{}
-\renewcommand*{\DTMdisplaydate}[4]{\number#2月 \number#3日}
+\AtBeginDocument{\renewcommand*{\DTMdisplaydate}[4]{\number#2月\number#3日}}
