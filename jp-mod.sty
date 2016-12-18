@@ -1,0 +1,53 @@
+%% for use with \documentclass[no{\linewidth}]{cdcalendar}
+\usepackage[match]{luatexja-fontspec}
+
+% modern names
+% \deftranslation{January}{一月}
+% \deftranslation{February}{二月}
+% \deftranslation{March}{三月}
+% \deftranslation{April}{四月}
+% \deftranslation{May}{五月}
+% \deftranslation{June}{六月}
+% \deftranslation{July}{七月}
+% \deftranslation{August}{八月}
+% \deftranslation{September}{九月}
+% \deftranslation{October}{十月}
+% \deftranslation{November}{十一月}
+% \deftranslation{December}{十二月}
+
+% traditional names
+\deftranslation{January}{睦月}
+\deftranslation{February}{如月}
+\deftranslation{March}{弥生}
+\deftranslation{April}{卯月}
+\deftranslation{May}{皐月}
+\deftranslation{June}{水無月}
+\deftranslation{July}{文月}
+\deftranslation{August}{葉月}
+\deftranslation{September}{長月}
+\deftranslation{October}{神無月}
+\deftranslation{November}{霜月}
+\deftranslation{December}{師走}
+
+\deftranslation{Sunday}{日}
+\deftranslation{Monday}{月}
+\deftranslation{Tuesday}{火}
+\deftranslation{Wednesday}{水}
+\deftranslation{Thursday}{木}
+\deftranslation{Friday}{金}
+\deftranslation{Saturday}{土}
+
+\renewcommand{\eventSep}{：}
+
+\patchcmd{\monthCalendar}
+{anchor=north east,at=(current page.south east),rotate=-90,transform shape,}
+{anchor=south east,at=(current page.south east),}
+{}{}
+%
+\patchcmd{\monthCalendar}
+{\pgfcalendarmonthname{#2} #1}
+{\hbox{\tate\pgfcalendarmonthname{#2} #1}}%
+{}{}
+
+\patchcmd{\monthCalendar}{--}{—}{}{}
+% \AtBeginDocument{\renewcommand*{\DTMdisplaydate}[4]{\number#2月\number#3日}}
