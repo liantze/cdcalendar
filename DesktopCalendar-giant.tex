@@ -7,19 +7,7 @@
 %%% Localisation possible with languages supported by
 %%% babel/translator/datetime2.
 %%% Tested with british, spanish, french, ngerman,
-%%% italian, portuges, polish, croatian, greek, bahasai,
-%%% bahasam.
-%%%
-%%% bahasai (Indonesian) works with the following new or modified files in this project:
-%%% - translator-language-mappings.tex
-%%% - translator-months-dictionary-Indonesian.dict
-%%% - datetime2-bahasai.ldf
-%%%
-%%% bahasam (Bahasa Malaysia) works with the following new or
-%%% modified files in this project:
-%%% - translator-language-mappings.tex
-%%% - translator-months-dictionary-Malaysian.dict
-%%% - datetime2-bahasam.ldf
+%%% italian, portuges, polish, croatian, greek.
 %%%
 %%% (Use lualatex for french. If using pdflatex for greek,
 %%% Remember to load LGR,T1 for fontenc.)
@@ -35,15 +23,16 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 
-% Using Gentium and Open Sans
-\usepackage{gentium}
+% Using EBGaramond and Open Sans
+\usepackage[utopia]{mathdesign}
+\usepackage{ebgaramond}
 \usepackage[defaultsans,osfigures,scale=0.94]{opensans}
 %% End pdfLaTeX-related font settings %%%%%%%%
 
 
 % %% Compile with luaLaTeX if using fontspec
 % \usepackage{fontspec}
-% \setmainfont{Gentium}
+% \setmainfont{EB Garamond}
 % \setsansfont[BoldItalicFont=Fira Sans Italic,BoldFont=Fira Sans]{Fira Sans Light}
 % %% End luaLaTeX-related font settings %%%%%%%%
 
@@ -51,16 +40,17 @@
 \usepackage{graphicx}
 \usepackage{wallpaper}
 \usepackage{fontawesome}
-
 \graphicspath{{img/}}
+\usepackage[fleqn]{amsmath}
 
 \tikzset{blue icon/.style={text=SkyBlue,font=\Large}}
-\tikzset{orange icon/.style={text=orange!60,font=\Large}}
+\tikzset{pink icon/.style={text=Pink,font=\large}}
+\tikzset{holiday/.style={rectangle,fill=orange!70}}
 
 % Default values -- change if needed
 % \setlength{\CalPageMargin}{1cm}
 % \setlength{\EventLineWidth}{6in}
-% \geometry{a4paper}
+\geometry{a4paper}
 
 \begin{document}
 
@@ -68,8 +58,9 @@
 % Cover
 %%%%%%
 \coverBgColor{RoyalBlue!40!black}
-\coverImage{LuncheonoftheBoatingParty}
-\coverTitle[font=\fontsize{48pt}{50pt}\sffamily\bfseries,text=white,text width=\linewidth,align=flush right]{Coventry City Council 2015/16 School Year}
+\coverImage[\color{gray!50}David R.~Goodsell, RCSB PDB, 2005. `Molecule of the Month 2005 August: Neurotrophins: Receptors for nerve growth factor'. \mbox{CC-BY-4.0.} \url{https://doi.org/10.2210/rcsb_pdb/mom_2005_8}]
+{68-Neurotrophins-receptors}
+\coverTitle[font=\fontsize{48pt}{50pt}\sffamily\bfseries,text=white,text width=\linewidth,align=flush right]{2017 Calendar\\(with customizations)}
 
 \makeCover
 
@@ -80,7 +71,7 @@
 % \includegraphics[width=\textwidth]{actual}
 % \par}
 
-% Here are the actual printed calendars. The smaller calendar (9cm $\times$ 9.5cm) fits floppy disk jewel cases; while the bigger one (11.7cm $\times$ 13.65cm) fits CD jewel cases.
+% Here are the actual printed calendars. The smaller calendar (9\,cm $\times$ 9.5\,cm) fits floppy disk jewel cases; while the bigger one (11.7\,cm $\times$ 13.65\,cm) fits CD jewel cases.
 
 \clearpage
 %%%%
@@ -90,7 +81,7 @@
 % Some settings for the monthly calendars
 %%%%%%
 \dayHeadingStyle{font=\sffamily\color{gray!90}}
-\sundayColor{red}
+\sundayColor{red!80!black}
 \monthTitleStyle{font={\fontsize{40pt}{42pt}\bfseries\sffamily\itshape\selectfont}, red!50!RedViolet}
 \eventStyle{\scriptsize\sffamily}
 
@@ -103,195 +94,49 @@
 
 
 %%%%%%
-% September 2015
+% January 2017
 %%%%%%
-\illustration[Vincent van Gogh, `The Starry Night', 1889. Public Domain. \url{http://commons.wikimedia.org}]{\linewidth}{StarryNight}
+\illustration
+[`Detail of a power 20 mandelbulb made using Visions of Chaos'. By Soler97—Own work, Public Domain. \url{http://bit.ly/2hcn1gM}]
+{\linewidth}{1125px-Mandelbulb140a}
 
-\begin{monthCalendar}{2015}{09}
+\begin{monthCalendar}{2017}{01}
 
 %%% events must be given AFTER \begin{monthCalendar}
 %%% Currently you must give events on the same page
 %%% as the monthly calendar.
 
 %% This is an one-day event
-\event[mark style=orange icon, marker=\faBook]{2015-09-02}{}{Autumn school term starts}
-
-\end{monthCalendar}
-
-\clearpage
-
-
-%%%%%%
-% Oct 2015
-%%%%%%
-\illustration[John Constable, `Salisbury Cathedral from the Bishop's Grounds', 1823. Public Domain. \url{http://commons.wikimedia.org}]{\linewidth}{SalisburyCathedral}
-
-\begin{monthCalendar}{2015}{10}
-
-\event[mark style=blue icon, marker=\faClockO]{2015-10-25}{}{Daylight saving time ends}
-
-%% This is a 5-day event starting Oct 26th
-\event{2015-10-26}{5}{Autumn half-term holiday}
-
-%% You could also write
-%\event{2015-10-26}{2015-10-30}{Autumn half-term holiday}
+\event[mark style=holiday]{2017-01-01}{}{New Year's Day}
+%% This is a 5-day event
+\event[mark style=blue icon,marker=\faBriefcase]{2017-01-30}{5}{ACME Conference}
+%% you could also write \event{2017-01-06}{2017-02-03}{ACME Conference}
 
 \end{monthCalendar}
 
 \clearpage
 
 %%%%%%
-% Nov 2015
+% Feb 2017
 %%%%%%
-\illustration[Jin Nong, `Flower', 1754. Public Domain. \url{http://commons.wikimedia.org}]{\linewidth}{Flower_JinNong}
 
-\begin{monthCalendar}{2015}{11}
+% Or you can put any stuff, really, with a caption if you want:
+\setlength{\mathindent}{0pt}
+\otherstuff[Legrange's Equation, one of the `greatest mathematical equations'. \url{http://www.livescience.com/26680-greatest-mathematical-equations.html}]
+{\linewidth}
+{\huge\selectfont
+\[%
+  \frac{d}{dt}\left(\frac{\partial \textcolor{red}{L}}{\partial \dot{q}_i}\right) = \frac{\partial \textcolor{red}{L}}{\partial q_i}
+\]}
+
+\begin{monthCalendar}{2017}{02}
+
+%% Repeat the event if it spans two months
+\event[mark style=blue icon,marker=\faBriefcase]{2017-01-30}{5}{ACME Conference}
+\event[mark style=pink icon,marker=\faBirthdayCake]{2017-02-07}{}{Someone's birthday}
+\event{2017-02-24}{}{Grant proposal deadline!!}
 
 \end{monthCalendar}
 
-\clearpage
-
-
-%%%%%%
-% Dec 2015
-%%%%%%
-\illustration[Hendrick Avercamp, `Winter Landscape with Ice Skaters', c.~1608. Public Domain. \url{http://commons.wikimedia.org}]{\linewidth}{WinterLandscape}
-
-\begin{monthCalendar}{2015}{12}
-
-\event{2015-12-18}{}{Last day of Autumn term}
-
-\event{2015-12-25}{}{Christmas Day}
-
-\event{2015-12-28}{}{Boxing Day (substitute)}
-
-\end{monthCalendar}
-
-\clearpage
-
-%%%%%%
-% January 2016
-%%%%%%
-\illustration[Auguste Renoir, `Oarsmen at Chatou', 1879. Open Access. \url{https://images.nga.gov}]%
-{\linewidth}{A17050}
-
-\begin{monthCalendar}{2016}{01}
-
-\event{2016-01-01}{}{New Year's Day}
-
-\event[mark style=orange icon, marker=\faBook]{2016-01-04}{}{Spring term starts}
-
-\end{monthCalendar}
-
-\clearpage
-
-%%%%%%
-% February 2016
-%%%%%%
-\illustration[Cariani, `Concert', c.~1518--1520. Open Access. \url{https://images.nga.gov}]%
-{\linewidth}{A10623}
-
-\begin{monthCalendar}{2016}{02}
-
-%% This is a 5-day event starting on Feb 15
-\event{2016-02-15}{5}{Spring half-term holiday}
-
-\end{monthCalendar}
-
-\clearpage
-
-%%%%%%
-% March 2016
-%%%%%%
-\illustration[Henri Rosseau, `The Sleeping Gypsy', 1897. Public Domain. \url{http://commons.wikimedia.org}]{\linewidth}{SleepingGypsy}
-
-\begin{monthCalendar}{2016}{03}
-
-\event{2016-03-25}{}{Good Friday}
-
-\event[mark style=blue icon, marker=\faClockO]{2016-03-27}{}{Daylight Saving Time starts}
-
-\event{2016-03-28}{}{Easter Monday}
-
-
-%% Note if a multi-day event extends to the next month,
-%% you'll have to list it again in the next month.
-\event{2016-03-25}{2016-04-08}{Easter holiday}
-
-\end{monthCalendar}
-
-\clearpage
-
-
-%%%%%%
-% April 2016
-%%%%%%
-\illustration[Katsushika Hokusai, `The Great Wave of Kanagawa', 1823--1829. Public Domain. \url{http://commons.wikimedia.org}]{\linewidth}{Tsunami}
-
-\begin{monthCalendar}{2016}{04}
-
-\event{2016-03-25}{2016-04-08}{Easter holiday}
-
-\end{monthCalendar}
-
-\clearpage
-
-%%%%%%
-% May 2016
-%%%%%%
-\illustration[John Everett Millais, `Ophelia', circa 1851. Public Domain. \url{http://commons.wikimedia.org}]{\linewidth}{Ophelia}
-
-\begin{monthCalendar}{2016}{05}
-
-\event[mark style=blue icon, marker=\faBank]{2016-05-02}{}{Early May bank holiday}
-
-\event[mark style=blue icon, marker=\faBank]{2016-05-30}{}{Spring Bank Holiday}
-
-\event{2016-05-30}{5}{Summer half-term holiday}
-
-\end{monthCalendar}
-
-\clearpage
-
-%%%%%%
-% June 2015
-%%%%%%
-% {\huge\color{BurntOrange} Deep summer is when laziness finds respectability.\par}
-% {\raggedleft -- Sam Keen\par}
-\illustration[J.M.W.~Turner, `The Fighting Temeraire tugged to her last berth to be broken up', 1839. Public Domain. \url{http://commons.wikimedia.org}]{\linewidth}{FightingTemeraire}
-
-\begin{monthCalendar}{2016}{06}
-
-\event{2016-05-30}{5}{Summer half-term holiday}
-
-\end{monthCalendar}
-
-\clearpage
-
-%%%%%%
-% July 2016
-%%%%%%
-\illustration[Édouard Manet, `A Bar at the Folies-Bergère', 1881 -- 1882. Public Domain. \url{http://commons.wikimedia.org}]{\linewidth}{BarAtTheFoliesBergere}
-
-\begin{monthCalendar}{2016}{07}
-
-\event{2016-07-21}{}{Summer holiday begins}
-\end{monthCalendar}
-
-\clearpage
-
-%%%%%%
-% August 2016
-%%%%%%
-\illustration[Georges Seurat, `A Sunday Afternoon on the Island of La Grande Jatte', 1884 -- 1886. Public Domain. \url{http://commons.wikimedia.org}]{\linewidth}{SundayOnLaGrandeJatte}
-
-\begin{monthCalendar}{2016}{08}
-
-\event[mark style=blue icon, marker=\faBank]{2016-08-29}{}{Summer bank holiday}
-\event[mark style=blue icon, marker=\faBank]{2016-09-06}{}{New school year begins}
-
-\end{monthCalendar}
-
-\clearpage
 
 \end{document}

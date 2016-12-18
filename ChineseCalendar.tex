@@ -35,15 +35,17 @@
 \TileWallPaper{.5\paperwidth}{.1\paperheight}{lightpaperfibers}
 
 % \coverBgColor{RoyalBlue!40!black}
-% 用\url的话会导致之后的英、汉字符间距出问题。甚惆怅，暂不用了。
-% 有必要的话用短缩网址好了，不会过长，又不会有特殊字符。
-\coverImage[BabelStone摄，CC BY-SA 3.0 https://commons.wikimedia.org/w/index.php?curid=19011812]
+\coverImage[（元）景德镇窑蓝釉白龙戏珠纹盘。BabelStone摄，CC BY-SA 3.0. \url{ https://commons.wikimedia.org/w/index.php?curid=19011812}]
 {Yuan_Jingdezhen_dragon_and_pearl_dish}
 
-\coverTitle[font=\fontsize{30pt}{32pt}\kaishu\bfseries,
-text width=\linewidth,align=flush right,red!50!RedViolet]{二〇一七年历}
+\coverTitle[
+font=\fontsize{30pt}{32pt}\kaishu\bfseries,
+text width=\linewidth,align=flush right,red!50!RedViolet]
+{二〇一七年历}
 
 \makeCover
+% 由于须要以LuaLaTeX编译，封面变换了字体大小以后，会影响到后面英汉字符之间的距离，只好再强行加这一行来修正。
+\ltjsetparameter{xkanjiskip=.25\zw plus 1pt minus 1pt}
 
 %%%% Remove this page if you don't need it --
 %%%% just to show the actual output
@@ -52,7 +54,8 @@ text width=\linewidth,align=flush right,red!50!RedViolet]{二〇一七年历}
 \par}
 
 {\scriptsize
-实际印刷出来的台历效果。较小尺寸的（\texttt{small} 选项，9cm $\times$ 9.5cm）适用3.5寸软盘盒（家里有这些古董的可以派上用场了）。较大尺寸的（默认设定，11.7cm $\times$ 13.65cm）则适用CD盒。另外还有\texttt{giant}选项，一页A4纸就一个月历。\par}
+实际印刷出来的台历效果。较小尺寸的（\texttt{small} 选项，9\,cm $\times$ 9.5\,cm）适用3.5寸软盘盒（家里有这些古董的可以派上用场了）。较大尺寸的（默认设定，11.7\,cm $\times$ 13.65\,cm）则适用CD盒。另外还有\texttt{giant}选项，一页A4纸就一个月历。
+\par}
 
 \clearpage
 %%%%
@@ -70,7 +73,7 @@ text width=\linewidth,align=flush right,red!50!RedViolet]{二〇一七年历}
 \monthTitleStyle{font={\fontsize{42pt}{44pt}\bfseries\sffamily\fangsong}, red!50!RedViolet}
 \eventStyle{\scriptsize\sffamily}
 
-\illustration[金农, \textbf{花}, 1754. Public Domain. \url{http://commons.wikimedia.org}]
+\illustration[花。金农， 1754。 公有领域(Public Domain). \url{http://bit.ly/2hed962}]
 {8.5cm}{Flower_JinNong}
 
 

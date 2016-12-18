@@ -101,13 +101,6 @@
 \if@babel
   \RequirePackage{babel}
   \RequirePackage{translator}
-  \providetranslation{Sunday}{S}
-  \providetranslation{Monday}{S}
-  \providetranslation{Tuesday}{T}
-  \providetranslation{Wednesday}{W}
-  \providetranslation{Thursday}{T}
-  \providetranslation{Friday}{F}
-  \providetranslation{Saturday}{S}
   \languagealias{british}{English}
 \else
   \RequirePackage{translator}
@@ -151,25 +144,22 @@
   \def\@coverTitleText{#2}
 }
 
-\newcommand\makeCover{
-\pagecolor{\@coverBgColor}
+\newcommand\makeCover{%
+{\pagecolor{\@coverBgColor}
 \begin{tikzpicture}[overlay,remember picture]
   \ifdefempty{\@coverImage}{}{
     \node[rectangle split, rectangle split parts=2,
     rectangle split part align={left,left},
     text width=\dimexpr\paperwidth-1em\relax,
-    % textwidth=\paperwidth,align=left,
     font=\tiny\itshape,
-    anchor=north west,inner sep=0pt,] at (current page.north west) {
+    anchor=north west,inner xsep=0pt,inner ysep=1pt] at (current page.north west) {%
     \includegraphics[width=\paperwidth]{\@coverImage}
-    \nodepart{second} \space\@coverImageCaption};
-    % \node[font=\tiny\itshape,below of=img.south]{\@coverImageCaption};
+    \nodepart{second} \space\begin{minipage}{\dimexpr\hsize-0.5em}\@coverImageCaption\par\end{minipage}};
   }
 \node[anchor=south east, coverTitleOptions,
 inner sep=2ex] at (current page.south east) {\@coverTitleText};
-\end{tikzpicture}
-\clearpage
-\nopagecolor
+\end{tikzpicture}}
+\clearpage\nopagecolor\normalsize
 }
 
 %%%%%%%%
@@ -372,7 +362,7 @@ inner sep=2ex] at (current page.south east) {\@coverTitleText};
 \newcommand{\illustration}[3][]{%
   \tikz\node[rectangle split, rectangle split parts=2,
     rectangle split part align={left,left},
-    text width=#2,inner sep=0pt,font=\itshape\tiny]
+    text width=#2,inner xsep=0pt, inner ysep=1pt, font=\itshape\tiny]
   {\includegraphics[width=#2]{#3} \nodepart{second} #1};
 \vspace*{-\lessIllusSkip}%
 }
@@ -380,7 +370,7 @@ inner sep=2ex] at (current page.south east) {\@coverTitleText};
 \newcommand{\otherstuff}[3][1]{%
   \tikz\node[rectangle split, rectangle split parts=2,
     rectangle split part align={left,left},
-    text width=#2,inner xsep=0pt,font=\itshape\tiny]
+    text width=#2,inner xsep=0pt,inner ysep=3pt,font=\itshape\tiny]
   {#3 \nodepart{second} #1};
   \vspace*{-\lessIllusSkip}%
 }
