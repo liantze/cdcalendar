@@ -12,6 +12,7 @@
 \setmainfont[Ligatures=TeX]{EB Garamond}
 \setsansfont[Ligatures=TeX,BoldItalicFont=Fira Sans Italic,BoldFont=Fira Sans,Numbers=OldStyle]{Fira Sans Light}
 
+\title{Desktop Calendar (fits CD jewel case) with Chinese Localisation}
 
 \usepackage{graphicx}
 \usepackage{fontawesome}
@@ -71,7 +72,9 @@ text width=\linewidth,align=flush right,red!50!RedViolet]
 \dayHeadingStyle{font=\sffamily\color{gray!90}}
 \sundayColor{red}
 \monthTitleStyle{font={\fontsize{42pt}{44pt}\bfseries\sffamily\fangsong}, red!50!RedViolet}
-\eventStyle{\scriptsize\sffamily}
+\eventStyle{\scriptsize\songti}
+\renewcommand\printeventname[1]{{\heiti #1}}
+
 
 \illustration[花。金农， 1754。 公有领域(Public Domain). \url{http://bit.ly/2hed962}]
 {8.5cm}{Flower_JinNong}

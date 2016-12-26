@@ -50,4 +50,4 @@
 {}{}
 
 \patchcmd{\monthCalendar}{--}{—}{}{}
-% \AtBeginDocument{\renewcommand*{\DTMdisplaydate}[4]{\number#2月\number#3日}}
+\AtBeginDocument{\renewcommand*{\DTMdisplaydate}[4]{\number#2月\number#3日(\pgfcalendarweekdayname{#4})}}
