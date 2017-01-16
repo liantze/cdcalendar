@@ -93,11 +93,6 @@
 \RequirePackage{ifxetex}
 \RequirePackage{xstring}
 
-\ifxetex
-  \ClassError{cdcalendar}{xelatex will not work correctly with cdcalendar!}{%
-  Compile using lualatex instead.}
-\fi
-
 \if@babel
   \RequirePackage{babel}
   \RequirePackage{translator}
@@ -137,7 +132,12 @@
 \newcommand\printeventname[1]{\textbf{#1}}
 \def\eventSep{: }
 
-\newcommand\coverBgColor[1]{\def\@coverBgColor{#1}}
+\newcommand\coverBgColor[1]{%
+  \ifxetex%
+  \ClassWarning{cdcalendar}{xelatex may not work correctly with cdcalendar especially if you use \noexpand\coverBgColor! Compile with lualatex instead.}
+  \fi%
+  \def\@coverBgColor{#1}%
+}
 \newcommand\coverImage[2][]{\def\@coverImageCaption{#1}\def\@coverImage{#2}}
 \newcommand\coverTitle[2][]{
     \notblank{#1}{\tikzset{coverTitleOptions/.style={#1}}}{}
