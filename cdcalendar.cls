@@ -1,4 +1,4 @@
-\ProvidesClass{cdcalendar}[2016/12/15 CD Calendar 1.2 by LianTze LIM (liantze@gmail.com)]
+\ProvidesClass{cdcalendar}[2018/12/16 CD Calendar 1.2.1 by LianTze LIM (liantze@gmail.com)]
 
 
 \newif\if@smallcal\@smallcalfalse
@@ -272,6 +272,7 @@ inner sep=2ex] at (current page.south east) {\@coverTitleText};
     inner sep=\CalPageMargin,
     \if@sundayweek week list sunday\else week list\fi,
     day xshift=2.75em,
+    every day/.append style={text width=1em,align=right},
     day letter headings
     ]
     if (Sunday) [\@sundayColor];
@@ -347,7 +348,7 @@ inner sep=2ex] at (current page.south east) {\@coverTitleText};
 }{%
   \end{tikzpicture}
 
-  \begin{minipage}[t]{\EventLineWidth}\@eventStyle%
+  \begin{minipage}{\EventLineWidth}\@eventStyle%
   \setlength{\parskip}{0.5ex}%
   \@eventlist%
   \end{minipage}%
@@ -363,15 +364,15 @@ inner sep=2ex] at (current page.south east) {\@coverTitleText};
   \tikz\node[rectangle split, rectangle split parts=2,
     rectangle split part align={left,left},
     text width=#2,inner xsep=0pt, inner ysep=1pt, font=\itshape\tiny]
-  {\includegraphics[width=#2]{#3} \nodepart{second} #1};
-\vspace*{-\lessIllusSkip}%
+  {\includegraphics[width=#2]{#3} \nodepart{second} #1};\par
+  \vspace*{-\lessIllusSkip}%
 }
 
 \newcommand{\otherstuff}[3][1]{%
   \tikz\node[rectangle split, rectangle split parts=2,
     rectangle split part align={left,left},
     text width=#2,inner xsep=0pt,inner ysep=3pt,font=\itshape\tiny]
-  {#3 \nodepart{second} #1};
+  {#3 \nodepart{second} #1};\par
   \vspace*{-\lessIllusSkip}%
 }
 

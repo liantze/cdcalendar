@@ -32,21 +32,24 @@
 %%%%%%
 
 % Remove this line if you feel the background pattern is too annoying
-% \TileWallPaper{.5\paperwidth}{.5\paperheight}{ricepaper_v3}
-\TileWallPaper{.5\paperwidth}{.1\paperheight}{lightpaperfibers}
-
+\TileWallPaper{.5\paperwidth}{.5\paperheight}{ricepaper_v3}
 % \coverBgColor{RoyalBlue!40!black}
 \coverImage[（元）景德镇窑蓝釉白龙戏珠纹盘。BabelStone摄，CC BY-SA 3.0. \url{ https://commons.wikimedia.org/w/index.php?curid=19011812}]
 {Yuan_Jingdezhen_dragon_and_pearl_dish}
 
 \coverTitle[
-font=\fontsize{30pt}{32pt}\kaishu\bfseries,
+font=\fontsize{26pt}{30pt}\songti\bfseries,
 text width=\linewidth,align=flush right,red!50!RedViolet]
-{二〇一七年历}
+{二〇一九年历，再努力！}
 
 \makeCover
 % 由于须要以LuaLaTeX编译，封面变换了字体大小以后，会影响到后面英汉字符之间的距离，只好再强行加这一行来修正。
+\ifluatex
 \ltjsetparameter{xkanjiskip=.25\zw plus 1pt minus 1pt}
+\fi
+
+\TileWallPaper{.5\paperwidth}{.1\paperheight}{lightpaperfibers}
+
 
 %%%% Remove this page if you don't need it --
 %%%% just to show the actual output
@@ -80,12 +83,12 @@ text width=\linewidth,align=flush right,red!50!RedViolet]
 {8.5cm}{Flower_JinNong}
 
 
-\begin{monthCalendar}{2017}{01}
+\begin{monthCalendar}{2019}{01}
 
-\event[mark style=holiday]{2017-01-01}{2}{元旦+补休}
-\event[mark style=holiday]{2017-01-27}{2017-2-2}{春节连休}
+\event[mark style=holiday]{2019-01-01}{2}{元旦+补休}
+\event[mark style=holiday]{2019-01-27}{2019-2-2}{春节连休}
 \event[mark style=blue icon, marker=\faBriefcase]
-{2017-01-22}{}{春节调休上班}
+{2019-01-22}{}{春节调休上班}
 
 \end{monthCalendar}
 
@@ -97,14 +100,30 @@ text width=\linewidth,align=flush right,red!50!RedViolet]
 {8.5cm}{{\fontsize{48pt}{52pt}\fangsong\textcolor{red}{写}}%
         {\LARGE\kaishu，不停地写。}}
 
-\begin{monthCalendar}{2017}{02}
+\begin{monthCalendar}{2019}{02}
 
-\event[mark style=holiday]{2017-01-27}{2017-2-2}{春节连休}
+\event[mark style=holiday]{2019-01-27}{2019-2-2}{春节连休}
 \event[mark style=blue icon, marker=\faBriefcase]
-{2017-02-04}{}{春节调休上班}
-\event[mark style=pink icon,marker=\faBirthdayCake]{2017-02-14}{}{朋友生日}
-\event{2017-02-22}{}{稿件死线！！}
+{2019-02-04}{}{春节调休上班}
+\event[mark style=pink icon,marker=\faBirthdayCake]{2019-02-14}{}{朋友生日}
+\event{2019-02-22}{}{稿件死线！！}
+\event{2019-02-28}{2019-03-02}{旅游去！}
 
+\end{monthCalendar}
+
+\clearpage
+
+% \illustration[这是实物]
+% {6.5cm}{actual}
+\otherstuff
+{8.5cm}{\huge 海阔天空}
+
+\begin{monthCalendar}{2019}{03}
+\event{2019-02-28}{2019-03-02}{旅游去！}
+
+\event[mark style=holiday]{2019-03-08}{}{妇女节}
+
+\event[mark style=blue icon,marker=\faBriefcase]{2019-03-10}{2019-03-15}{上海出差}
 \end{monthCalendar}
 
 \end{document}

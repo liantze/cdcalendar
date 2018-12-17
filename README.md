@@ -1,8 +1,8 @@
 # Customisable multilingual calendars with LaTeX
 
-The calendars are printed 4-up to fit 3.5" floppy disk jewel cases, or 2-up to fit CD jewel cases. There is now also a full-page version for wall calendars. (Updated Dec, 2016).
+The calendars are printed 4-up to fit 3.5" floppy disk jewel cases, or 2-up to fit CD jewel cases. There is now also a full-page version for wall calendars as of Dec 2016.
 
-![actual.jpg](https://bitbucket.org/repo/j59y5j/images/4048533618-actual.jpg)
+![actual.jpg](img/actual.jpg)
 
 Colours, illustrations, fonts etc are customisable. The calendars can be marked with events with date ranges (updated June 22, 2015). See [this blog post](https://www.overleaf.com/blog/217-a-multilingual-customisable-cd-slash-floppy-disk-jewel-case-calendar-with-latex) for more information (syntax of some commands have changed though),
 or open and edit a [CD-sized](https://www.overleaf.com/read/htkctjjgmxjx), [floppy disk-sized](https://www.overleaf.com/read/vtqtzgbcvmbg) or [full-page](https://www.overleaf.com/read/csttbxxjydvz) calendar template on Overleaf.
@@ -90,3 +90,7 @@ There are a few other settings you can set as well. These can be re-issued at an
     \eventStyle{\scriptsize\sffamily}
     \newcommand{\printeventname}[1]{\textbf{#1}}   % can be renewed
     \newcommand{\eventSep}{: }  % can be renewed
+
+## Multiple calendar systems
+
+`Chinese-2019.tex` demonstrates how another calendar system, e.g. the Chinese lunar calendar, can be incorporated. The mapping between the Chinese lunar calenar and the Gregorian calendar was downloaded from [here](https://github.com/infinet/lunar-calendar/blob/master/chinese_lunar_prev_year_next_year.ics) and then converted to a `.csv` file with [this tool](https://www.indigoblue.eu/ics2csv/).
