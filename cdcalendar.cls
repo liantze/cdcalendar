@@ -1,4 +1,4 @@
-\ProvidesClass{cdcalendar}[2018/12/18 CD Calendar 1.3 by LianTze LIM (liantze@gmail.com)]
+\ProvidesClass{cdcalendar}[2018/12/18 CD Calendar 1.3.1 by LianTze LIM (liantze@gmail.com)]
 
 
 \newif\if@smallcal\@smallcalfalse
@@ -120,6 +120,7 @@
 \RequirePackage{xargs}
 \RequirePackage{pgfkeys}
 \RequirePackage[absolute,overlay]{textpos}
+\RequirePackage[pagecolor=none]{pagecolor}
 
 \def\@coverBgColor{white}
 \def\@coverImage{}
@@ -136,7 +137,7 @@
 \newcommand\coverBgColor[1]{%
   % \ifxetex%
   % \ClassWarning{cdcalendar}{xelatex may not work correctly with cdcalendar especially if you use \noexpand\coverBgColor! Compile with xelatex instead.}
-  \fi%
+  % \fi%
   \def\@coverBgColor{#1}%
 }
 \newcommand\coverImage[2][]{\def\@coverImageCaption{#1}\def\@coverImage{#2}}
@@ -146,21 +147,24 @@
 }
 
 \newcommand\makeCover{%
-{\pagecolor{\@coverBgColor}
-\begin{tikzpicture}[overlay,remember picture]
-  \ifdefempty{\@coverImage}{}{
-    \node[rectangle split, rectangle split parts=2,
-    rectangle split part align={left,left},
-    text width=\dimexpr\paperwidth-1em\relax,
-    font=\tiny\itshape,
-    anchor=north west,inner xsep=0pt,inner ysep=1pt] at (current page.north west) {%
-    \includegraphics[width=\paperwidth]{\@coverImage}
-    \nodepart{second} \space\begin{minipage}{\dimexpr\hsize-0.5em}\@coverImageCaption\par\end{minipage}};
-  }
-\node[anchor=south east, coverTitleOptions,
-inner sep=2ex] at (current page.south east) {\@coverTitleText};
-\end{tikzpicture}}
-\clearpage\nopagecolor\normalsize
+  {\pagecolor{\@coverBgColor}%
+  \ifdefempty{\@coverImage}{}{%
+    \begin{textblock*}{\paperwidth}(0pt,0pt)%
+    \tikz\node[rectangle split, rectangle split parts=2,
+      rectangle split part align={left,left},
+      text width=\paperwidth,
+      font=\tiny\itshape,inner sep=0pt] {%
+      \includegraphics[width=\paperwidth]{\@coverImage}
+      \nodepart{second}%
+      \space\begin{minipage}{\dimexpr\hsize-0.5em}\vskip0.5ex%
+      \@coverImageCaption\par\end{minipage}};
+  \end{textblock*}}
+  \begin{textblock*}{\paperwidth}[1,1](\dimexpr\paperwidth-2ex\relax,\dimexpr\paperheight-2ex\relax)
+    \noindent\tikz\node[coverTitleOptions,inner sep=0pt] {\@coverTitleText};
+  \end{textblock*}
+  }\null\clearpage%
+  \ifxetex\restorepagecolor\else\nopagecolor\fi%
+  \normalsize%
 }
 
 %%%%%%%%
