@@ -1,4 +1,4 @@
-% !TEX program=lualatex
+% !TEX program=xelatex
 
 % nobabel means you'll need to provide your own month names, week day headings,
 % etc
@@ -43,10 +43,10 @@ text width=\linewidth,align=flush right,red!50!RedViolet]
 {二〇一九年历，再努力！}
 
 \makeCover
-% 由于须要以LuaLaTeX编译，封面变换了字体大小以后，会影响到后面英汉字符之间的距离，只好再强行加这一行来修正。
-\ifluatex
-\ltjsetparameter{xkanjiskip=.25\zw plus 1pt minus 1pt}
-\fi
+% 由于须要以xelatex编译，封面变换了字体大小以后，会影响到后面英汉字符之间的距离，只好再强行加这一行来修正。
+% \ifluatex
+% \ltjsetparameter{xkanjiskip=.25\zw plus 1pt minus 1pt}
+% \fi
 
 \TileWallPaper{.5\paperwidth}{.1\paperheight}{lightpaperfibers}
 
@@ -64,9 +64,9 @@ text width=\linewidth,align=flush right,red!50!RedViolet]
 \clearpage
 %%%%
 
-% You may find the gap between illustrations and events too wide
-% Use this length to lessen it
-\setlength{\lessIllusSkip}{1.5\ccwd}
+% You may find the gap between illustrations and events too narrow;
+% Use this length to incrase it
+\setlength{\illusSkip}{1.5\ccwd}
 
 
 %%%%%%
@@ -95,7 +95,7 @@ text width=\linewidth,align=flush right,red!50!RedViolet]
 \clearpage
 
 % 这一页"图"和月历距离可以大一些
-\setlength{\lessIllusSkip}{0pt}
+\setlength{\illusSkip}{1cm}
 \otherstuff[金玉良言，苦口良药]
 {8.5cm}{{\fontsize{48pt}{52pt}\fangsong\textcolor{red}{写}}%
         {\LARGE\kaishu，不停地写。}}
@@ -115,7 +115,7 @@ text width=\linewidth,align=flush right,red!50!RedViolet]
 
 % \illustration[这是实物]
 % {6.5cm}{actual}
-\otherstuff
+\otherstuff[今天我 寒夜里看雪飘过]
 {8.5cm}{\huge 海阔天空}
 
 \begin{monthCalendar}{2019}{03}

@@ -27,14 +27,10 @@
 \renewcommand{\eventSep}{：}
 
 % 在此向专业的排版员、美术设计人员叩头请罪，以下直排实现方法实在简单粗暴、罪孽深重
-\patchcmd{\monthCalendar}
-{anchor=north east,at=(current page.south east),rotate=-90,transform shape,}
-{anchor=south east,at=(current page.south east),text width=3\ccwd,}
-{}{}
-
+\patchcmd{\monthCalendar}{rotate=-90,transform shape,}{text width=3\ccwd,}{}{}
 \patchcmd{\monthCalendar}
 {\pgfcalendarmonthname{#2} #1}
-{\pgfcalendarmonthname{#2}%
+{\pgfcalendarmonthname{#2}\\%
 \raisebox{0.5em}{\rotatebox{-90}{#1}}%
 }
 {}{}

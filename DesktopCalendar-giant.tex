@@ -9,13 +9,19 @@
 %%% Tested with british, spanish, french, ngerman,
 %%% italian, portuges, polish, croatian, greek.
 %%%
-%%% (Use lualatex for french. If using pdflatex for greek,
+%%% (If using pdflatex for greek,
 %%% Remember to load LGR,T1 for fontenc.)
 %%%
 %%% NOTE: If you get an error when you change the language,
 %%% click on the "compile from scratch" option in the error
 %%% message window.
 \documentclass[20pt,british,giant]{cdcalendar}
+
+%%% (If using pdflatex for french, uncomment these lines.)
+% \tikzset{%
+%   every picture/.prefix style={execute at begin picture=\shorthandoff{;}}
+% }
+
 %%% Use the sundayweek option for weeks to start on Sundays.
 % \documentclass[20pt,british,sundayweek,giant]{cdcalendar}
 
@@ -30,11 +36,11 @@
 %% End pdfLaTeX-related font settings %%%%%%%%
 
 
-% %% Compile with luaLaTeX if using fontspec
+% %% Compile with xelatex if using fontspec
 % \usepackage{fontspec}
-% \setmainfont{EB Garamond}
+% \setmainfont{Gentium}
 % \setsansfont[BoldItalicFont=Fira Sans Italic,BoldFont=Fira Sans]{Fira Sans Light}
-% %% End luaLaTeX-related font settings %%%%%%%%
+% %% End xelatex-related font settings %%%%%%%%
 
 
 \usepackage{graphicx}
@@ -88,9 +94,9 @@
 % Remove this line if you feel the background pattern is too annoying
 \TileWallPaper{.5\paperwidth}{.5\paperheight}{ricepaper_v3}
 
-% You may find the gap between illustrations and events too wide
-% Use this length to lessen it
-\setlength{\lessIllusSkip}{1ex}
+% You may find the gap between illustrations and events too narrow
+% Use this length to increase it
+\setlength{\illusSkip}{2cm}
 
 
 %%%%%%

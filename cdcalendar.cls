@@ -1,4 +1,4 @@
-\ProvidesClass{cdcalendar}[2018/12/16 CD Calendar 1.2.1 by LianTze LIM (liantze@gmail.com)]
+\ProvidesClass{cdcalendar}[2018/12/18 CD Calendar 1.3 by LianTze LIM (liantze@gmail.com)]
 
 
 \newif\if@smallcal\@smallcalfalse
@@ -119,6 +119,7 @@
 \RequirePackage{xpatch}
 \RequirePackage{xargs}
 \RequirePackage{pgfkeys}
+\RequirePackage[absolute,overlay]{textpos}
 
 \def\@coverBgColor{white}
 \def\@coverImage{}
@@ -133,8 +134,8 @@
 \def\eventSep{: }
 
 \newcommand\coverBgColor[1]{%
-  \ifxetex%
-  \ClassWarning{cdcalendar}{xelatex may not work correctly with cdcalendar especially if you use \noexpand\coverBgColor! Compile with lualatex instead.}
+  % \ifxetex%
+  % \ClassWarning{cdcalendar}{xelatex may not work correctly with cdcalendar especially if you use \noexpand\coverBgColor! Compile with xelatex instead.}
   \fi%
   \def\@coverBgColor{#1}%
 }
@@ -261,12 +262,14 @@ inner sep=2ex] at (current page.south east) {\@coverTitleText};
 \def\@eventlist{}
 
 \newenvironment{monthCalendar}[2]{%
-  \begin{tikzpicture}[overlay,remember picture]
-  \node[anchor=north east,at=(current page.south east),rotate=-90,transform shape,monthTitleOptions, inner sep=\CalPageMargin]
-  {\pgfcalendarmonthname{#2} #1};
-  \node[anchor=south west] at (current page.south west)
-  {
-  \tikz \calendar (cdCal-\thepage) [
+  \begin{textblock*}{\textwidth}[1,1](\paperwidth,\paperheight)
+    \raggedleft\tikz
+    \node[rotate=-90,transform shape,monthTitleOptions, inner sep=\CalPageMargin]
+    {\pgfcalendarmonthname{#2} #1};
+  \end{textblock*}%
+  \begin{textblock*}{\textwidth}[0,1](0pt,\paperheight)
+  \noindent\begin{tikzpicture}[remember picture]
+  \calendar (cdCal-\thepage) [
     dates=#1-#2-01 to #1-#2-last,
     month text = {\%mt \%y-},
     inner sep=\CalPageMargin,
@@ -276,78 +279,79 @@ inner sep=2ex] at (current page.south east) {\@coverTitleText};
     day letter headings
     ]
     if (Sunday) [\@sundayColor];
-  };%
+  \end{tikzpicture}
+  \end{textblock*}
 
   \gdef\@eventlist{}
 
-  \newcommand{\markCalendar}[2][]{%
-    \pgfkeys{/eventmark,default,##1}%
-    \DTMsavedate{tmp}{##2}%
-    \@ifundefined{pgf@sh@ns@cdCal-\thepage-##2}{}{%
-      % \begin{tikzpicture}[overlay,remember picture]%
-      \begin{scope}[on background layer]
-      \node[inner sep=1.25ex,\event@markstyle]
-        at (cdCal-\thepage-##2) {\event@marker};%
-      \end{scope}%
-      % \end{tikzpicture}%
-    }%
-  }
+    \begin{tikzpicture}[remember picture,overlay]
 
-  % #1=style; #2=startdate; #3=enddate or days; #4=name
-  \newcommand{\event}[4][mark style=default mark]{%
-    \ifblank{##3}{\oneDayEvent[##1]{##2}{##4}}%
-                 {\multiDayEvent[##1]{##2}{##3}{##4}}%
-  }
+    \newcommand{\markCalendar}[2][]{%
+      \pgfkeys{/eventmark,default,##1}%
+      \DTMsavedate{tmp}{##2}%
+      \@ifundefined{pgf@sh@ns@cdCal-\thepage-##2}{}{%
+        % \begin{tikzpicture}[overlay,remember picture]%
+        \begin{scope}[on background layer]
+        \node[inner sep=1.25ex,\event@markstyle]
+          at (cdCal-\thepage-##2) {\event@marker};%
+        \end{scope}%
+        % \end{tikzpicture}%
+      }%
+    }
 
-  % #1=style; #2=startdate; #4=name
-  \newcommand{\oneDayEvent}[3][mark style=default mark]{%
-    \pgfkeys{/eventmark,default,##1}%
-    \markCalendar[##1]{##2}%
-    \protected@xappto{\@eventlist}{%
-      \makebox[1.75em][c]{\protect\tikz%
-        \protect\node[\event@markstyle,font=\@eventStyle,%
-        \ifdefempty{\event@marker}{inner sep=0.5ex}{inner sep=0pt},
-]{\event@marker};}%
-      \printeventname{##3\eventSep}\DTMdate{##2}\par%
-    }{}{}
-  }
+    % #1=style; #2=startdate; #3=enddate or days; #4=name
+    \newcommand{\event}[4][mark style=default mark]{%
+      \ifblank{##3}{\oneDayEvent[##1]{##2}{##4}}%
+                   {\multiDayEvent[##1]{##2}{##3}{##4}}%
+    }
 
-  % #1=style; #2=startdate; #3=enddate or days; #4=name
-  \newcommand{\multiDayEvent}[4][mark style=default mark]{%
-    \IfInteger{##3}%
-      {\multiDayEventWithDuration[##1]{##2}{##3}{##4}}%
-      {\multiDayEventWithEnd[##1]{##2}{##3}{##4}}%
-  }
+    % #1=style; #2=startdate; #4=name
+    \newcommand{\oneDayEvent}[3][mark style=default mark]{%
+      \pgfkeys{/eventmark,default,##1}%
+      \markCalendar[##1]{##2}%
+      \protected@xappto{\@eventlist}{%
+        \makebox[1.75em][c]{\protect\tikz%
+          \protect\node[\event@markstyle,font=\@eventStyle,%
+          \ifdefempty{\event@marker}{inner sep=0.5ex}{inner sep=0pt},
+  ]{\event@marker};}%
+        \printeventname{##3\eventSep}\DTMdate{##2}\par%
+      }{}{}
+    }
 
-  % #1=style; #2=startdate; #3=days; #4=name
-  \newcommand{\multiDayEventWithDuration}[4][mark style=default mark]{%
-    \pgfkeys{/eventmark,default,##1}%
-    \pgfmathparse{##3-1}%
-    \foreach \d in {0,...,\pgfmathresult}{%
-    	\DTMsavedate{tmp}{##2+\d}%
-      \DTMmakeglobal{tmp}%
-    	\markCalendar[##1]{\DTMfetchyear{tmp}-\DTMfetchmonth{tmp}-\DTMfetchday{tmp}}%
-    }%
-    \protected@xappto{\@eventlist}{%
-      \makebox[1.75em][c]{\protect\tikz%
-        \protect\node[\event@markstyle,font=\fontsize{1em}{1em},%
-        \ifdefempty{\event@marker}{inner sep=0.5ex}{inner sep=0pt},
-        ]{\event@marker};}%
-      \printeventname{##4\eventSep}\DTMdate{##2}-- \DTMusedate{tmp}\par}{}{}
-  }
+    % #1=style; #2=startdate; #3=enddate or days; #4=name
+    \newcommand{\multiDayEvent}[4][mark style=default mark]{%
+      \IfInteger{##3}%
+        {\multiDayEventWithDuration[##1]{##2}{##3}{##4}}%
+        {\multiDayEventWithEnd[##1]{##2}{##3}{##4}}%
+    }
 
-  % #1=style; #2=startdate; #3=enddate; #4=name
-  \newcommand{\multiDayEventWithEnd}[4][mark style=default mark]{%
-    \DTMsavedate{startdate}{##2}%
-    \DTMsavedate{enddate}{##3+1}%
-    \newcount\myct%
-    \DTMsaveddatediff{enddate}{startdate}{\myct}%
-    \multiDayEventWithDuration[##1]{##2}{\myct}{##4}%
-  }
+    % #1=style; #2=startdate; #3=days; #4=name
+    \newcommand{\multiDayEventWithDuration}[4][mark style=default mark]{%
+      \pgfkeys{/eventmark,default,##1}%
+      \pgfmathparse{##3-1}%
+      \foreach \d in {0,...,\pgfmathresult}{%
+      	\DTMsavedate{tmp}{##2+\d}%
+        \DTMmakeglobal{tmp}%
+      	\markCalendar[##1]{\DTMfetchyear{tmp}-\DTMfetchmonth{tmp}-\DTMfetchday{tmp}}%
+      }%
+      \protected@xappto{\@eventlist}{%
+        \makebox[1.75em][c]{\protect\tikz%
+          \protect\node[\event@markstyle,font=\fontsize{1em}{1em},%
+          \ifdefempty{\event@marker}{inner sep=0.5ex}{inner sep=0pt},
+          ]{\event@marker};}%
+        \printeventname{##4\eventSep}\DTMdate{##2}-- \DTMusedate{tmp}\par}{}{}
+    }
 
+    % #1=style; #2=startdate; #3=enddate; #4=name
+    \newcommand{\multiDayEventWithEnd}[4][mark style=default mark]{%
+      \DTMsavedate{startdate}{##2}%
+      \DTMsavedate{enddate}{##3+1}%
+      \newcount\myct%
+      \DTMsaveddatediff{enddate}{startdate}{\myct}%
+      \multiDayEventWithDuration[##1]{##2}{\myct}{##4}%
+    }
 }{%
   \end{tikzpicture}
-
   \begin{minipage}{\EventLineWidth}\@eventStyle%
   \setlength{\parskip}{0.5ex}%
   \@eventlist%
@@ -357,23 +361,23 @@ inner sep=2ex] at (current page.south east) {\@coverTitleText};
 
 \tikzset{default mark/.style={circle,draw=red!50}}
 
-\newlength\lessIllusSkip
-\setlength{\lessIllusSkip}{1ex}
+\newlength\illusSkip
+\setlength{\illusSkip}{1em}
 
 \newcommand{\illustration}[3][]{%
   \tikz\node[rectangle split, rectangle split parts=2,
     rectangle split part align={left,left},
     text width=#2,inner xsep=0pt, inner ysep=1pt, font=\itshape\tiny]
   {\includegraphics[width=#2]{#3} \nodepart{second} #1};\par
-  \vspace*{-\lessIllusSkip}%
+  \vspace*{\illusSkip}%
 }
 
-\newcommand{\otherstuff}[3][1]{%
+\newcommand{\otherstuff}[3][]{%
   \tikz\node[rectangle split, rectangle split parts=2,
     rectangle split part align={left,left},
     text width=#2,inner xsep=0pt,inner ysep=3pt,font=\itshape\tiny]
   {#3 \nodepart{second} #1};\par
-  \vspace*{-\lessIllusSkip}%
+  \vspace*{\illusSkip}%
 }
 
 \pagestyle{empty}

@@ -14,9 +14,17 @@ Localisation possible with languages supported by `babel`/`translator`/`datetime
 
 Tested with british, spanish, french, ngerman, italian, portuges, polish, croatian, greek.
 
-slovak works if you add `\shorthandoff{-}` after `\begin{document}`.
+If using `pdflatex` for greek, remember to load `LGR,T1` for `fontenc`.
 
-Use lualatex for french or fontspec. If using `pdflatex` for greek, remember to load `LGR,T1` for `fontenc`.
+If using `pdflatex` for french, add these lines in the preamble:
+
+````
+\tikzset{%
+  every picture/.prefix style={execute at begin picture=\shorthandoff{;}}
+}
+````
+
+The Chinese example is best compiled with XeLaTeX. The Japanese example is best compiled with LuaLaTeX.
 
 For (partially) unsupported languages or if you'd like to customise the localisations yourself, either because the language isn't supported by babel and translator, or because the language doesn't lend itself well to having the first letter extracted for the week day headings (e.g. Chinese), you can. In this case do your own modifications; see `ChineseCalendar.tex` and `zh-mod.sty` for an example. You'll most likely want to stop `cdcalendar` from loading babel in this case, so use the `nobabel` option:
 

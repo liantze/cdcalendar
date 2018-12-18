@@ -1,4 +1,4 @@
-% !TEX program=lualatex
+% !TEX program=xelatex
 
 % nobabel means you'll need to provide your own month names, week day headings,
 % etc
@@ -15,7 +15,8 @@
 \usepackage{csvsimple,xstring}
 
 \newcommand{\annotdate}[2]{%
-  \node[font=\tiny,anchor=north,outer sep=3pt,text width=2.5\ccwd,align=flush center]
+  \node[font=\tiny\ctexset{space=true},
+    anchor=north,outer sep=3pt,text width=2.5\ccwd,align=flush center]
     at (cdCal-\thepage-#1) {#2};%
 }
 \newcommand{\importlunar}[1]{%
@@ -39,8 +40,7 @@
 \eventStyle{\scriptsize\songti}
 \renewcommand\printeventname[1]{{\heiti #1}}
 \tikzset{every calendar/.append style={day yshift=2.5\ccwd}}
-\patchcmd{\monthCalendar}{anchor=south west}{anchor=south west,yshift=0.5cm}{}{}
-
+\patchcmd{\monthCalendar}{0pt,\paperheight}{0pt,\dimexpr\paperheight-0.5cm\relax}{}{}
 
 %% Define all event mark styles here
 \tikzset{holiday/.style={rectangle,fill=orange!70}}

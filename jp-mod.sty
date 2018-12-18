@@ -39,10 +39,7 @@
 
 \renewcommand{\eventSep}{：}
 
-\patchcmd{\monthCalendar}
-{anchor=north east,at=(current page.south east),rotate=-90,transform shape,}
-{anchor=south east,at=(current page.south east),}
-{}{}
+\patchcmd{\monthCalendar}{rotate=-90,transform shape,}{text width=3em,}{}{}
 %
 \patchcmd{\monthCalendar}
 {\pgfcalendarmonthname{#2} #1}

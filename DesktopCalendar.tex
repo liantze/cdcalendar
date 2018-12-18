@@ -9,11 +9,18 @@
 %%% Tested with british, spanish, french, ngerman,
 %%% italian, portuges, polish, croatian, greek.
 %%%
-%%% (Use lualatex for french. If using pdflatex for greek,
+%%% (If using pdflatex for greek,
 %%% Remember to load LGR,T1 for fontenc.)
-% \documentclass[12pt,british]{cdcalendar}
+\documentclass[12pt,british]{cdcalendar}
+
+%%% (If using pdflatex for french, uncomment these lines.)
+% \tikzset{%
+%   every picture/.prefix style={execute at begin picture=\shorthandoff{;}}
+% }
+
 %%% Use the sundayweek option for weeks to start on Sundays.
-\documentclass[12pt,british,sundayweek]{cdcalendar}
+% \documentclass[12pt,british,sundayweek]{cdcalendar}
+
 %% If using pdfLaTeX %%%%%%%%%%
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -25,11 +32,11 @@
 %% End pdfLaTeX-related font settings %%%%%%%%
 
 
-% %% Compile with luaLaTeX if using fontspec
+% %% Compile with xelatex if using fontspec
 % \usepackage{fontspec}
-% \setmainfont{EB Garamond}
+% \setmainfont{Gentium}
 % \setsansfont[BoldItalicFont=Fira Sans Italic,BoldFont=Fira Sans]{Fira Sans Light}
-% %% End luaLaTeX-related font settings %%%%%%%%
+% %% End xelatex-related font settings %%%%%%%%
 
 
 \usepackage{graphicx}
@@ -77,9 +84,9 @@ Here are the actual printed calendars. The smaller calendar (9\,cm $\times$ 9.5\
 % Remove this line if you feel the background pattern is too annoying
 \TileWallPaper{.5\paperwidth}{.5\paperheight}{ricepaper_v3}
 
-% You may find the gap between illustrations and events too wide
-% Use this length to lessen it
-\setlength{\lessIllusSkip}{1em}
+% You may find the gap between illustrations and events too narrow
+% Use this length to increase it
+\setlength{\illusSkip}{1em}
 
 
 %%%%%%
@@ -104,7 +111,7 @@ Here are the actual printed calendars. The smaller calendar (9\,cm $\times$ 9.5\
 \end{monthCalendar}
 
 \clearpage
-\setlength{\lessIllusSkip}{1ex}
+\setlength{\illusSkip}{1cm}
 
 %%%%%%
 % Feb 2019
