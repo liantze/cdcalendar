@@ -1,4 +1,4 @@
-\ProvidesClass{cdcalendar}[2018/12/18 CD Calendar 1.3.1 by LianTze LIM (liantze@gmail.com)]
+\ProvidesClass{cdcalendar}[2018/12/19 CD Calendar 1.3.2 by LianTze LIM (liantze@gmail.com)]
 
 
 \newif\if@smallcal\@smallcalfalse
@@ -116,11 +116,11 @@
 \RequirePackage{url}
 % \urlstyle{rm}
 \renewcommand{\UrlFont}{\rmfamily}
-\RequirePackage{xpatch}
+\RequirePackage{regexpatch}
 \RequirePackage{xargs}
 \RequirePackage{pgfkeys}
 \RequirePackage[absolute,overlay]{textpos}
-\RequirePackage[pagecolor=none]{pagecolor}
+\RequirePackage[nopagecolor=white,pagecolor=white]{pagecolor}
 
 \def\@coverBgColor{white}
 \def\@coverImage{}
@@ -162,9 +162,7 @@
   \begin{textblock*}{\paperwidth}[1,1](\dimexpr\paperwidth-2ex\relax,\dimexpr\paperheight-2ex\relax)
     \noindent\tikz\node[coverTitleOptions,inner sep=0pt] {\@coverTitleText};
   \end{textblock*}
-  }\null\clearpage%
-  \ifxetex\restorepagecolor\else\nopagecolor\fi%
-  \normalsize%
+  }\null\clearpage\nopagecolor\normalsize%
 }
 
 %%%%%%%%

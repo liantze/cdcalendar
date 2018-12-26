@@ -39,12 +39,19 @@
 
 \renewcommand{\eventSep}{：}
 
-\patchcmd{\monthCalendar}{rotate=-90,transform shape,}{text width=3em,}{}{}
-%
-\patchcmd{\monthCalendar}
-{\pgfcalendarmonthname{#2} #1}
-{\hbox{\tate\pgfcalendarmonthname{#2} #1}}%
-{}{}
+\patchcmd{\monthCalendar}{rotate=-90,transform shape,}{}{}{}
+
+\@ifpackagelater{luatexja-core}{2017/09/01}{%
+  \xpatchcmd*{\monthCalendar}
+  {\pgfcalendarmonthname{#2} #1}
+  {\hbox{\tate\pgfcalendarmonthname{#2} #1}}%
+  {}{}
+}{%
+  \xpatchcmd*{\monthCalendar}
+  {\pgfcalendarmonthname{#2} #1}
+  {\rotatebox[origin=tl]{-90}{\tate\pgfcalendarmonthname{#2} #1}}%
+  {}{}
+}
 
 \patchcmd{\monthCalendar}{--}{—}{}{}
 \AtBeginDocument{\renewcommand*{\DTMdisplaydate}[4]{\number#2月\number#3日(\pgfcalendarweekdayname{#4})}}
