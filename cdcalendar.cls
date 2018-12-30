@@ -1,4 +1,4 @@
-\ProvidesClass{cdcalendar}[2018/12/19 CD Calendar 1.3.2 by LianTze LIM (liantze@gmail.com)]
+\ProvidesClass{cdcalendar}[2018/12/30 CD Calendar 1.3.2 by LianTze LIM (liantze@gmail.com)]
 
 
 \newif\if@smallcal\@smallcalfalse
@@ -282,12 +282,12 @@
     ]
     if (Sunday) [\@sundayColor];
   \end{tikzpicture}
-  \end{textblock*}
-
-  \gdef\@eventlist{}
-
+  \end{textblock*}%
+%
+  \gdef\@eventlist{}%
+%
     \begin{tikzpicture}[remember picture,overlay]
-
+%
     \newcommand{\markCalendar}[2][]{%
       \pgfkeys{/eventmark,default,##1}%
       \DTMsavedate{tmp}{##2}%
@@ -300,13 +300,18 @@
         % \end{tikzpicture}%
       }%
     }
-
+%
     % #1=style; #2=startdate; #3=enddate or days; #4=name
     \newcommand{\event}[4][mark style=default mark]{%
-      \ifblank{##3}{\oneDayEvent[##1]{##2}{##4}}%
+      \ifblank{##3}{\oneDayEvent[##1]{##2}{##4}}{%
+        \ifboolexpr{ test {\ifstrequal{##2}{##3}}
+                  or test {\ifdefequal{##2}{##3}}
+                  or test {\ifdefstring{##3}{1}}}
+                   {\oneDayEvent[##1]{##2}{##4}}%
                    {\multiDayEvent[##1]{##2}{##3}{##4}}%
+        }%
     }
-
+%
     % #1=style; #2=startdate; #4=name
     \newcommand{\oneDayEvent}[3][mark style=default mark]{%
       \pgfkeys{/eventmark,default,##1}%
@@ -319,14 +324,14 @@
         \printeventname{##3\eventSep}\DTMdate{##2}\par%
       }{}{}
     }
-
+%
     % #1=style; #2=startdate; #3=enddate or days; #4=name
     \newcommand{\multiDayEvent}[4][mark style=default mark]{%
       \IfInteger{##3}%
         {\multiDayEventWithDuration[##1]{##2}{##3}{##4}}%
         {\multiDayEventWithEnd[##1]{##2}{##3}{##4}}%
     }
-
+%
     % #1=style; #2=startdate; #3=days; #4=name
     \newcommand{\multiDayEventWithDuration}[4][mark style=default mark]{%
       \pgfkeys{/eventmark,default,##1}%
@@ -339,11 +344,11 @@
       \protected@xappto{\@eventlist}{%
         \makebox[1.75em][c]{\protect\tikz%
           \protect\node[\event@markstyle,font=\fontsize{1em}{1em},%
-          \ifdefempty{\event@marker}{inner sep=0.5ex}{inner sep=0pt},
+          \ifdefempty{\event@marker}{inner sep=0.5ex}{inner sep=0pt},%
           ]{\event@marker};}%
-        \printeventname{##4\eventSep}\DTMdate{##2}-- \DTMusedate{tmp}\par}{}{}
+        \printeventname{##4\eventSep}\DTMdate{##2}-- \DTMusedate{tmp}\par}{}{}%
     }
-
+%
     % #1=style; #2=startdate; #3=enddate; #4=name
     \newcommand{\multiDayEventWithEnd}[4][mark style=default mark]{%
       \DTMsavedate{startdate}{##2}%
@@ -353,8 +358,8 @@
       \multiDayEventWithDuration[##1]{##2}{\myct}{##4}%
     }
 }{%
-  \end{tikzpicture}
-  \begin{minipage}{\EventLineWidth}\@eventStyle%
+  \end{tikzpicture}%
+  \noindent\begin{minipage}{\EventLineWidth}\@eventStyle%
   \setlength{\parskip}{0.5ex}%
   \@eventlist%
   \end{minipage}%
