@@ -1,4 +1,4 @@
-\ProvidesClass{cdcalendar}[2018/12/30 CD Calendar 1.3.2 by LianTze LIM (liantze@gmail.com)]
+\ProvidesClass{cdcalendar}[2018/12/19 CD Calendar 1.3.2 by LianTze LIM (liantze@gmail.com)]
 
 
 \newif\if@smallcal\@smallcalfalse
@@ -346,7 +346,7 @@
           \protect\node[\event@markstyle,font=\fontsize{1em}{1em},%
           \ifdefempty{\event@marker}{inner sep=0.5ex}{inner sep=0pt},%
           ]{\event@marker};}%
-        \printeventname{##4\eventSep}\DTMdate{##2}-- \DTMusedate{tmp}\par}{}{}%
+        \printeventname{##4\eventSep}\DTMdate{##2}\,--\,\DTMusedate{tmp}\par}{}{}%
     }
 %
     % #1=style; #2=startdate; #3=enddate; #4=name
