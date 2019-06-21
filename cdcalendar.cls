@@ -1,4 +1,4 @@
-\ProvidesClass{cdcalendar}[2018/12/19 CD Calendar 1.3.2 by LianTze LIM (liantze@gmail.com)]
+\ProvidesClass{cdcalendar}[2019/06/12 CD Calendar 1.3.3 by LianTze LIM (liantze@gmail.com)]
 
 
 \newif\if@smallcal\@smallcalfalse
@@ -26,11 +26,6 @@
   \def\@daynumlist{0/6,1/0,2/1,3/2,4/3,5/4,6/5}
 }
 
-\if@giantcal
-  \ExecuteOptions{20pt}
-\else
-  \ExecuteOptions{10pt}
-\fi
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{extarticle}}
 \ProcessOptions\relax
 \LoadClass{extarticle}
@@ -38,17 +33,18 @@
 \RequirePackage[dvipsnames,svgnames]{xcolor}
 \newlength{\CalPageMargin}
 \newlength{\EventLineWidth}
-
+%% v1.3.3. Load pgfpages early
+\RequirePackage{geometry}
+\RequirePackage{pgfpages}
 \if@giantcal
   \setlength{\CalPageMargin}{1cm}
   \setlength{\EventLineWidth}{6in}
-  \RequirePackage[margin=\CalPageMargin]{geometry}
+  \geometry{margin=\CalPageMargin}
 \else
   \setlength{\EventLineWidth}{3in}
   \if@smallcal
     \setlength{\CalPageMargin}{0.3cm}
-    \RequirePackage[paperheight=9.5cm,paperwidth=9cm,margin=\CalPageMargin]{geometry}
-    \RequirePackage{pgfpages}
+    \geometry{paperheight=9.5cm,paperwidth=9cm,margin=\CalPageMargin}
     \pgfpagesuselayout{4 on 1}[a4paper]
     \pgfpageslogicalpageoptions{1}{
         resized width=9cm,
@@ -70,10 +66,9 @@
         resized height=9.5cm,
         border code=\pgfsetlinewidth{0.4pt}\pgfstroke
     }
-
   \else
     \setlength{\CalPageMargin}{0.5cm}
-    \RequirePackage[paperheight=13.65cm,paperwidth=11.7cm,margin=\CalPageMargin]{geometry}
+    \geometry{paperheight=13.65cm,paperwidth=11.7cm,margin=\CalPageMargin}
     \RequirePackage{pgfpages}
     \pgfpagesuselayout{2 on 1}[a4paper,landscape]
     \pgfpageslogicalpageoptions{1}{
@@ -168,11 +163,19 @@
 %%%%%%%%
 % Using code from http://tex.stackexchange.com/a/245279/226
 % \if@babel
+  %% v1.3.3 After 2019/01/10, \pgfcalendarweekname uses
+  %% \pgfutil@translate instead of \xtranslate.
   \let\xpgfcalendarweekdayname\pgfcalendarweekdayname
+  %% After 2019/01/10
   \xpatchcmd{\xpgfcalendarweekdayname}
-   {\translate}
-   {\xtranslate}
-   {}{\ddt}
+     {\pgfutil@translate}
+     {\xtranslate}
+     {}{}
+  %% Before 2019/01/10
+  \xpatchcmd{\xpgfcalendarweekdayname}
+     {\translate}
+     {\xtranslate}
+     {}{}
   \newcommand{\xtranslate}[1]{%
     \csname tr@@@\csname tr@ml@\languagename\endcsname @#1\endcsname
   }
