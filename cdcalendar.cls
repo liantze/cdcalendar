@@ -1,4 +1,4 @@
-\ProvidesClass{cdcalendar}[2019/06/12 CD Calendar 1.3.3 by LianTze LIM (liantze@gmail.com)]
+\ProvidesClass{cdcalendar}[2019/08/27 CD Calendar 1.3.4 by LianTze LIM (liantze@gmail.com)]
 
 
 \newif\if@smallcal\@smallcalfalse
@@ -33,6 +33,24 @@
 \RequirePackage[dvipsnames,svgnames]{xcolor}
 \newlength{\CalPageMargin}
 \newlength{\EventLineWidth}
+
+% v1.3.4 Load babel and translator even earlier
+\if@babel
+  \RequirePackage{babel}
+  \RequirePackage{translator}
+  \languagealias{british}{English}
+\else
+  \RequirePackage{translator}
+  \providetranslation{Sunday}{S}
+  \providetranslation{Monday}{S}
+  \providetranslation{Tuesday}{T}
+  \providetranslation{Wednesday}{W}
+  \providetranslation{Thursday}{T}
+  \providetranslation{Friday}{F}
+  \providetranslation{Saturday}{S}
+  \AtBeginDocument{\renewcommand*{\DTMdisplaydate}[4]{\number#3/\number#2}}
+\fi
+
 %% v1.3.3. Load pgfpages early
 \RequirePackage{geometry}
 \RequirePackage{pgfpages}
@@ -88,24 +106,8 @@
 \RequirePackage{ifxetex}
 \RequirePackage{xstring}
 
-\if@babel
-  \RequirePackage{babel}
-  \RequirePackage{translator}
-  \languagealias{british}{English}
-\else
-  \RequirePackage{translator}
-  \providetranslation{Sunday}{S}
-  \providetranslation{Monday}{S}
-  \providetranslation{Tuesday}{T}
-  \providetranslation{Wednesday}{W}
-  \providetranslation{Thursday}{T}
-  \providetranslation{Friday}{F}
-  \providetranslation{Saturday}{S}
-  \AtBeginDocument{\renewcommand*{\DTMdisplaydate}[4]{\number#3/\number#2}}
-\fi
-
 \RequirePackage{tikz}
-\usetikzlibrary{calendar,positioning,backgrounds,shapes}
+\usetikzlibrary{babel,calendar,positioning,backgrounds,shapes}
 \RequirePackage[useregional,showdow]{datetime2}
 \DTMlangsetup{abbr,ord=raise,showyear=false}
 \RequirePackage{url}
@@ -142,7 +144,18 @@
 }
 
 \newcommand\makeCover{%
-  {\pagecolor{\@coverBgColor}%
+  \begingroup%
+  \ifnum\pgf@logicalpages=0\relax
+    \pagecolor{\@coverBgColor}%
+  \else
+    \ifx\@Gm@driver\@Gm@dvipdfm
+      \typeout{I see you dvipdfm}
+      \tikz[remember picture,overlay]
+      \fill[\@coverBgColor] (current page.north west) rectangle (current page.south east);%
+    \else
+      \pagecolor{\@coverBgColor}%
+    \fi%
+  \fi%
   \ifdefempty{\@coverImage}{}{%
     \begin{textblock*}{\paperwidth}(0pt,0pt)%
     \tikz\node[rectangle split, rectangle split parts=2,
@@ -157,7 +170,7 @@
   \begin{textblock*}{\paperwidth}[1,1](\dimexpr\paperwidth-2ex\relax,\dimexpr\paperheight-2ex\relax)
     \noindent\tikz\node[coverTitleOptions,inner sep=0pt] {\@coverTitleText};
   \end{textblock*}
-  }\null\clearpage\nopagecolor\normalsize%
+  \endgroup\null\clearpage\nopagecolor\normalsize%
 }
 
 %%%%%%%%
@@ -176,6 +189,12 @@
      {\translate}
      {\xtranslate}
      {}{}
+   \let\xpgfcalendarmonthname\pgfcalendarmonthname
+   \xpatchcmd{\xpgfcalendarname}
+      {\pgfutil@translate}
+      {\xtranslate}
+      {}{}
+
   \newcommand{\xtranslate}[1]{%
     \csname tr@@@\csname tr@ml@\languagename\endcsname @#1\endcsname
   }
@@ -280,7 +299,7 @@
     inner sep=\CalPageMargin,
     \if@sundayweek week list sunday\else week list\fi,
     day xshift=2.75em,
-    every day/.append style={text width=1em,align=right},
+    every day/.append style={text width=1em,align=center},
     day letter headings
     ]
     if (Sunday) [\@sundayColor];
@@ -321,7 +340,7 @@
       \markCalendar[##1]{##2}%
       \protected@xappto{\@eventlist}{%
         \makebox[1.75em][c]{\protect\tikz%
-          \protect\node[\event@markstyle,font=\@eventStyle,%
+          \protect\node[\event@markstyle,font=\fontsize{1em}{1em},%
           \ifdefempty{\event@marker}{inner sep=0.5ex}{inner sep=0pt},
   ]{\event@marker};}%
         \printeventname{##3\eventSep}\DTMdate{##2}\par%

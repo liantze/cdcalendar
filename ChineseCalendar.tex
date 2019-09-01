@@ -3,7 +3,6 @@
 % nobabel means you'll need to provide your own month names, week day headings,
 % etc
 \documentclass[12pt,nobabel,sundayweek]{cdcalendar}
-
 %% and here we do some settings for a calendar in Chinese
 %% (*not* the lunar calendar! Just localising the Gregorian calendar into
 %% Chinese)
@@ -31,23 +30,18 @@
 % Cover
 %%%%%%
 
-% Remove this line if you feel the background pattern is too annoying
-\TileWallPaper{.5\paperwidth}{.5\paperheight}{ricepaper_v3}
-% \coverBgColor{RoyalBlue!40!black}
-\coverImage[（元）景德镇窑蓝釉白龙戏珠纹盘。BabelStone摄，CC BY-SA 3.0. \url{ https://commons.wikimedia.org/w/index.php?curid=19011812}]
+\coverBgColor{RoyalBlue!40!black}
+\coverImage[\color{gray!50}BY-SA 3.0. \url{ https://commons.wikimedia.org/w/index.php?curid=19011812}]
 {Yuan_Jingdezhen_dragon_and_pearl_dish}
 
 \coverTitle[
-font=\fontsize{26pt}{30pt}\songti\bfseries,
-text width=\linewidth,align=flush right,red!50!RedViolet]
+font=\fontsize{26pt}{30pt}\heiti,
+text width=\linewidth,align=flush right,white]
 {二〇一九年历，再努力！}
 
 \makeCover
-% 由于须要以xelatex编译，封面变换了字体大小以后，会影响到后面英汉字符之间的距离，只好再强行加这一行来修正。
-% \ifluatex
-% \ltjsetparameter{xkanjiskip=.25\zw plus 1pt minus 1pt}
-% \fi
 
+% Remove this line if you feel the background pattern is too annoying
 \TileWallPaper{.5\paperwidth}{.1\paperheight}{lightpaperfibers}
 
 
