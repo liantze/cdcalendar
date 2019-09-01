@@ -14,11 +14,19 @@
 
 \usepackage{csvsimple,xstring}
 
+\robustify{\\}
 \newcommand{\annotdate}[2]{%
-  \node[font=\tiny\ctexset{space=true},
-    anchor=north,outer sep=3pt,text width=2.5\ccwd,align=flush center]
-    at (cdCal-\thepage-#1) {#2};%
+	\ifboolexpr{ test{\IfBeginWith{#2}{初}}
+						or test{\IfBeginWith{#2}{十}}
+						or test{\IfEndWith{#2}{十}}
+						or test{\IfBeginWith{#2}{廿}}
+	}{\def\extra{}}
+	 {\def\extra{red!70!black}}
+	\node[font=\tiny\CJKspace,\extra,
+	anchor=north,outer sep=0.55ex,text width=2.5em,align=flush center]
+	at (cdCal-\thepage-#1) {#2};%
 }
+
 \newcommand{\importlunar}[1]{%
 \begin{scope}[on background layer]%
   %% lunar-2019.csv contains mappings between the Chinese lunar calendar and
@@ -58,7 +66,6 @@
 
 \begin{document}
 
-% \coverBgColor{RoyalBlue!40!black}
 \TileWallPaper{.5\paperwidth}{.5\paperheight}{ricepaper_v3}
 \coverImage[（元）景德镇窑蓝釉白龙戏珠纹盘。BabelStone摄，CC BY-SA 3.0. \url{ https://commons.wikimedia.org/w/index.php?curid=19011812}]
 {Yuan_Jingdezhen_dragon_and_pearl_dish}
