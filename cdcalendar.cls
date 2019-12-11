@@ -1,8 +1,9 @@
-\ProvidesClass{cdcalendar}[2019/08/27 CD Calendar 1.3.4 by LianTze LIM (liantze@gmail.com)]
+\ProvidesClass{cdcalendar}[2019/12/09 CD Calendar 1.4 by LianTze LIM (liantze@gmail.com)]
 
 
 \newif\if@smallcal\@smallcalfalse
 \newif\if@giantcal\@giantcalfalse
+\newif\if@prevnext\@prevnextfalse
 
 \DeclareOption{small}{
   \@smallcaltrue
@@ -12,6 +13,13 @@
 \DeclareOption{giant}{
   \@smallcalfalse
   \@giantcaltrue
+  \@prevnexttrue
+}
+
+\DeclareOption{giantsolo}{
+  \@smallcalfalse
+  \@giantcaltrue
+  \@prevnextfalse
 }
 
 \newif\if@babel\@babeltrue
@@ -287,9 +295,25 @@
 
 \newenvironment{monthCalendar}[2]{%
   \begin{textblock*}{\textwidth}[1,1](\paperwidth,\paperheight)
-    \raggedleft\tikz
-    \node[rotate=-90,transform shape,monthTitleOptions, inner sep=\CalPageMargin]
+    \raggedleft\tiny\color{black!70}
+    \begin{tikzpicture}
+    \node[rotate=-90,transform shape,monthTitleOptions, inner sep=\CalPageMargin] (mainMonthHead)
     {\pgfcalendarmonthname{#2} #1};
+    \if@giantcal\if@prevnext\begingroup%
+    \tikzset{every calendar/.append style={
+        day yshift=1.5em,month label above centered,
+        \if@sundayweek week list sunday\else week list\fi,
+        day xshift=1.5em,day letter headings},
+      dayHeadingsOptions/.append style={yshift=0.25em},
+      every day/.append style={align=center,font={\mdseries\sffamily},text width=1.5em},every month/.append style={font=\sffamily\mdseries}}
+    \matrix[row sep=2em,matrix anchor=south east,left=0pt of mainMonthHead.south east,yshift=\CalPageMargin]{%
+      \pgfmathsetmacro{\tmpmonth}{int(\number#2-1)}%
+      \calendar [dates=#1-\tmpmonth-01 to #1-\tmpmonth-last];\\
+      \pgfmathsetmacro{\tmpmonth}{int(\number#2+1)}%
+      \calendar [dates=#1-\tmpmonth-01 to #1-\tmpmonth-last];\\
+    };
+    \endgroup\fi\fi
+  \end{tikzpicture}
   \end{textblock*}%
   \begin{textblock*}{\textwidth}[0,1](0pt,\paperheight)
   \noindent\begin{tikzpicture}[remember picture]
@@ -299,7 +323,7 @@
     inner sep=\CalPageMargin,
     \if@sundayweek week list sunday\else week list\fi,
     day xshift=2.75em,
-    every day/.append style={text width=1em,align=center},
+    every day/.append style={text width=1.5em,align=flush center,font={\bfseries}},
     day letter headings
     ]
     if (Sunday) [\@sundayColor];
