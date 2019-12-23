@@ -1,80 +1,67 @@
-% \title{Desktop Calendar (fits 3.5" floppy disk jewel case)}
+%!TEX program=xelatex
 
-%%% The calendars are printed 2-up to fit CD jewel cases,
-%%% or 4-up to fit 3" floppy disk jewel cases. OR, now a
-%%% full-blown "giant" version that prints full-page!
-%%%
-%%% Localisation possible with languages supported by
-%%% babel/translator/datetime2.
-%%% Tested with british, spanish, french, ngerman,
-%%% italian, portuges, polish, croatian, greek
-%%%
-%%% (If using pdflatex for greek,
-%%% Remember to load LGR,T1 for fontenc.)
-\documentclass[9pt,british,small]{cdcalendar}
+% nobabel means you'll need to provide your own month names, week day headings,
+% etc
+\documentclass[12pt,nobabel,sundayweek]{cdcalendar}
+%% and here we do some settings for a calendar in Chinese
+%% (*not* the lunar calendar! Just localising the Gregorian calendar into
+%% Chinese)
+\usepackage{zh-mod}
 
-%%% Use the sundayweek option for weeks to start on Sundays.
-% \documentclass[9pt,british,small,sundayweek]{cdcalendar}
+%% Use Roboto and Roboto Slab
+\usepackage[rm,light,osf,scale=0.94]{roboto}
 
-
-%% If using pdfLaTeX %%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-
-\usepackage[rm,scale=0.94]{roboto}
-\usepackage[notextcomp,notext]{stix2}
-%% End pdfLaTeX-related font settings %%%%%%%%
-
-
-% %% Compile with xelatex if using fontspec %%%%%%
-% \usepackage{fontspec}
-% \setmainfont{Gentium}
-% \setsansfont[BoldItalicFont=Fira Sans Italic,BoldFont=Fira Sans]{Fira Sans Light}
-% %% End xelatex-related font settings %%%%%%%%%%%
+% \title{Desktop Calendar (fits CD jewel case) with Chinese Localisation}
 
 \usepackage{graphicx}
-\usepackage{wallpaper}
 \usepackage{fontawesome}
-\graphicspath{{img/}}
+\usepackage{wallpaper}
 \usepackage[fleqn]{amsmath}
-
 \usepackage{tikzlings,tikzducks}
 
-\tikzset{blue icon/.style={text=SkyBlue,font=\Large}}
-\tikzset{pink icon/.style={text=Pink,font=\large}}
+\graphicspath{{img/}}
+
+%% Define all event mark styles here
 \tikzset{holiday/.style={rectangle,fill=orange!70}}
+\tikzset{pink icon/.style={text=Pink,font=\large}}
+\tikzset{blue icon/.style={text=SkyBlue,font=\large}}
 
 \begin{document}
 
 %%%%%%
 % Cover
 %%%%%%
+
 \coverBgColor{RoyalBlue!40!black}
-\coverImage
-  [\color{gray!80}(This is an optional description line for hte cover image.) Here are the actual printed calendars. The smaller calendar (9\,cm $\times$ 9.5\,cm) fits floppy disk jewel cases; while the bigger one (11.7\,cm $\times$ 13.65\,cm) fits CD jewel cases.]
-  {actual-crop.jpg}
-\coverTitle
-  [font=\fontsize{20pt}{22pt}\sffamily\bfseries,text=white,text width=\linewidth,align=flush right]
-  {2020 Calendar}
+\coverImage[\color{gray!20!white}实际印刷出来的台历效果。较小尺寸的（\texttt{small} 选项，9\,cm $\times$ 9.5\,cm）适用3.5寸软盘盒（家里有这些古董的可以派上用场了）。较大尺寸的（默认设定，11.7\,cm $\times$ 13.65\,cm）则适用CD盒。另外还有\texttt{giant}选项，一页A4纸就一个月历。]
+{actual-crop}
+
+\coverTitle[
+font=\fontsize{26pt}{30pt}\heiti,
+text width=\linewidth,align=flush right,white]
+{二零二零年历，再努力！}
 
 \makeCover
 \clearpage
+
+% Remove this line if you feel the background pattern is too annoying
+\TileWallPaper{.5\paperwidth}{.1\paperheight}{lightpaperfibers}
+
 %%%%
+
+% You may find the gap between illustrations and events too narrow;
+% Use this length to incrase it
+\setlength{\illusSkip}{1.5\ccwd}
+
 
 %%%%%%
 % Some settings for the monthly calendars
 %%%%%%
 \dayHeadingStyle{font=\sffamily\color{gray!90}}
-\sundayColor{red!80!black}
-\monthTitleStyle{font={\fontsize{26pt}{28pt}\bfseries\sffamily\itshape\selectfont}, red!50!RedViolet}
-\eventStyle{\scriptsize\sffamily}
-
-% Remove this line if you feel the background pattern is too annoying
-\TileWallPaper{.5\paperwidth}{.5\paperheight}{lightpaperfibers}
-
-% You may find the gap between illustrations and events too narrow;
-% Use this length to increase it
-\setlength{\illusSkip}{1em}
+\sundayColor{red}
+\monthTitleStyle{font={\fontsize{42pt}{44pt}\bfseries\sffamily\fangsong}, red!50!RedViolet}
+\eventStyle{\scriptsize\songti\color{black}}
+\renewcommand\printeventname[1]{{\heiti\color{black}#1}}
 
 
 %%%%%%
@@ -91,10 +78,10 @@
 %%% as the monthly calendar.
 
 %% This is an one-day event
-\event[mark style=holiday]{2020-01-01}{}{New Year's Day}
+\event[mark style=holiday]{2020-01-01}{}{新年元旦}
 %% This is a 5-day event
-\event[mark style=blue icon,marker=\faBriefcase]{2020-01-30}{5}{ACME Conference}
-%% you could also write \event{2020-01-06}{2020-02-03}{ACME Conference}
+\event[mark style=blue icon,marker=\faBriefcase]{2020-01-30}{5}{ACME大会}
+%% you could also write \event{2020-01-06}{2020-02-03}{ACME 大会}
 
 \end{monthCalendar}
 
@@ -116,15 +103,15 @@
 \begin{monthCalendar}{2020}{02}
 
 %% Repeat the event if it spans two months
-\event[mark style=blue icon,marker=\faBriefcase]{2020-01-30}{5}{ACME Conference}
-\event[mark style=pink icon,marker=\faBirthdayCake]{2020-02-07}{}{Someone's birthday}
-\event{2020-02-24}{}{Grant proposal deadline!!}
+\event[mark style=blue icon,marker=\faBriefcase]{2020-01-30}{5}{ACME大会}
+\event[mark style=pink icon,marker=\faBirthdayCake]{2020-02-07}{}{朋友生日}
+\event{2020-02-24}{}{死线！！}
 
 \end{monthCalendar}
 
 \clearpage
 
-%%% I... I was too tired search for more pics so will just show some cute animals
+%%% I... I can't search for more pics so will just show some cute animals
 \otherstuff{\linewidth}{\tikz[scale=1.5]\koala[crown];}
 \begin{monthCalendar}{2020}{03}
 \end{monthCalendar}
@@ -181,7 +168,7 @@
 \clearpage
 
 \otherstuff{\linewidth}{
-\begin{tikzpicture}
+\begin{tikzpicture}[scale=1.5]
   \duck[snowduck=white!90!gray,eye=white];
 \end{tikzpicture}
 }

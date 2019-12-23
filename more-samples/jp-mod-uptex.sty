@@ -46,4 +46,5 @@
   {{\tate\adjustbaseline\pgfcalendarmonthname{#2} #1}}%
   {}{}
 \patchcmd{\monthCalendar}{--}{—}{}{}
+\patchcmd{\monthCalendar}{mainMonthHead.south east}{mainMonthHead.south west}{}{}
 \AtBeginDocument{\renewcommand*{\DTMdisplaydate}[4]{\number#2月\number#3日(\pgfcalendarweekdayname{#4})}}

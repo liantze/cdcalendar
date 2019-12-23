@@ -27,13 +27,15 @@
 \renewcommand{\eventSep}{：}
 
 % 在此向专业的排版员、美术设计人员叩头请罪，以下直排实现方法实在简单粗暴、罪孽深重
-\patchcmd{\monthCalendar}{rotate=-90,transform shape,}{text width=3\ccwd,}{}{}
+\patchcmd{\monthCalendar}{rotate=-90,transform shape,}{align=flush center,text width=5.2\ccwd,}{}{}
 \patchcmd{\monthCalendar}
-{\pgfcalendarmonthname{#2} #1}
-{\pgfcalendarmonthname{#2}\\%
-\raisebox{0.5em}{\rotatebox{-90}{#1}}%
-}
-{}{}
+  {\pgfcalendarmonthname{#2} #1}
+  {\pgfcalendarmonthname{#2}\\%
+    \raisebox{0.75em}{\rotatebox{-90}{#1}}%
+  }
+  {}{}
+\patchcmd{\monthCalendar}{mainMonthHead.south east}{mainMonthHead.south west}{}{}
 
 \patchcmd{\monthCalendar}{--}{—}{}{}
+
 \AtBeginDocument{\renewcommand*{\DTMdisplaydate}[4]{\number#2月\number#3日}}

@@ -2,11 +2,13 @@
 
 The calendars are printed 4-up to fit 3.5" floppy disk jewel cases, or 2-up to fit CD jewel cases. There is now also a full-page version for wall calendars as of Dec 2016.
 
-![actual.jpg](img/actual.jpg)
+<img src="img/actual.jpg" width="500px" />
 
 Colours, illustrations, fonts etc are customisable. The calendars can be marked with events with date ranges (updated June 22, 2015). See [this blog post](https://www.overleaf.com/blog/217-a-multilingual-customisable-cd-slash-floppy-disk-jewel-case-calendar-with-latex) for more information (syntax of some commands have changed though). [Templates are available on Overleaf.](https://www.overleaf.com/latex/templates/desktop-calendar-with-events/htkctjjgmxjx)
 
 As of v1.4 (December 2019), that `giant` document class option i.e. full-sized A4 calendar will have mini-calendars of the previous and next months on each page of `monthCalendar`. Use the `giantsimple` option instead if you do not want these mini-calendars alongside.
+
+<img src="img/calendar2020.png" width="500px" />
 
 
 ## Language Localisation

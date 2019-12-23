@@ -25,10 +25,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 
-% Using EB Garamond and Open Sans
-% \usepackage[utopia]{mathdesign}
-\usepackage{ebgaramond}
-\usepackage[defaultsans,scale=0.94]{opensans}
+\usepackage[rm,scale=0.94]{roboto}
+\usepackage[notextcomp,notext]{stix2}
 %% End pdfLaTeX-related font settings %%%%%%%%
 
 
@@ -45,6 +43,9 @@
 \graphicspath{{img/}}
 \usepackage[fleqn]{amsmath}
 
+\usepackage{tikzlings,tikzducks}
+
+
 \tikzset{blue icon/.style={text=SkyBlue,font=\Large}}
 \tikzset{pink icon/.style={text=Pink,font=\large}}
 \tikzset{holiday/.style={rectangle,fill=orange!70}}
@@ -55,19 +56,11 @@
 % Cover
 %%%%%%
 \coverBgColor{RoyalBlue!40!black}
-\coverImage[\color{gray!50}David R.~Goodsell, RCSB PDB, 2005. `Molecule of the Month 2005 August: Neurotrophins: Receptors for nerve growth factor'. \mbox{CC-BY-4.0.} \url{https://doi.org/10.2210/rcsb_pdb/mom_2005_8}]
-{68-Neurotrophins-receptors}
-\coverTitle[font=\fontsize{30pt}{32pt}\sffamily\bfseries,text=white,text width=\linewidth,align=flush right]{2019 Calendar}
+\coverImage[\color{gray!50}Here are the actual printed calendars. The smaller calendar (9\,cm $\times$ 9.5\,cm) fits floppy disk jewel cases; while the bigger one (11.7\,cm $\times$ 13.65\,cm) fits CD jewel cases.]
+{actual.jpg}
+\coverTitle[font=\fontsize{30pt}{32pt}\sffamily\bfseries,text=white,text width=\linewidth,align=flush right]{2020 Calendar}
 
 \makeCover
-
-%%%% Remove this page if you don't need it --
-%%%% just to show the actual output
-{\centering
-\includegraphics[width=\textwidth]{actual}
-\par}
-
-Here are the actual printed calendars. The smaller calendar (9\,cm $\times$ 9.5\,cm) fits floppy disk jewel cases; while the bigger one (11.7\,cm $\times$ 13.65\,cm) fits CD jewel cases.
 
 \clearpage
 %%%%
@@ -78,11 +71,11 @@ Here are the actual printed calendars. The smaller calendar (9\,cm $\times$ 9.5\
 %%%%%%
 \dayHeadingStyle{font=\sffamily\color{gray!90}}
 \sundayColor{red!80!black}
-\monthTitleStyle{font={\fontsize{42pt}{44pt}\bfseries\sffamily\itshape\selectfont}, red!50!RedViolet}
+\monthTitleStyle{font={\fontsize{36pt}{38pt}\bfseries\sffamily\itshape\selectfont}, red!50!RedViolet}
 \eventStyle{\scriptsize\sffamily}
 
 % Remove this line if you feel the background pattern is too annoying
-\TileWallPaper{.5\paperwidth}{.5\paperheight}{ricepaper_v3}
+\TileWallPaper{.5\paperwidth}{.5\paperheight}{lightpaperfibers}
 
 % You may find the gap between illustrations and events too narrow
 % Use this length to increase it
@@ -90,48 +83,122 @@ Here are the actual printed calendars. The smaller calendar (9\,cm $\times$ 9.5\
 
 
 %%%%%%
-% January 2019
+% January 2020
 %%%%%%
 \illustration
-[`Detail of a power 20 mandelbulb made using Visions of Chaos'. By Soler97—Own work, Public Domain. \url{http://bit.ly/2hcn1gM}]
-{8.5cm}{Mandelbulb140a}
+[Happy TikZ animals! This is an optional description about the illustrations.]
+{0.9\linewidth}{tikzlings}
 
-\begin{monthCalendar}{2019}{01}
+\begin{monthCalendar}{2020}{01}
 
 %%% events must be given AFTER \begin{monthCalendar}
 %%% Currently you must give events on the same page
 %%% as the monthly calendar.
 
 %% This is an one-day event
-\event[mark style=holiday]{2019-01-01}{}{New Year's Day}
+\event[mark style=holiday]{2020-01-01}{}{New Year's Day}
 %% This is a 5-day event
-\event[mark style=blue icon,marker=\faBriefcase]{2019-01-30}{5}{ACME Conference}
-%% you could also write \event{2019-01-06}{2019-02-03}{ACME Conference}
+\event[mark style=blue icon,marker=\faBriefcase]{2020-01-30}{5}{ACME Conference}
+%% you could also write \event{2020-01-06}{2020-02-03}{ACME Conference}
 
 \end{monthCalendar}
 
 \clearpage
-\setlength{\illusSkip}{1cm}
 
 %%%%%%
-% Feb 2019
+% Feb 2020
 %%%%%%
 
 % Or you can put any stuff, really, with a caption if you want:
 \setlength{\mathindent}{0pt}
-\otherstuff[Legrange's Equation, one of the `greatest mathematical equations'. \url{http://www.livescience.com/26680-greatest-mathematical-equations.html}]
-{8.5cm}{\Huge\[%
-  \frac{d}{dt}\left(\frac{\partial \textcolor{red}{L}}{\partial \dot{q}_i}\right) = \frac{\partial \textcolor{red}{L}}{\partial q_i}
+\otherstuff[Fourier Transformation, one of the `math equations that changed the world'. \url{http://news.bitofnews.com/13-math-equations-that-changed-the-world/}]
+{\linewidth}
+{\huge\selectfont
+\[%
+  \hat{f}(\xi) = \int^{\infty}_{-\infty} f(x) e^{-2\pi ix\xi} \mathop{dx}
 \]}
 
-\begin{monthCalendar}{2019}{02}
+\begin{monthCalendar}{2020}{02}
 
 %% Repeat the event if it spans two months
-\event[mark style=blue icon,marker=\faBriefcase]{2019-01-30}{5}{ACME Conference}
-\event[mark style=pink icon,marker=\faBirthdayCake]{2019-02-07}{}{Someone's birthday}
-\event{2019-02-24}{}{Grant proposal deadline!!}
+\event[mark style=blue icon,marker=\faBriefcase]{2020-01-30}{5}{ACME Conference}
+\event[mark style=pink icon,marker=\faBirthdayCake]{2020-02-07}{}{Someone's birthday}
+\event{2020-02-24}{}{Grant proposal deadline!!}
 
 \end{monthCalendar}
+
+\clearpage
+
+%%% I... I was too tired search for more pics so will just show some cute animals
+\otherstuff{\linewidth}{\tikz[scale=1.5]\koala[crown];}
+\begin{monthCalendar}{2020}{03}
+\end{monthCalendar}
+
+\clearpage
+
+\otherstuff{\linewidth}{\tikz[scale=1.5]\duck[graduate,glasses];}
+\begin{monthCalendar}{2020}{04}
+\end{monthCalendar}
+
+\clearpage
+
+\otherstuff{\linewidth}{\tikz[scale=1.5]\mouse[cheese];}
+\begin{monthCalendar}{2020}{05}
+\end{monthCalendar}
+
+\clearpage
+
+\otherstuff{\linewidth}{\tikz[scale=1.5]\duck[crozier,strawhat=red!80!white,bowtie=red];}
+\begin{monthCalendar}{2020}{06}
+\end{monthCalendar}
+
+\clearpage
+
+\otherstuff{\linewidth}{\tikz[scale=1.5]\sloth[icecream];}
+\begin{monthCalendar}{2020}{07}
+\end{monthCalendar}
+
+\clearpage
+
+\otherstuff{\linewidth}
+  {\tikz[scale=1.5]\duck[body=pink!50!white,bill=orange,
+  unicorn=magenta!60!violet, longhair=magenta!60!violet];}
+\begin{monthCalendar}{2020}{08}
+\end{monthCalendar}
+
+\clearpage
+
+\otherstuff{\linewidth}{\tikz[scale=1.5]\coati[umbrella=blue!60!black,handbag];}
+
+\begin{monthCalendar}{2020}{09}
+\end{monthCalendar}
+
+\clearpage
+
+\otherstuff{\linewidth}
+  {\tikz[scale=1.5]\duck[witch=black!50!gray,
+      longhair=red!80!black,
+      jacket=black!50!gray,
+      magicwand];}
+\begin{monthCalendar}{2020}{10}
+\end{monthCalendar}
+
+\clearpage
+
+\otherstuff{\linewidth}{
+\begin{tikzpicture}[scale=1.5]
+  \duck[snowduck=white!90!gray,eye=white];
+\end{tikzpicture}
+}
+\begin{monthCalendar}{2020}{11}
+\end{monthCalendar}
+
+\clearpage
+
+\otherstuff{\linewidth}{\tikz[scale=1.5]\marmot[santa,wine];}
+\begin{monthCalendar}{2020}{12}
+\end{monthCalendar}
+
 
 
 \end{document}

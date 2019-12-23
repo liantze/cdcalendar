@@ -1,0 +1,214 @@
+% !TEX program=xelatex
+
+% nobabel means you'll need to provide your own month names, week day headings,
+% etc
+\documentclass[17pt,nobabel,sundayweek,giant,rgb]{cdcalendar}
+
+%% and here we do some settings for a calendar in Chinese
+%% (*not* the lunar calendar! Just localising the Gregorian calendar into
+%% Chinese)
+\usepackage{zh-mod}
+\newcommand{\weibo}[1]{{\xeCJKsetup{CJKecglue={}}\faWeibo{}\,@#1}}
+
+\usepackage[rm]{roboto}
+
+\usepackage{csvsimple,xstring}
+
+\robustify{\\}
+\newcommand{\annotdate}[2]{%
+  \ifboolexpr{ test{\IfBeginWith{#2}{初}}
+            or test{\IfBeginWith{#2}{十}}
+            or test{\IfEndWith{#2}{十}}
+            or test{\IfBeginWith{#2}{廿}}
+  }{\def\extra{}}%
+   {\def\extra{red!70!black}}%
+  \node[font=\tiny\sffamily\CJKspace,\extra,
+  anchor=north,outer sep=0.55ex,align=flush center]
+  at (cdCal-\thepage-#1) {#2};%
+}
+
+\newcommand{\importlunar}[1]{%
+\begin{scope}[on background layer]%
+  %% lunar-2020.csv contains mappings between the Chinese lunar calendar and
+  %% 2020 Gregorian calendar, with columns EVENT and DATE.
+  %% Sourced from https://github.com/infinet/lunar-calendar/blob/master/chinese_lunar_prev_year_next_year.ics; converted to Simplified Chinese;
+  %% converted to .csv with https://www.indigoblue.eu/ics2csv/
+  \csvreader[filter test=\IfBeginWith{\LNDATE}{#1}]
+  {lunar-2020.csv}{EVENT=\LNEVENT,DATE=\LNDATE}
+  {\annotdate{\LNDATE}{\LNEVENT}}
+\end{scope}%
+}
+
+%%%%%%
+% Some settings for the monthly calendars, to accomodate extra annotations below each date
+%%%%%%
+\dayHeadingStyle{font=\sffamily\color{gray!90}}
+\sundayColor{red}
+\monthTitleStyle{font={\fontsize{42pt}{44pt}\bfseries\fangsong},text=胭脂}
+\eventStyle{\scriptsize\heiti\def\CJKecglue{}}
+\renewcommand\printeventname[1]{{\sffamily #1}}
+\tikzset{every calendar/.append style={day yshift=2.5\ccwd,day xshift=2.75\ccwd},every day/.append style={font=\bfseries}}
+\patchcmd{\monthCalendar}{0pt,\paperheight}{0pt,\dimexpr\paperheight-0.5cm\relax}{}{}
+
+%% 月份上下加的小点缀，嫌太花了的可以把这些删掉。
+\usepackage{scrlfile}
+\ReplacePackage{xpatch}{regexpatch}
+\usepackage{pgfornament-han}
+\usepackage{cncolours}
+\patchcmd{\monthCalendar}
+  {\pgfcalendarmonthname}
+  {\rotatebox{90}{\pgfornamenthan[width=.8\ccwd,color=金色]{43}}\\%
+   \pgfcalendarmonthname}
+  {}{}
+\patchcmd{\monthCalendar}
+  {{\rotatebox{-90}{#1}}}
+  {{\rotatebox{-90}{#1}}\\[0.75ex]%
+    \rotatebox{90}{\pgfornamenthan[width=.8\ccwd,color=缃色]{43}}}
+  {}{}
+
+%% Define all event mark styles here
+\tikzset{holiday/.style={rectangle,fill=orange!60,inner xsep=1.375em,inner ysep=0.5em}}
+\tikzset{pink icon/.style={text=Pink,font=\large}}
+\tikzset{blue icon/.style={text=SkyBlue!60,font=\large}}
+
+
+\usepackage{fontawesome}
+\usepackage{graphicx}
+\usepackage{wallpaper}
+\graphicspath{{img/}}
+
+\setlength{\CalPageMargin}{1cm}
+% \setlength{\EventLineWidth}{6in}
+\geometry{a4paper}
+
+\begin{document}
+
+%\TileWallPaper{.5\paperwidth}{.5\paperheight}{ricepaper_v3}
+\coverImage[\vspace*{-7.25cm}~\weibo{溪畔鹤迹} \url{http://1t.click/bxy3}]{taotie}
+
+\coverTitle[
+font=\fontsize{48pt}{50pt}\sffamily\fangsong\bfseries,
+text width=\linewidth,align=flush right,枣红]
+{2020年历（附农历节气）}
+
+\makeCover
+\clearpage
+
+%% Uncomment the next line if you want to clear the background
+%\ClearWallPaper
+
+\illustration[西汉，错金银青铜锯齿形器。图片拍摄：一只饭包。\weibo{张博力}\url{http://t.cn/EUm09h0}]{\textwidth}{IMG_4645}
+% 春节：1月24日至30日放假调休，共7天。1月19日（星期日）、2月1日（星期六）上班。
+\begin{monthCalendar}{2020}{01}
+  \event[mark style=holiday]{2020-01-01}{}{元旦}
+  \event{2020-01-08}{2020-01-10}{ACME Conference}
+  \event[mark style=blue icon,marker=\faBriefcase]{2020-01-19}{}{上班日}
+  \event[mark style=pink icon,marker=\faBirthdayCake]{2020-01-23}{}{朋友生日}
+  \event[mark style=holiday]{2020-01-24}{2020-01-30}{春节放假调休}
+  \importlunar{2020-01}
+\end{monthCalendar}
+
+\clearpage
+
+\illustration[商 有领玉璧 1986年广汉三星堆遗址K2出土 四川广汉三星堆博物馆藏 \weibo{川后} \url{http://t.cn/EUmH7He}]{\textwidth}{youlingyupi}
+
+\begin{monthCalendar}{2020}{02}
+  \event[mark style=blue icon,marker=\faBriefcase]{2020-02-01}{}{上班日}
+  \importlunar{2020-02}
+\end{monthCalendar}
+
+
+
+\clearpage
+
+\illustration[Immortals Riding Dragons: Section of a Tomb Pediment.
+Han dynasty (206 B.C.--A.D. 220), 1st century B.C./A.D. Probably from Henan province, China. Art Initiative Chicago. \url{http://t.cn/EUmmVjV}]{\textwidth}{dragonriders}
+
+\begin{monthCalendar}{2020}{03}
+  \importlunar{2020-03}
+\end{monthCalendar}
+
+\clearpage
+
+\illustration[明代金饰件，杭州桃源岭出土，浙江省博物馆 藏。\weibo{一梦琥珀}\url{http://1t.click/bxyv}]{\textwidth}{toushi}
+
+\begin{monthCalendar}{2020}{04}
+  \event[mark style=holiday]{2020-04-04}{3}{清明节放假调休}
+  \event[mark style=blue icon,marker=\faBriefcase]{2020-04-26}{}{上班日}
+  \importlunar{2020-04}
+\end{monthCalendar}
+
+\clearpage
+
+\illustration[西汉，错金银青铜锯齿形器。图片拍摄：一只饭包。\weibo{张博力}\url{http://t.cn/EUm09h0}]{\textwidth}{IMG_4645}
+
+\begin{monthCalendar}{2020}{05}
+  \event[mark style=holiday]{2020-05-01}{5}{劳动节放假调休}
+  \event[mark style=blue icon,marker=\faBriefcase]{2020-05-09}{}{上班日}
+  \importlunar{2020-05}
+\end{monthCalendar}
+
+\clearpage
+
+\illustration[商 有领玉璧 1986年广汉三星堆遗址K2出土 四川广汉三星堆博物馆藏 \weibo{川后} \url{http://t.cn/EUmH7He}]{\textwidth}{youlingyupi}
+
+\begin{monthCalendar}{2020}{06}
+  \event[mark style=holiday]{2020-06-25}{3}{端午节放假调休}
+  \event[mark style=blue icon,marker=\faBriefcase]{2020-06-28}{}{上班日}
+  \importlunar{2020-06}
+\end{monthCalendar}
+
+\clearpage
+
+\illustration[Immortals Riding Dragons: Section of a Tomb Pediment.
+Han dynasty (206 B.C.--A.D. 220), 1st century B.C./A.D. Probably from Henan province, China. Art Initiative Chicago. \url{http://t.cn/EUmmVjV}]{\textwidth}{dragonriders}
+
+\begin{monthCalendar}{2020}{07}
+  \importlunar{2020-07}
+\end{monthCalendar}
+
+\clearpage
+
+\illustration[明代金饰件，杭州桃源岭出土，浙江省博物馆 藏。\weibo{一梦琥珀}\url{http://1t.click/bxyv}]{\textwidth}{toushi}
+
+\begin{monthCalendar}{2020}{08}
+  \importlunar{2020-08}
+\end{monthCalendar}
+
+\clearpage
+
+\illustration[西汉，错金银青铜锯齿形器。图片拍摄：一只饭包。\weibo{张博力}\url{http://t.cn/EUm09h0}]{\textwidth}{IMG_4645}
+
+\begin{monthCalendar}{2020}{09}
+  \event[mark style=blue icon,marker=\faBriefcase]{2020-09-27}{}{上班日}
+  \importlunar{2020-09}
+\end{monthCalendar}
+
+\clearpage
+
+\illustration[商 有领玉璧 1986年广汉三星堆遗址K2出土 四川广汉三星堆博物馆藏 \weibo{川后} \url{http://t.cn/EUmH7He}]{\textwidth}{youlingyupi}
+
+\begin{monthCalendar}{2020}{10}
+  \event[mark style=holiday]{2020-10-01}{2020-10-08}{国庆节、中秋节放假调休}
+  \event[mark style=blue icon,marker=\faBriefcase]{2020-10-10}{}{上班日}
+  \importlunar{2020-10}
+\end{monthCalendar}
+
+\clearpage
+
+\illustration[Immortals Riding Dragons: Section of a Tomb Pediment.
+Han dynasty (206 B.C.--A.D. 220), 1st century B.C./A.D. Probably from Henan province, China. Art Initiative Chicago. \url{http://t.cn/EUmmVjV}]{\textwidth}{dragonriders}
+
+\begin{monthCalendar}{2020}{11}
+  \importlunar{2020-11}
+\end{monthCalendar}
+
+\clearpage
+
+\illustration[明代金饰件，杭州桃源岭出土，浙江省博物馆 藏。\weibo{一梦琥珀}\url{http://1t.click/bxyv}]{\textwidth}{toushi}
+
+\begin{monthCalendar}{2020}{12}
+  \importlunar{2020-12}
+\end{monthCalendar}
+
+\end{document}

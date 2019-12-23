@@ -1,53 +1,28 @@
-% \title{Wall Calendar version of CD calendars}
+% nobabel means you'll need to provide your own month names, week day headings,
+% etc. We'll use jsarticle+uplatex in this example.
+\RequirePackage{scrlfile}
+\ReplaceClass{extarticle}{jsarticle}
+\AfterClass{jsarticle}{\RequirePackage[17pt]{extsizes}}
+\PassOptionsToClass{uplatex}{jsarticle}
+\documentclass[giant,nobabel,sundayweek,dvipdfmx]{cdcalendar}
 
-%%% The calendars are printed 2-up to fit CD jewel cases,
-%%% or 4-up to fit 3" floppy disk jewel cases. OR, now a
-%%% full-blown "giant" version that prints full-page!
-%%%
-%%% Localisation possible with languages supported by
-%%% babel/translator/datetime2.
-%%% Tested with british, spanish, french, ngerman,
-%%% italian, portuges, polish, croatian, greek.
-%%%
-%%% (If using pdflatex for greek,
-%%% Remember to load LGR,T1 for fontenc.)
-%%%
-%%% NOTE: If you get an error when you change the language,
-%%% click on the "compile from scratch" option in the error
-%%% message window.
-\documentclass[17pt,british,giant]{cdcalendar}
-
-%%% Use the sundayweek option for weeks to start on Sundays.
-% \documentclass[20pt,british,sundayweek,giant]{cdcalendar}
-
-%% If using pdfLaTeX %%%%%%%%%%
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
+%% and here we do some settings for a calendar in Japanese
+\usepackage{jp-mod-uptex}
 
 \usepackage[rm]{roboto}
-\usepackage[notextcomp,notext]{stix2}
-%% End pdfLaTeX-related font settings %%%%%%%%
-
-% %% Compile with xelatex if using fontspec
-% \usepackage{fontspec}
-% \setmainfont{Gentium}
-% \setsansfont[BoldItalicFont=Fira Sans Italic,BoldFont=Fira Sans]{Fira Sans Light}
-% %% End xelatex-related font settings %%%%%%%%
-
 
 \usepackage{graphicx}
-\usepackage{wallpaper}
 \usepackage{fontawesome}
-\graphicspath{{img/}}
-
-%% If you're a mathematician and like to look at beautiful equations...
+\usepackage{wallpaper}
 \usepackage[fleqn]{amsmath}
-
 \usepackage{tikzlings,tikzducks}
 
-\tikzset{blue icon/.style={text=SkyBlue,font=\Large}}
-\tikzset{pink icon/.style={text=Pink,font=\large}}
+\graphicspath{{img/}}
+
+%% Define all event mark styles here
 \tikzset{holiday/.style={rectangle,fill=orange!70}}
+\tikzset{pink icon/.style={text=Pink,font=\large}}
+\tikzset{blue icon/.style={text=SkyBlue,font=\large}}
 
 % Default values -- change if needed
 % \setlength{\CalPageMargin}{1cm}
@@ -59,35 +34,34 @@
 %%%%%%
 % Cover
 %%%%%%
+
 \coverBgColor{RoyalBlue!40!black}
-\coverImage
-  [\color{gray!80}(This is an optional description line for hte cover image.) Here are the actual printed calendars. The smaller calendar (9\,cm $\times$ 9.5\,cm) fits floppy disk jewel cases; while the bigger one (11.7\,cm $\times$ 13.65\,cm) fits CD jewel cases.]
-  {actual.jpg}
+\coverImage[\color{gray!50}ここに実際に印刷されたカレンダーがあります。 小さなカレンダー(9\,cm $\times$ 9.5\,cm)は、フロッピーディスクのジュエルケースに適合します。 大きなもの(11.7\,cm $\times$ 13.65\,cm)はCDのジュエルケースに適合します。]
+{actual}
 
-\coverTitle
-  [font=\fontsize{72pt}{76pt}\sffamily\bfseries,text=white,text width=\linewidth,align=flush right]
-  {2020 Calendar}
+\coverTitle[font=\fontsize{56pt}{56pt}\sffamily\bfseries\gtfamily,
+text=white,text width=\linewidth,align=flush right]
+{2020カレンダー}
 
-% \makeCover  %% Generates a cover
-\clearpage
-%%%%
+% \makeCover
+
+% Remove this line if you feel the background pattern is too annoying
+% \TileWallPaper{.5\paperwidth}{.5\paperheight}{ricepaper_v3}
+\TileWallPaper{.5\paperwidth}{.1\paperheight}{lightpaperfibers}
+
+
+% You may find the gap between illustrations and events too narrow
+% Use this length to increase it
+\setlength{\illusSkip}{1em}
 
 
 %%%%%%
 % Some settings for the monthly calendars
 %%%%%%
-\dayHeadingStyle{font=\sffamily\color{gray!90}}
-\sundayColor{red!80!black}
-\monthTitleStyle{font={\fontsize{56pt}{60pt}\bfseries\sffamily\itshape\selectfont}, red!50!RedViolet}
-\eventStyle{\scriptsize\sffamily}
-
-% Remove this line if you feel the background pattern is too annoying
-\TileWallPaper{.5\paperwidth}{.5\paperheight}{lightpaperfibers}
-
-% You may find the gap between illustrations and events too narrow
-% Use this length to increase it
-\setlength{\illusSkip}{1cm}
-
+\dayHeadingStyle{font=\gtfamily\color{gray!90}}
+\sundayColor{red}
+\monthTitleStyle{font={\fontsize{56pt}{60pt}\sffamily\gtfamily}, red!50!RedViolet}
+\eventStyle{\scriptsize\sffamily\gtfamily}
 
 %%%%%%
 % January 2020
@@ -103,10 +77,10 @@
 %%% as the monthly calendar.
 
 %% This is an one-day event
-\event[mark style=holiday]{2020-01-01}{}{New Year's Day}
+\event[mark style=holiday]{2020-01-01}{}{元日}
 %% This is a 5-day event
-\event[mark style=blue icon,marker=\faBriefcase]{2020-01-30}{5}{ACME Conference}
-%% you could also write \event{2020-01-06}{2020-02-03}{ACME Conference}
+\event[mark style=blue icon,marker=\faBriefcase]{2020-01-30}{5}{ACME会議}
+%% you could also write \event{2020-01-06}{2020-02-03}{ACME会議}
 
 \end{monthCalendar}
 
@@ -128,15 +102,15 @@
 \begin{monthCalendar}{2020}{02}
 
 %% Repeat the event if it spans two months
-\event[mark style=blue icon,marker=\faBriefcase]{2020-01-30}{5}{ACME Conference}
-\event[mark style=pink icon,marker=\faBirthdayCake]{2020-02-07}{}{Someone's birthday}
-\event{2020-02-24}{}{Grant proposal deadline!!}
+\event[mark style=blue icon,marker=\faBriefcase]{2020-01-30}{5}{ACME会議}
+\event[mark style=pink icon,marker=\faBirthdayCake]{2020-02-07}{}{友人の誕生日}
+\event{2020-02-24}{}{締め切り！}
 
 \end{monthCalendar}
 
 \clearpage
 
-%%% I... I was too tired to search for more pics so will just show some cute animals
+%%% I... I was too tired search for more pics so will just show some cute animals
 \otherstuff{\linewidth}{\tikz[scale=5]\koala[crown];}
 \begin{monthCalendar}{2020}{03}
 \end{monthCalendar}
@@ -193,7 +167,7 @@
 \clearpage
 
 \otherstuff{\linewidth}{
-\begin{tikzpicture}[scale=5]
+\begin{tikzpicture}
   \duck[snowduck=white!90!gray,eye=white];
 \end{tikzpicture}
 }
