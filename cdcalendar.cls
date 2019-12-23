@@ -1,4 +1,4 @@
-\ProvidesClass{cdcalendar}[2019/12/09 CD Calendar 1.4 by LianTze LIM (liantze@gmail.com)]
+\ProvidesClass{cdcalendar}[2019/12/16 CD Calendar 1.4.1 by LianTze LIM (liantze@gmail.com)]
 
 
 \newif\if@smallcal\@smallcalfalse
@@ -304,7 +304,8 @@
         day yshift=1.5em,month label above centered,
         \if@sundayweek week list sunday\else week list\fi,
         day xshift=1.5em,day letter headings},
-      dayHeadingsOptions/.append style={yshift=0.25em},
+      % dayHeadingsOptions/.append style={yshift=0.25em},
+      dayHeadingsOptions/.style={font=\sffamily\bfseries,gray!90},
       every day/.append style={align=center,font={\mdseries\sffamily},text width=1.5em},every month/.append style={font=\sffamily\mdseries}}
     \matrix[row sep=2em,matrix anchor=south east,left=0pt of mainMonthHead.south east,yshift=\CalPageMargin]{%
       \pgfmathsetmacro{\tmpmonth}{int(\number#2-1)}%
@@ -323,7 +324,7 @@
     inner sep=\CalPageMargin,
     \if@sundayweek week list sunday\else week list\fi,
     day xshift=2.75em,
-    every day/.append style={text width=1.5em,align=flush center,font={\bfseries}},
+    every day/.append style={text height=1.5ex,text depth=0.25ex,text width=1.5em,align=flush center,font={\bfseries}},
     day letter headings
     ]
     if (Sunday) [\@sundayColor];
