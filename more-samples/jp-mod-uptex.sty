@@ -43,8 +43,12 @@
 \patchcmd{\monthCalendar}{rotate=-90,transform shape,}{}{}{}
 \xpatchcmd*{\monthCalendar}
   {\pgfcalendarmonthname{#2} #1}
-  {{\tate\adjustbaseline\pgfcalendarmonthname{#2} #1}}%
+  {\hbox{\tate\adjustbaseline\pgfcalendarmonthname{#2} #1}}%
   {}{}
+% \xpatchcmd*{\monthCalendar}
+%   {every month/.append style={font=\sffamily\mdseries}}
+% 	{every month/.append style={font=\sffamily\mdseries\tate\adjustbaseline}}
+% 	{}{\PackageWarning{foo}{bar}}
 \patchcmd{\monthCalendar}{--}{—}{}{}
 \patchcmd{\monthCalendar}{mainMonthHead.south east}{mainMonthHead.south west}{}{}
 \AtBeginDocument{\renewcommand*{\DTMdisplaydate}[4]{\number#2月\number#3日(\pgfcalendarweekdayname{#4})}}
