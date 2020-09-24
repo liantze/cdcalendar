@@ -1,4 +1,4 @@
-\ProvidesClass{cdcalendar}[2019/12/16 CD Calendar 1.4.1 by LianTze LIM (liantze@gmail.com)]
+\ProvidesClass{cdcalendar}[2020/09/24 CD Calendar 1.4.2 by LianTze LIM (liantze@gmail.com)]
 
 
 \newif\if@smallcal\@smallcalfalse
@@ -192,16 +192,6 @@
      {\pgfutil@translate}
      {\xtranslate}
      {}{}
-  %% Before 2019/01/10
-  \xpatchcmd{\xpgfcalendarweekdayname}
-     {\translate}
-     {\xtranslate}
-     {}{}
-   \let\xpgfcalendarmonthname\pgfcalendarmonthname
-   \xpatchcmd{\xpgfcalendarname}
-      {\pgfutil@translate}
-      {\xtranslate}
-      {}{}
 
   \newcommand{\xtranslate}[1]{%
     \csname tr@@@\csname tr@ml@\languagename\endcsname @#1\endcsname
