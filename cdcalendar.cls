@@ -1,9 +1,10 @@
-\ProvidesClass{cdcalendar}[2020/09/24 CD Calendar 1.4.2 by LianTze LIM (liantze@gmail.com)]
+\ProvidesClass{cdcalendar}[2021/08/28 CD Calendar 1.4.3 by LianTze LIM (liantze@gmail.com)]
 
 
 \newif\if@smallcal\@smallcalfalse
 \newif\if@giantcal\@giantcalfalse
 \newif\if@prevnext\@prevnextfalse
+\newif\if@landscapecal\@landscapecalfalse
 
 \DeclareOption{small}{
   \@smallcaltrue
@@ -21,6 +22,15 @@
   \@giantcaltrue
   \@prevnextfalse
 }
+
+\DeclareOption{landscape}{
+  \if@giantcal
+    \@landscapecaltrue
+  \else
+    \ClassWarning{cdcalenar}{Sorry, `landscape' option only supported with `giant' and `giantsolo'}
+  \fi
+}
+
 
 \newif\if@babel\@babeltrue
 \DeclareOption{nobabel}{
@@ -109,7 +119,10 @@
     }
   \fi
 \fi
-
+\if@landscapecal
+  \setlength{\EventLineWidth}{\linewidth}
+  \geometry{landscape,left=.3\paperheight}
+\fi
 
 \RequirePackage{ifxetex}
 \RequirePackage{xstring}
@@ -306,7 +319,11 @@
     \endgroup\fi\fi
   \end{tikzpicture}
   \end{textblock*}%
-  \begin{textblock*}{\textwidth}[0,1](0pt,\paperheight)
+  % \begin{textblock*}{\textwidth}[0,1](0pt,\paperheight)
+  \begin{textblock*}{\textwidth}[0,1](
+      \if@landscapecal\dimexpr\Gm@lmargin-\CalPageMargin\relax
+      \else 0pt\fi,
+      \paperheight)
   \noindent\begin{tikzpicture}[remember picture]
   \calendar (cdCal-\thepage) [
     dates=#1-#2-01 to #1-#2-last,
@@ -409,19 +426,31 @@
 \setlength{\illusSkip}{1em}
 
 \newcommand{\illustration}[3][]{%
+  \if@landscapecal
+  \begin{textblock*}{\paperwidth}(\CalPageMargin,\CalPageMargin)
+  \fi%
   \tikz\node[rectangle split, rectangle split parts=2,
     rectangle split part align={left,left},
     text width=#2,inner xsep=0pt, inner ysep=1pt, font=\itshape\tiny]
   {\includegraphics[width=#2]{#3} \nodepart{second} #1};\par
   \vspace*{\illusSkip}%
+  \if@landscapecal
+  \end{textblock*}
+  \fi%
 }
 
 \newcommand{\otherstuff}[3][]{%
+  \if@landscapecal
+  \begin{textblock*}{\paperwidth}(\CalPageMargin,\CalPageMargin)
+  \fi%
   \tikz\node[rectangle split, rectangle split parts=2,
     rectangle split part align={left,left},
     text width=#2,inner xsep=0pt,inner ysep=3pt,font=\itshape\tiny]
   {#3 \nodepart{second} #1};\par
   \vspace*{\illusSkip}%
+  \if@landscapecal
+  \end{textblock*}
+  \fi%
 }
 
 \pagestyle{empty}
