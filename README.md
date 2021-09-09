@@ -34,8 +34,8 @@ You can still write `\usepackage[...]{babel}` yourself in the preamble (for hyph
 
 ```latex
 \documentclass[nobabel]{cdcalendar}    % don't load babel yet!
-\usepackage{ms-mod}   % our own Bahasa Indonesian localisation
-\usepackage[bahasam]{babel}  % if you need Indonesian hyphenation patterns
+\usepackage{ms-mod}   % our own Bahasa Melayu localisation
+\usepackage[bahasam]{babel}  % if you need Melayu hyphenation patterns
 ```
 
 I'll add mods for other languages from time to time when I feel like it. ;-)
