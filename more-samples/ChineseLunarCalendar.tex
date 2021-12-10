@@ -8,7 +8,7 @@
 %% (*not* the lunar calendar! Just localising the Gregorian calendar into
 %% Chinese)
 \usepackage{zh-mod}
-\newcommand{\weibo}[1]{{\xeCJKsetup{CJKecglue={}}\faWeibo{}\,@#1}}
+\newcommand{\weibo}[1]{{\xeCJKsetup{CJKecglue={}}{\color{red}\faWeibo{}}@#1}}
 
 \usepackage[rm]{roboto}
 
@@ -29,12 +29,12 @@
 
 \newcommand{\importlunar}[1]{%
 \begin{scope}[on background layer]%
-  %% lunar-2021.csv contains mappings between the Chinese lunar calendar and
-  %% 2021 Gregorian calendar, with columns EVENT and DATE.
-  %% Sourced from https://github.com/infinet/lunar-calendar/blob/master/chinese_lunar_prev_year_next_year.ics; converted to Simplified Chinese;
+  %% lunar-2022.csv contains mappings between the Chinese lunar calendar and
+  %% 2022 Gregorian calendar, with columns EVENT and DATE.
+  %% Created with https://github.com/infinet/lunar-calendar; converted to Simplified Chinese;
   %% converted to .csv with https://www.indigoblue.eu/ics2csv/
   \csvreader[filter test=\IfBeginWith{\LNDATE}{#1}]
-  {lunar-2021.csv}{EVENT=\LNEVENT,DATE=\LNDATE}
+  {lunar-2022.csv}{EVENT=\LNEVENT,DATE=\LNDATE}
   {\annotdate{\LNDATE}{\LNEVENT}}
 \end{scope}%
 }
@@ -84,12 +84,13 @@
 \begin{document}
 
 %\TileWallPaper{.5\paperwidth}{.5\paperheight}{ricepaper_v3}
-\coverImage[\vspace*{-7.25cm}~\weibo{溪畔鹤迹} \url{http://1t.click/bxy3}]{taotie}
+\coverImage[\qquad 爱上紫禁城\ 摄影：张林\url{https://www.dpm.org.cn/light/254473.html}]{爱上紫禁城-sq}
+
 
 \coverTitle[
 font=\fontsize{48pt}{50pt}\sffamily\fangsong\bfseries,
 text width=\linewidth,align=flush right,正青]
-{2021年历（附农历节气）}
+{2022年历（附农历节气）}
 
 \makeCover
 \clearpage
@@ -97,125 +98,124 @@ text width=\linewidth,align=flush right,正青]
 %% Uncomment the next line if you want to clear the background
 %\ClearWallPaper
 
-\illustration[西汉，错金银青铜锯齿形器。图片拍摄：一只饭包。\weibo{张博力}\url{http://t.cn/EUm09h0}]{\textwidth}{IMG_4645}
-% 一、元旦：2021年1月1日至3日放假，共3天。
-\begin{monthCalendar}{2021}{01}
-  \event[mark style=holiday]{2021-01-01}{2021-01-03}{元旦放假}
-  \event{2021-01-11}{2021-01-13}{ACME Conference}
-  \event[mark style=pink icon,marker=\faBirthdayCake]{2021-01-23}{}{朋友生日}
-  \importlunar{2021-01}
+\illustration[爱上这座城\ 摄影：朱楷\url{https://www.dpm.org.cn/light/248999.html}]{\textwidth}{爱上这座城-02}
+% 元旦：2022年1月1日至3日放假，共3天。
+% 二、春节：1月31日至2月6日放假调休，共7天。1月29日（星期六）、1月30日（星期日）上班。
+\begin{monthCalendar}{2022}{01}
+  \event[mark style=holiday]{2022-01-01}{2022-01-03}{元旦放假}
+  \event{2022-01-11}{2022-01-13}{ACME Conference}
+  \event[mark style=pink icon,marker=\faBirthdayCake]{2022-01-23}{}{朋友生日}
+  \event[mark style=holiday]{2022-01-31}{2022-02-06}{春节放假调休}
+  \event[mark style=blue icon,marker=\faBriefcase]{2022-01-29}{2}{上班日}
+  \importlunar{2022-01}
 \end{monthCalendar}
 
 \clearpage
 
-\illustration[商 有领玉璧 1986年广汉三星堆遗址K2出土 四川广汉三星堆博物馆藏 \weibo{川后} \url{http://t.cn/EUmH7He}]{\textwidth}{youlingyupi}
+\illustration[清\ 席佩兰花鸟草虫册（局部）\url{https://www.dpm.org.cn/light/253607.html}]{\textwidth}{清+席佩兰花鸟草虫册}
 
-% 二、春节：2月11日至17日放假调休，共7天。2月7日（星期日）、2月20日（星期六）上班。
-\begin{monthCalendar}{2021}{02}
-  \event[mark style=holiday]{2021-02-11}{2021-02-17}{春节放假调休}
-  \event[mark style=blue icon,marker=\faBriefcase]{2021-02-07}{}{上班日}
-  \event[mark style=blue icon,marker=\faBriefcase]{2021-02-20}{}{上班日}
-  \importlunar{2021-02}
+% 二、春节：1月31日至2月6日放假调休，共7天。1月29日（星期六）、1月30日（星期日）上班。
+\begin{monthCalendar}{2022}{02}
+  \event[mark style=holiday]{2022-01-31}{2022-02-06}{春节放假调休}
+  \importlunar{2022-02}
 \end{monthCalendar}
 
 
 
 \clearpage
 
-\illustration[Immortals Riding Dragons: Section of a Tomb Pediment.
-Han dynasty (206 B.C.--A.D. 220), 1st century B.C./A.D. Probably from Henan province, China. Art Initiative Chicago. \url{http://t.cn/EUmmVjV}]{\textwidth}{dragonriders}
+\illustration[明\ 项圣谟青梅初熟卷（局部）\url{https://www.dpm.org.cn/light/255579.html}]{\textwidth}{明-项圣谟青梅初熟卷}
 
-\begin{monthCalendar}{2021}{03}
-  \importlunar{2021-03}
+\begin{monthCalendar}{2022}{03}
+  \importlunar{2022-03}
 \end{monthCalendar}
 
 \clearpage
 
-\illustration[明代金饰件，杭州桃源岭出土，浙江省博物馆 藏。\weibo{一梦琥珀}\url{http://1t.click/bxyv}]{\textwidth}{toushi}
+\illustration[爱上这座城\ 摄影：朱楷 \url{https://www.dpm.org.cn/light/249343.html}]{\textwidth}{爱上这座城-01}
 
-% 三、清明节：4月3日至5日放假调休，共3天。
-\begin{monthCalendar}{2021}{04}
-  \event[mark style=holiday]{2021-04-03}{3}{清明节放假调休}
-  \event[mark style=blue icon,marker=\faBriefcase]{2021-04-25}{}{上班日}
-  \importlunar{2021-04}
+% 三、清明节：4月3日至5日放假调休，共3天。4月2日（星期六）上班。
+% 四、劳动节：4月30日至5月4日放假调休，共5天。4月24日（星期日）、5月7日（星期六）上班。
+\begin{monthCalendar}{2022}{04}
+  \event[mark style=blue icon,marker=\faBriefcase]{2022-04-02}{}{上班日}
+  \event[mark style=holiday]{2022-04-03}{3}{清明节放假调休}
+  \event[mark style=blue icon,marker=\faBriefcase]{2022-04-24}{}{上班日}
+  \event[mark style=holiday]{2022-04-30}{5}{劳动节放假调休}
+  \importlunar{2022-04}
 \end{monthCalendar}
 
 \clearpage
 
-\illustration[西汉，错金银青铜锯齿形器。图片拍摄：一只饭包。\weibo{张博力}\url{http://t.cn/EUm09h0}]{\textwidth}{IMG_4645}
+\illustration[爱上这座城\ 摄影：朱楷\url{https://www.dpm.org.cn/light/248999.html}]{\textwidth}{爱上这座城-02}
 
-% 四、劳动节：5月1日至5日放假调休，共5天。4月25日（星期日）、5月8日（星期六）上班。
-\begin{monthCalendar}{2021}{05}
-  \event[mark style=holiday]{2021-05-01}{5}{劳动节放假调休}
-  \event[mark style=blue icon,marker=\faBriefcase]{2021-05-08}{}{上班日}
-  \importlunar{2021-05}
+% 四、劳动节：4月30日至5月4日放假调休，共5天。4月24日（星期日）、5月7日（星期六）上班。
+\begin{monthCalendar}{2022}{05}
+  \event[mark style=holiday]{2022-04-30}{5}{劳动节放假调休}
+  \event[mark style=blue icon,marker=\faBriefcase]{2022-05-07}{}{上班日}
+  \importlunar{2022-05}
 \end{monthCalendar}
 
 \clearpage
 
-\illustration[商 有领玉璧 1986年广汉三星堆遗址K2出土 四川广汉三星堆博物馆藏 \weibo{川后} \url{http://t.cn/EUmH7He}]{\textwidth}{youlingyupi}
+\illustration[清\ 席佩兰花鸟草虫册（局部）\url{https://www.dpm.org.cn/light/253607.html}]{\textwidth}{清+席佩兰花鸟草虫册}
 
-% 五、端午节：6月12日至14日放假，共3天。
-\begin{monthCalendar}{2021}{06}
-  \event[mark style=holiday]{2021-06-12}{3}{端午节放假调休}
-  \importlunar{2021-06}
+% 五、端午节：6月3日至5日放假，共3天。
+\begin{monthCalendar}{2022}{06}
+  \event[mark style=holiday]{2022-06-03}{3}{端午节放假}
+  \importlunar{2022-06}
 \end{monthCalendar}
 
 \clearpage
 
-\illustration[Immortals Riding Dragons: Section of a Tomb Pediment.
-Han dynasty (206 B.C.--A.D. 220), 1st century B.C./A.D. Probably from Henan province, China. Art Initiative Chicago. \url{http://t.cn/EUmmVjV}]{\textwidth}{dragonriders}
+\illustration[明\ 项圣谟青梅初熟卷（局部）\url{https://www.dpm.org.cn/light/255579.html}]{\textwidth}{明-项圣谟青梅初熟卷}
 
-\begin{monthCalendar}{2021}{07}
-  \importlunar{2021-07}
+\begin{monthCalendar}{2022}{07}
+  \importlunar{2022-07}
 \end{monthCalendar}
 
 \clearpage
 
-\illustration[明代金饰件，杭州桃源岭出土，浙江省博物馆 藏。\weibo{一梦琥珀}\url{http://1t.click/bxyv}]{\textwidth}{toushi}
+\illustration[爱上这座城\ 摄影：朱楷 \url{https://www.dpm.org.cn/light/249343.html}]{\textwidth}{爱上这座城-01}
 
-\begin{monthCalendar}{2021}{08}
-  \importlunar{2021-08}
+\begin{monthCalendar}{2022}{08}
+  \importlunar{2022-08}
 \end{monthCalendar}
 
 \clearpage
 
-\illustration[西汉，错金银青铜锯齿形器。图片拍摄：一只饭包。\weibo{张博力}\url{http://t.cn/EUm09h0}]{\textwidth}{IMG_4645}
+\illustration[爱上这座城\ 摄影：朱楷\url{https://www.dpm.org.cn/light/248999.html}]{\textwidth}{爱上这座城-02}
 
-% 六、中秋节：9月19日至21日放假调休，共3天。9月18日（星期六）上班。
-\begin{monthCalendar}{2021}{09}
-  \event[mark style=holiday]{2021-09-19}{3}{中秋节放假调休}
-  \event[mark style=blue icon,marker=\faBriefcase]{2021-09-18}{}{上班日}
-  \event[mark style=blue icon,marker=\faBriefcase]{2021-09-26}{}{上班日}
-  \importlunar{2021-09}
+% 六、中秋节：9月10日至12日放假，共3天。
+\begin{monthCalendar}{2022}{09}
+  \event[mark style=holiday]{2022-09-10}{3}{中秋节放假}
+  \importlunar{2022-09}
 \end{monthCalendar}
 
 \clearpage
 
-\illustration[商 有领玉璧 1986年广汉三星堆遗址K2出土 四川广汉三星堆博物馆藏 \weibo{川后} \url{http://t.cn/EUmH7He}]{\textwidth}{youlingyupi}
+\illustration[清\ 席佩兰花鸟草虫册（局部）\url{https://www.dpm.org.cn/light/253607.html}]{\textwidth}{清+席佩兰花鸟草虫册}
 
-% 七、国庆节：10月1日至7日放假调休，共7天。9月26日（星期日）、10月9日（星期六）上班。
-\begin{monthCalendar}{2021}{10}
-  \event[mark style=holiday]{2021-10-01}{2021-10-07}{国庆节放假调休}
-  \event[mark style=blue icon,marker=\faBriefcase]{2021-10-09}{}{上班日}
-  \importlunar{2021-10}
+% 七、国庆节：10月1日至7日放假调休，共7天。10月8日（星期六）、10月9日（星期日）上班。
+\begin{monthCalendar}{2022}{10}
+  \event[mark style=holiday]{2022-10-01}{2022-10-07}{国庆节放假调休}
+  \event[mark style=blue icon,marker=\faBriefcase]{2022-10-08}{2}{上班日}
+  \importlunar{2022-10}
 \end{monthCalendar}
 
 \clearpage
 
-\illustration[Immortals Riding Dragons: Section of a Tomb Pediment.
-Han dynasty (206 B.C.--A.D. 220), 1st century B.C./A.D. Probably from Henan province, China. Art Initiative Chicago. \url{http://t.cn/EUmmVjV}]{\textwidth}{dragonriders}
+\illustration[明\ 项圣谟青梅初熟卷（局部）\url{https://www.dpm.org.cn/light/255579.html}]{\textwidth}{明-项圣谟青梅初熟卷}
 
-\begin{monthCalendar}{2021}{11}
-  \importlunar{2021-11}
+\begin{monthCalendar}{2022}{11}
+  \importlunar{2022-11}
 \end{monthCalendar}
 
 \clearpage
 
-\illustration[明代金饰件，杭州桃源岭出土，浙江省博物馆 藏。\weibo{一梦琥珀}\url{http://1t.click/bxyv}]{\textwidth}{toushi}
+\illustration[爱上这座城\ 摄影：朱楷 \url{https://www.dpm.org.cn/light/249343.html}]{\textwidth}{爱上这座城-01}
 
-\begin{monthCalendar}{2021}{12}
-  \importlunar{2021-12}
+\begin{monthCalendar}{2022}{12}
+  \importlunar{2022-12}
 \end{monthCalendar}
 
 \end{document}
