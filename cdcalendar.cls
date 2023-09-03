@@ -1,4 +1,4 @@
-\ProvidesClass{cdcalendar}[2021/08/28 CD Calendar 1.4.3 by LianTze LIM (liantze@gmail.com)]
+\ProvidesClass{cdcalendar}[2021/12/09 CD Calendar 1.4.4 by LianTze LIM (liantze@gmail.com)]
 
 
 \newif\if@smallcal\@smallcalfalse
@@ -135,7 +135,7 @@
 % \urlstyle{rm}
 \renewcommand{\UrlFont}{\rmfamily}
 \RequirePackage{regexpatch}
-\RequirePackage{xargs}
+% \RequirePackage{xargs}
 \RequirePackage{pgfkeys}
 \RequirePackage[absolute,overlay]{textpos}
 \RequirePackage[nopagecolor=white,pagecolor=white]{pagecolor}
@@ -281,6 +281,8 @@
 \newcommand\sundayColor[1]{\def\@sundayColor{#1}}
 \newcommand\monthTitleStyle[1]{\tikzset{monthTitleOptions/.style={#1}}}
 \newcommand\eventStyle[1]{\def\@eventStyle{#1}}
+% v1.4.4 Make it easier to customise caption below \illustration or \otherstuff
+\newcommand\captionStyle[1]{\tikzset{illusCaptionOptions/.style={#1}}}
 
 \pgfkeys{
   /eventmark/.is family, /eventmark,
@@ -424,14 +426,14 @@
 
 \newlength\illusSkip
 \setlength{\illusSkip}{1em}
-
+\tikzset{illusCaptionOptions/.style={font=\itshape\tiny}}
 \newcommand{\illustration}[3][]{%
   \if@landscapecal
   \begin{textblock*}{\paperwidth}(\CalPageMargin,\CalPageMargin)
   \fi%
   \tikz\node[rectangle split, rectangle split parts=2,
     rectangle split part align={left,left},
-    text width=#2,inner xsep=0pt, inner ysep=1pt, font=\itshape\tiny]
+    text width=#2,inner xsep=0pt, inner ysep=1pt, illusCaptionOptions]
   {\includegraphics[width=#2]{#3} \nodepart{second} #1};\par
   \vspace*{\illusSkip}%
   \if@landscapecal
@@ -445,7 +447,7 @@
   \fi%
   \tikz\node[rectangle split, rectangle split parts=2,
     rectangle split part align={left,left},
-    text width=#2,inner xsep=0pt,inner ysep=3pt,font=\itshape\tiny]
+    text width=#2,inner xsep=0pt,inner ysep=3pt,illusCaptionOptions]
   {#3 \nodepart{second} #1};\par
   \vspace*{\illusSkip}%
   \if@landscapecal
