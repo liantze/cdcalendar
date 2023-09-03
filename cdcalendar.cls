@@ -1,4 +1,4 @@
-\ProvidesClass{cdcalendar}[2021/12/09 CD Calendar 1.4.4 by LianTze LIM (liantze@gmail.com)]
+\ProvidesClass{cdcalendar}[2023/09/03 CD Calendar 1.4.5 by LianTze LIM (liantze@gmail.com)]
 
 
 \newif\if@smallcal\@smallcalfalse
@@ -297,11 +297,24 @@
 \newcommand{\printdate}[1]{\DTMdate{#1}}
 
 \def\@eventlist{}
+\newcounter{cdcalaux@next@page}
+\newcounter{cdcalaux@prev@page}
+\newwrite\cdcalaux@next@file
+\newwrite\cdcalaux@prev@file
 
 \newenvironment{monthCalendar}[2]{%
+  \tracinglostchars=0\relax%
+  \setcounter{cdcalaux@next@page}{\value{page}}%
+  \stepcounter{cdcalaux@next@page}%
+  \setcounter{cdcalaux@prev@page}{\value{page}}%
+  \addtocounter{cdcalaux@prev@page}{-1}%
+  \if@prevnext
+    \immediate\openout\cdcalaux@next@file=\jobname-p\thecdcalaux@next@page-p.calaux
+    \immediate\openout\cdcalaux@prev@file=\jobname-p\thecdcalaux@prev@page-n.calaux
+  \fi%
   \begin{textblock*}{\textwidth}[1,1](\paperwidth,\paperheight)
     \raggedleft\tiny\color{black!70}
-    \begin{tikzpicture}
+    \begin{tikzpicture}[remember picture]
     \node[rotate=-90,transform shape,monthTitleOptions, inner sep=\CalPageMargin] (mainMonthHead)
     {\pgfcalendarmonthname{#2} #1};
     \if@giantcal\if@prevnext\begingroup%
@@ -314,9 +327,9 @@
       every day/.append style={align=center,font={\mdseries\sffamily},text width=1.5em},every month/.append style={font=\sffamily\mdseries}}
     \matrix[row sep=2em,matrix anchor=south east,left=0pt of mainMonthHead.south east,yshift=\CalPageMargin]{%
       \pgfmathsetmacro{\tmpmonth}{int(\number#2-1)}%
-      \calendar [dates=#1-\tmpmonth-01 to #1-\tmpmonth-last];\\
+      \calendar (cdCal-\thepage-prev) [dates=#1-\tmpmonth-01 to #1-\tmpmonth-last];\\
       \pgfmathsetmacro{\tmpmonth}{int(\number#2+1)}%
-      \calendar [dates=#1-\tmpmonth-01 to #1-\tmpmonth-last];\\
+      \calendar (cdCal-\thepage-next) [dates=#1-\tmpmonth-01 to #1-\tmpmonth-last];\\
     };
     \endgroup\fi\fi
   \end{tikzpicture}
@@ -342,7 +355,7 @@
 %
   \gdef\@eventlist{}%
 %
-    \begin{tikzpicture}[remember picture,overlay]
+  \begin{tikzpicture}[remember picture,overlay]
 %
     \newcommand{\markCalendar}[2][]{%
       \pgfkeys{/eventmark,default,##1}%
@@ -355,6 +368,22 @@
         \end{scope}%
         % \end{tikzpicture}%
       }%
+      %%% crossing fingers again...
+      \if@prevnext
+        \immediate\write\cdcalaux@next@file{%
+          \noexpand\@ifundefined{pgf@sh@ns@cdCal-\thecdcalaux@next@page-prev-##2}{}{
+          \noexpand\node[transform shape,scale=0.4,inner sep=1.25ex,\expandonce\event@markstyle]
+            at (cdCal-\thecdcalaux@next@page-prev-##2) {\expandonce\event@marker};%
+          }
+        }
+        % 
+        \immediate\write\cdcalaux@prev@file{%
+          \noexpand\@ifundefined{pgf@sh@ns@cdCal-\thecdcalaux@prev@page-next-##2}{}{
+          \noexpand\node[transform shape,scale=0.4,inner sep=1.25ex,\expandonce\event@markstyle]
+            at (cdCal-\thecdcalaux@prev@page-next-##2) {\expandonce\event@marker};%
+          }
+        }
+      \fi
     }
 %
     % #1=style; #2=startdate; #3=enddate or days; #4=name
@@ -419,6 +448,18 @@
   \setlength{\parskip}{0.5ex}%
   \@eventlist%
   \end{minipage}%
+  \if@prevnext
+    \immediate\closeout\cdcalaux@next@file
+    \immediate\closeout\cdcalaux@prev@file
+    \makeatletter
+    \begin{tikzpicture}[remember picture,overlay]
+    \begin{scope}[on background layer]
+    \IfFileExists{\jobname-p\thepage-p.calaux}{\input{\jobname-p\thepage-p.calaux}}{}
+    \IfFileExists{\jobname-p\thepage-n.calaux}{\input{\jobname-p\thepage-n.calaux}}{}
+    \end{scope}
+    \end{tikzpicture}
+    \makeatother
+  \fi
 }
 
 
