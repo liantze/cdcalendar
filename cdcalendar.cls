@@ -1,4 +1,4 @@
-\ProvidesClass{cdcalendar}[2021/08/28 CD Calendar 1.4.3 by LianTze LIM (liantze@gmail.com)]
+\ProvidesClass{cdcalendar}[2023/09/03 CD Calendar 1.4.5 by LianTze LIM (liantze@gmail.com)]
 
 
 \newif\if@smallcal\@smallcalfalse
