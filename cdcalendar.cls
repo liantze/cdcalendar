@@ -288,10 +288,12 @@
   /eventmark/.is family, /eventmark,
   default/.style = {
     marker = {},
-    mark style = {}
+    mark style = {},
+    smallver = {opacity=0.8,inner sep=1.25ex}
   },
   marker/.store in = \event@marker,
-  mark style/.store in = \event@markstyle
+  mark style/.store in = \event@markstyle,
+  smallver/.store in = \event@smallmarkstyle
 }%
 
 \newcommand{\printdate}[1]{\DTMdate{#1}}
@@ -372,14 +374,16 @@
       \if@prevnext
         \immediate\write\cdcalaux@next@file{%
           \noexpand\@ifundefined{pgf@sh@ns@cdCal-\thecdcalaux@next@page-prev-##2}{}{
-          \noexpand\node[transform shape,scale=0.4,inner sep=1.25ex,\expandonce\event@markstyle]
+          \noexpand\node[transform shape,scale=0.4,%inner sep=1.25ex,opacity=0.4,
+          \expandonce\event@markstyle,\expandonce\event@smallmarkstyle]
             at (cdCal-\thecdcalaux@next@page-prev-##2) {\expandonce\event@marker};%
           }
         }
         % 
         \immediate\write\cdcalaux@prev@file{%
           \noexpand\@ifundefined{pgf@sh@ns@cdCal-\thecdcalaux@prev@page-next-##2}{}{
-          \noexpand\node[transform shape,scale=0.4,inner sep=1.25ex,\expandonce\event@markstyle]
+          \noexpand\node[transform shape,scale=0.4,%inner sep=1.25ex,opacity=0.4,
+          \expandonce\event@markstyle,\expandonce\event@smallmarkstyle]
             at (cdCal-\thecdcalaux@prev@page-next-##2) {\expandonce\event@marker};%
           }
         }
