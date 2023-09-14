@@ -311,8 +311,8 @@
   \setcounter{cdcalaux@prev@page}{\value{page}}%
   \addtocounter{cdcalaux@prev@page}{-1}%
   \if@prevnext
-    \immediate\openout\cdcalaux@next@file=\jobname-p\thecdcalaux@next@page-p.calaux
-    \immediate\openout\cdcalaux@prev@file=\jobname-p\thecdcalaux@prev@page-n.calaux
+    \immediate\openout\cdcalaux@next@file=\jobname-p\thecdcalaux@next@page-p.aux
+    \immediate\openout\cdcalaux@prev@file=\jobname-p\thecdcalaux@prev@page-n.aux
   \fi%
   \begin{textblock*}{\textwidth}[1,1](\paperwidth,\paperheight)
     \raggedleft\tiny\color{black!70}
@@ -329,9 +329,9 @@
       every day/.append style={align=center,font={\mdseries\sffamily},text width=1.5em},every month/.append style={font=\sffamily\mdseries}}
     \matrix[row sep=2em,matrix anchor=south east,left=0pt of mainMonthHead.south east,yshift=\CalPageMargin]{%
       \pgfmathsetmacro{\tmpmonth}{int(\number#2-1)}%
-      \calendar (cdCal-\thepage-prev) [dates=#1-\tmpmonth-01 to #1-\tmpmonth-last];\\
+      \calendar (cdCal-p\thepage) [dates=#1-\tmpmonth-01 to #1-\tmpmonth-last];\\
       \pgfmathsetmacro{\tmpmonth}{int(\number#2+1)}%
-      \calendar (cdCal-\thepage-next) [dates=#1-\tmpmonth-01 to #1-\tmpmonth-last];\\
+      \calendar (cdCal-p\thepage) [dates=#1-\tmpmonth-01 to #1-\tmpmonth-last];\\
     };
     \endgroup\fi\fi
   \end{tikzpicture}
@@ -373,18 +373,18 @@
       %%% crossing fingers again...
       \if@prevnext
         \immediate\write\cdcalaux@next@file{%
-          \noexpand\@ifundefined{pgf@sh@ns@cdCal-\thecdcalaux@next@page-prev-##2}{}{
+          \noexpand\@ifundefined{pgf@sh@ns@cdCal-p\thecdcalaux@next@page-##2}{}{
           \noexpand\node[transform shape,scale=0.4,%inner sep=1.25ex,opacity=0.4,
           \expandonce\event@markstyle,\expandonce\event@smallmarkstyle]
-            at (cdCal-\thecdcalaux@next@page-prev-##2) {\expandonce\event@marker};%
+            at (cdCal-p\thecdcalaux@next@page-##2) {\expandonce\event@marker};%
           }
         }
         % 
         \immediate\write\cdcalaux@prev@file{%
-          \noexpand\@ifundefined{pgf@sh@ns@cdCal-\thecdcalaux@prev@page-next-##2}{}{
+          \noexpand\@ifundefined{pgf@sh@ns@cdCal-p\thecdcalaux@prev@page-##2}{}{
           \noexpand\node[transform shape,scale=0.4,%inner sep=1.25ex,opacity=0.4,
           \expandonce\event@markstyle,\expandonce\event@smallmarkstyle]
-            at (cdCal-\thecdcalaux@prev@page-next-##2) {\expandonce\event@marker};%
+            at (cdCal-p\thecdcalaux@prev@page-##2) {\expandonce\event@marker};%
           }
         }
       \fi
@@ -458,8 +458,8 @@
     \makeatletter
     \begin{tikzpicture}[remember picture,overlay]
     \begin{scope}[on background layer]
-    \IfFileExists{\jobname-p\thepage-p.calaux}{\input{\jobname-p\thepage-p.calaux}}{}
-    \IfFileExists{\jobname-p\thepage-n.calaux}{\input{\jobname-p\thepage-n.calaux}}{}
+    \IfFileExists{\jobname-p\thepage-p.aux}{\input{\jobname-p\thepage-p.aux}}{}
+    \IfFileExists{\jobname-p\thepage-n.aux}{\input{\jobname-p\thepage-n.aux}}{}
     \end{scope}
     \end{tikzpicture}
     \makeatother

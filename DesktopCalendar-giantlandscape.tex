@@ -31,7 +31,7 @@
 \tikzset{blue icon/.style={text=SkyBlue,font=\Large}}
 \tikzset{pink icon/.style={text=Pink,font=\large}}
 \tikzset{holiday/.style={rectangle,fill=orange!70}}
-
+\tikzset{smfillbg/.style={opacity=0.4,inner sep=1.5ex}}
 
 % Default values -- change if needed
 % \setlength{\CalPageMargin}{1cm}
@@ -53,7 +53,7 @@
 
 \begin{monthCalendar}{2022}{01}
 
-\event{2022-01-01}{}{New Year's Day}
+\event[mark style=holiday,smallver=smfillbg]{2022-01-01}{}{New Year's Day}
 \event[mark style=blue icon,marker=\faBriefcase]{2022-01-30}{5}{ACME Conference}
 
 \end{monthCalendar}
@@ -77,5 +77,7 @@
 \event[mark style=pink icon,marker=\faBirthdayCake]{2022-02-07}{}{Someone's birthday}
 \event{2022-02-24}{}{Grant proposal deadline!!}
 
+% A cheat/hack to get Dec 2021 events onto the small calendar on the previous page
+\event[mark style=holiday,smallver=smfillbg]{2021-12-25}{}{Christmas Day}
 \end{monthCalendar}
 \end{document}
