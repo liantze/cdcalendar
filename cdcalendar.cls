@@ -1,4 +1,4 @@
-\ProvidesClass{cdcalendar}[2023/09/03 CD Calendar 1.4.5 by LianTze LIM (liantze@gmail.com)]
+\ProvidesClass{cdcalendar}[2023/09/16 CD Calendar 1.4.5 by LianTze LIM (liantze@gmail.com)]
 
 
 \newif\if@smallcal\@smallcalfalse
@@ -164,13 +164,15 @@
   \def\@coverTitleText{#2}
 }
 
+\newtoggle{stealth}\togglefalse{stealth}
+
 \newcommand\makeCover{%
   \begingroup%
   \ifnum\pgf@logicalpages=0\relax
     \pagecolor{\@coverBgColor}%
   \else
     \ifx\@Gm@driver\@Gm@dvipdfm
-      \typeout{I see you dvipdfm}
+      % \typeout{I see you dvipdfm}
       \tikz[remember picture,overlay]
       \fill[\@coverBgColor] (current page.north west) rectangle (current page.south east);%
     \else
@@ -336,7 +338,7 @@
     \endgroup\fi\fi
   \end{tikzpicture}
   \end{textblock*}%
-  % \begin{textblock*}{\textwidth}[0,1](0pt,\paperheight)
+  % 
   \begin{textblock*}{\textwidth}[0,1](
       \if@landscapecal\dimexpr\Gm@lmargin-\CalPageMargin\relax
       \else 0pt\fi,
@@ -374,7 +376,7 @@
       \if@prevnext
         \immediate\write\cdcalaux@next@file{%
           \noexpand\@ifundefined{pgf@sh@ns@cdCal-p\thecdcalaux@next@page-##2}{}{
-          \noexpand\node[transform shape,scale=0.4,%inner sep=1.25ex,opacity=0.4,
+          \noexpand\node[transform shape,scale=0.4,
           \expandonce\event@markstyle,\expandonce\event@smallmarkstyle]
             at (cdCal-p\thecdcalaux@next@page-##2) {\expandonce\event@marker};%
           }
@@ -382,7 +384,7 @@
         % 
         \immediate\write\cdcalaux@prev@file{%
           \noexpand\@ifundefined{pgf@sh@ns@cdCal-p\thecdcalaux@prev@page-##2}{}{
-          \noexpand\node[transform shape,scale=0.4,%inner sep=1.25ex,opacity=0.4,
+          \noexpand\node[transform shape,scale=0.4,
           \expandonce\event@markstyle,\expandonce\event@smallmarkstyle]
             at (cdCal-p\thecdcalaux@prev@page-##2) {\expandonce\event@marker};%
           }
@@ -405,13 +407,15 @@
     \newcommand{\oneDayEvent}[3][mark style=default mark]{%
       \pgfkeys{/eventmark,default,##1}%
       \markCalendar[##1]{##2}%
-      \protected@xappto{\@eventlist}{%
-        \makebox[1.75em][c]{\protect\tikz%
-          \protect\node[\event@markstyle,font=\fontsize{1em}{1em},%
-          \ifdefempty{\event@marker}{inner sep=0.5ex}{inner sep=0pt},
-  ]{\event@marker};}%
-        \printeventname{##3\eventSep}\DTMdate{##2}\par%
-      }{}{}
+      \nottoggle{stealth}{%
+        \protected@xappto{\@eventlist}{%
+          \makebox[1.75em][c]{\protect\tikz%
+            \protect\node[\event@markstyle,font=\fontsize{1em}{1em},%
+            \ifdefempty{\event@marker}{inner sep=0.5ex}{inner sep=0pt},
+            ]{\event@marker};}%
+          \printeventname{##3\eventSep}\DTMdate{##2}\par%
+        }{}{}
+      }{}
     }
 %
     % #1=style; #2=startdate; #3=enddate or days; #4=name
@@ -430,12 +434,14 @@
         \DTMmakeglobal{tmp}%
       	\markCalendar[##1]{\DTMfetchyear{tmp}-\DTMfetchmonth{tmp}-\DTMfetchday{tmp}}%
       }%
-      \protected@xappto{\@eventlist}{%
-        \makebox[1.75em][c]{\protect\tikz%
-          \protect\node[\event@markstyle,font=\fontsize{1em}{1em},%
-          \ifdefempty{\event@marker}{inner sep=0.5ex}{inner sep=0pt},%
-          ]{\event@marker};}%
-        \printeventname{##4\eventSep}\DTMdate{##2}\,--\,\DTMusedate{tmp}\par}{}{}%
+      \nottoggle{stealth}{%
+        \protected@xappto{\@eventlist}{%
+          \makebox[1.75em][c]{\protect\tikz%
+            \protect\node[\event@markstyle,font=\fontsize{1em}{1em},%
+            \ifdefempty{\event@marker}{inner sep=0.5ex}{inner sep=0pt},%
+            ]{\event@marker};}%
+          \printeventname{##4\eventSep}\DTMdate{##2}\,--\,\DTMusedate{tmp}\par}{}{}%
+      }{}
     }
 %
     % #1=style; #2=startdate; #3=enddate; #4=name
