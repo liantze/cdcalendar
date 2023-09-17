@@ -1,19 +1,19 @@
 # Customisable multilingual calendars with LaTeX
 
-The calendars are printed 4-up to fit 3.5" floppy disk jewel cases, or 2-up to fit CD jewel cases. There is now also a full-page version for wall calendars as of Dec 2016.
+The calendars are printed 4-up to fit 3.5" floppy disk jewel cases, or 2-up to fit CD jewel cases, or a fullsize A4 (portrait or landscape) version for wall calendars.
 
 <img src="img/actual.jpg" width="500px" />
 
-Colours, illustrations, fonts etc are customisable. The calendars can be marked with events with date ranges (updated June 22, 2015). See [this blog post](https://www.overleaf.com/blog/217-a-multilingual-customisable-cd-slash-floppy-disk-jewel-case-calendar-with-latex) for more information (syntax of some commands have changed though). [Templates are available on Overleaf.](https://www.overleaf.com/latex/templates/desktop-calendar-with-events/htkctjjgmxjx)
+Colours, illustrations, fonts etc are customisable. The calendars can be marked with events with date ranges. See [this blog post](https://www.overleaf.com/blog/217-a-multilingual-customisable-cd-slash-floppy-disk-jewel-case-calendar-with-latex) for more information (syntax of some commands have changed though). [Templates are available on Overleaf.](https://www.overleaf.com/latex/templates/desktop-calendar-with-events/htkctjjgmxjx)
 
-As of v1.4 (December 2019), that `giant` document class option i.e. full-sized A4 calendar will have mini-calendars of the previous and next months on each page of `monthCalendar`. Use the `giantsolo` option instead if you do not want these mini-calendars alongside.
+The `giant` document class option i.e. full-sized A4 calendar will have mini-calendars of the previous and next months on each page of `monthCalendar`. Use the `giantsolo` option instead if you do not want these mini-calendars alongside.
 
-<img src="img/calendar2020.png" width="500px" alt="'Giant' calendar format" />
+<img src="img/calendar2024.png" width="500px" alt="'Giant' calendar format" />
 
 
-From v1.4.3 (September 2021), a `landscape` option is available for `giant` and `giantsolo`.
+A `landscape` option is available for `giant` and `giantsolo`.
 
-<img src="img/calendar2022.png" width="500px" alt="'Giant' landscape calendar format"/>
+<img src="img/calendar2024-ls.png" width="500px" alt="'Giant' landscape calendar format"/>
 
 
 ## Language Localisation
@@ -60,7 +60,7 @@ An example of a month calendar with events (syntax updated in v1.2):
 ```
 
 The events mark and style can be customised: (All `\tikzset` styles for use with
-`mark style` should be issued in the document preamble; new in v1.2)
+`mark style` should be issued in the document preamble.)
 
 ```latex
 % In the preamble
@@ -101,9 +101,10 @@ You can add an illustration on each page (the length is the width of the image).
 There are a few other settings you can set as well. These can be re-issued at any point in the document to change the styles.
 
 ```latex
-\dayHeadingStyle{font=\sffamily\color{gray!90}}
-\sundayColor{red}
-\monthTitleStyle{font={\Huge\sffamily}, RoyalBlue}
+\captionStyle{font=\sffamily\itshape\tiny}
+\dayHeadingStyle{font=\sffamily,text=gray!90}
+\sundayColor{red!70!black}
+\monthTitleStyle{font={\Huge\sffamily},text=RoyalBlue}
 \eventStyle{\scriptsize\sffamily}
 \newcommand{\printeventname}[1]{\textbf{#1}}   % can be renewed
 \newcommand{\eventSep}{: }  % can be renewed

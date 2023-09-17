@@ -32,7 +32,7 @@
 
 \coverTitle[font=\fontsize{40pt}{42pt}\sffamily\bfseries,
 text=white,text width=\linewidth,align=flush right]
-{2022カレンダー}
+{2024カレンダー}
 
 \makeCover
 \clearpage
@@ -52,7 +52,7 @@ text=white,text width=\linewidth,align=flush right]
 %%%%%%
 \dayHeadingStyle{font=\sffamily\color{gray!90}}
 \sundayColor{red}
-\monthTitleStyle{font={\fontsize{42pt}{44pt}\bfseries\sffamily}, red!50!RedViolet}
+\monthTitleStyle{font={\fontsize{42pt}{44pt}\bfseries\sffamily},text=red!50!RedViolet}
 \eventStyle{\scriptsize\sffamily}
 
 %%%%%%
@@ -62,17 +62,17 @@ text=white,text width=\linewidth,align=flush right]
 [Happy TikZ animals! This is an optional description about the illustrations.]
 {0.9\linewidth}{tikzlings}
 
-\begin{monthCalendar}{2022}{01}
+\begin{monthCalendar}{2024}{01}
 
 %%% events must be given AFTER \begin{monthCalendar}
 %%% Currently you must give events on the same page
 %%% as the monthly calendar.
 
 %% This is an one-day event
-\event[mark style=holiday]{2022-01-01}{}{元日}
+\event[mark style=holiday]{2024-01-01}{}{元日}
 %% This is a 5-day event
-\event[mark style=blue icon,marker=\faBriefcase]{2022-01-30}{5}{ACME会議}
-%% you could also write \event{2022-01-06}{2022-02-03}{ACME会議}
+\event[mark style=blue icon,marker=\faBriefcase]{2024-01-30}{5}{ACME会議}
+%% you could also write \event{2024-01-06}{2024-02-03}{ACME会議}
 
 \end{monthCalendar}
 
@@ -91,85 +91,81 @@ text=white,text width=\linewidth,align=flush right]
   \hat{f}(\xi) = \int^{\infty}_{-\infty} f(x) e^{-2\pi ix\xi} \mathop{dx}
 \]}
 
-\begin{monthCalendar}{2022}{02}
+\begin{monthCalendar}{2024}{02}
 
 %% Repeat the event if it spans two months
-\event[mark style=blue icon,marker=\faBriefcase]{2022-01-30}{5}{ACME会議}
-\event[mark style=pink icon,marker=\faBirthdayCake]{2022-02-07}{}{友人の誕生日}
-\event{2022-02-24}{}{締め切り！}
+\event[mark style=blue icon,marker=\faBriefcase]{2024-01-30}{5}{ACME会議}
+\event[mark style=pink icon,marker=\faBirthdayCake]{2024-02-07}{}{友人の誕生日}
+\event{2024-02-24}{}{締め切り！}
 
 \end{monthCalendar}
 
 \clearpage
 
 %%% I... I was too tired search for more pics so will just show some cute animals
-\otherstuff{\linewidth}{\tikz[scale=1.5]\koala[crown];}
-\begin{monthCalendar}{2022}{03}
+\otherstuff{\linewidth}{\tikz[scale=1.5]{\koala[crown]};}
+\begin{monthCalendar}{2024}{03}
 \end{monthCalendar}
 
 \clearpage
 
-\otherstuff{\linewidth}{\tikz[scale=1.5]\duck[graduate,glasses];}
-\begin{monthCalendar}{2022}{04}
+\otherstuff{\linewidth}{\tikz[scale=1.5]{\duck[graduate,glasses]};}
+\begin{monthCalendar}{2024}{04}
 \end{monthCalendar}
 
 \clearpage
 
-\otherstuff{\linewidth}{\tikz[scale=1.5]\mouse[cheese];}
-\begin{monthCalendar}{2022}{05}
+\otherstuff{\linewidth}{\tikz[scale=1.5]{\mouse[cheese]};}
+\begin{monthCalendar}{2024}{05}
 \end{monthCalendar}
 
 \clearpage
 
-\otherstuff{\linewidth}{\tikz[scale=1.5]\duck[crozier,strawhat=red!80!white,bowtie=red];}
-\begin{monthCalendar}{2022}{06}
+\otherstuff{\linewidth}{\tikz[scale=1.5]{\duck[crozier,strawhat=red!80!white,bowtie=red]};}
+\begin{monthCalendar}{2024}{06}
 \end{monthCalendar}
 
 \clearpage
 
-\otherstuff{\linewidth}{\tikz[scale=1.5]\sloth[icecream];}
-\begin{monthCalendar}{2022}{07}
-\end{monthCalendar}
-
-\clearpage
-
-\otherstuff{\linewidth}
-  {\tikz[scale=1.5]\duck[body=pink!50!white,bill=orange,
-  unicorn=magenta!60!violet, longhair=magenta!60!violet];}
-\begin{monthCalendar}{2022}{08}
-\end{monthCalendar}
-
-\clearpage
-
-\otherstuff{\linewidth}{\tikz[scale=1.5]\coati[umbrella=blue!60!black,handbag];}
-
-\begin{monthCalendar}{2022}{09}
+\otherstuff{\linewidth}{\tikz[scale=1.5]{\sloth[icecream]};}
+\begin{monthCalendar}{2024}{07}
 \end{monthCalendar}
 
 \clearpage
 
 \otherstuff{\linewidth}
-  {\tikz[scale=1.5]\duck[witch=black!50!gray,
+  {\tikz[scale=1.5]{\duck[body=pink!50!white,bill=orange,
+  unicorn=magenta!60!violet, longhair=magenta!60!violet]};}
+\begin{monthCalendar}{2024}{08}
+\end{monthCalendar}
+
+\clearpage
+
+\otherstuff{\linewidth}{\tikz[scale=1.5]{\coati[umbrella=blue!60!black,handbag]};}
+
+\begin{monthCalendar}{2024}{09}
+\end{monthCalendar}
+
+\clearpage
+
+\otherstuff{\linewidth}
+  {\tikz[scale=1.5]{\duck[witch=black!50!gray,
       longhair=red!80!black,
       jacket=black!50!gray,
-      magicwand];}
-\begin{monthCalendar}{2022}{10}
+      magicwand]};}
+\begin{monthCalendar}{2024}{10}
 \end{monthCalendar}
 
 \clearpage
 
-\otherstuff{\linewidth}{
-\begin{tikzpicture}
-  \duck[snowduck=white!90!gray,eye=white];
-\end{tikzpicture}
-}
-\begin{monthCalendar}{2022}{11}
+\otherstuff{\linewidth}{\tikz[scale=1.5]{\duck[snowduck=white!90!gray,eye=white]};}
+\begin{monthCalendar}{2024}{11}
 \end{monthCalendar}
 
 \clearpage
 
-\otherstuff{\linewidth}{\tikz[scale=1.5]\marmot[santa,wine];}
-\begin{monthCalendar}{2022}{12}
+\otherstuff{\linewidth}{\tikz[scale=1.5]{\marmot[santa,wine]};}
+\begin{monthCalendar}{2024}{12}
 \end{monthCalendar}
 
 \end{document}

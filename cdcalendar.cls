@@ -54,6 +54,8 @@
 
 % v1.3.4 Load babel and translator even earlier
 \if@babel
+  % v1.4.5 Turn off shorthands anyway
+  \PassOptionsToPackage{shorthands=off}{babel}
   \RequirePackage{babel}
   \RequirePackage{translator}
   \languagealias{british}{English}
@@ -153,9 +155,6 @@
 \def\eventSep{: }
 
 \newcommand\coverBgColor[1]{%
-  % \ifxetex%
-  % \ClassWarning{cdcalendar}{xelatex may not work correctly with cdcalendar especially if you use \noexpand\coverBgColor! Compile with xelatex instead.}
-  % \fi%
   \def\@coverBgColor{#1}%
 }
 \newcommand\coverImage[2][]{\def\@coverImageCaption{#1}\def\@coverImage{#2}}
@@ -164,6 +163,8 @@
   \def\@coverTitleText{#2}
 }
 
+% v1.4.5: Hack/cheat for not printing an event when marking it
+% useful for sneaking in marks on prev/next thumbnails on next/prev page
 \newtoggle{stealth}\togglefalse{stealth}
 
 \newcommand\makeCover{%
@@ -295,6 +296,7 @@
   },
   marker/.store in = \event@marker,
   mark style/.store in = \event@markstyle,
+  % v1.4.5: add smallver for customising marks on prev/next thumbnail calendars
   smallver/.store in = \event@smallmarkstyle
 }%
 
@@ -307,7 +309,12 @@
 \newwrite\cdcalaux@prev@file
 
 \newenvironment{monthCalendar}[2]{%
+  % v1.4.5: lazy hack for turning off all the "there is no x in font nullfont" messages
   \tracinglostchars=0\relax%
+  % v1.4.5: When @prevnext true, create two .aux files for each monthCalendar
+  % page to hold the event marks from the previous and next page
+  % Kinda ugly with all the plethora of generated files... but this is the 
+  % best I can manage now.
   \setcounter{cdcalaux@next@page}{\value{page}}%
   \stepcounter{cdcalaux@next@page}%
   \setcounter{cdcalaux@prev@page}{\value{page}}%
@@ -365,14 +372,13 @@
       \pgfkeys{/eventmark,default,##1}%
       \DTMsavedate{tmp}{##2}%
       \@ifundefined{pgf@sh@ns@cdCal-\thepage-##2}{}{%
-        % \begin{tikzpicture}[overlay,remember picture]%
         \begin{scope}[on background layer]
         \node[inner sep=1.25ex,\event@markstyle]
           at (cdCal-\thepage-##2) {\event@marker};%
         \end{scope}%
-        % \end{tikzpicture}%
       }%
-      %%% crossing fingers again...
+      %%% v1.4.5: When @prevnext true, write each event mark to the prev and 
+      %%% next page .aux files too so that they get marked on the thumbnails 
       \if@prevnext
         \immediate\write\cdcalaux@next@file{%
           \noexpand\@ifundefined{pgf@sh@ns@cdCal-p\thecdcalaux@next@page-##2}{}{
@@ -407,6 +413,7 @@
     \newcommand{\oneDayEvent}[3][mark style=default mark]{%
       \pgfkeys{/eventmark,default,##1}%
       \markCalendar[##1]{##2}%
+      % v1.4.5: If in stealth mode, don't print the event name and date in list
       \nottoggle{stealth}{%
         \protected@xappto{\@eventlist}{%
           \makebox[1.75em][c]{\protect\tikz%
@@ -434,6 +441,7 @@
         \DTMmakeglobal{tmp}%
       	\markCalendar[##1]{\DTMfetchyear{tmp}-\DTMfetchmonth{tmp}-\DTMfetchday{tmp}}%
       }%
+      % v1.4.5: If in stealth mode, don't print the event name and date in list
       \nottoggle{stealth}{%
         \protected@xappto{\@eventlist}{%
           \makebox[1.75em][c]{\protect\tikz%
@@ -458,6 +466,8 @@
   \setlength{\parskip}{0.5ex}%
   \@eventlist%
   \end{minipage}%
+  % v1.4.5: if @prevnext true, then read in the prev/next .aux files to
+  % mark events on prev/next thumbnail calendars
   \if@prevnext
     \immediate\closeout\cdcalaux@next@file
     \immediate\closeout\cdcalaux@prev@file
