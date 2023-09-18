@@ -1,4 +1,4 @@
-\ProvidesClass{cdcalendar}[2023/09/16 CD Calendar 1.4.5 by LianTze LIM (liantze@gmail.com)]
+\ProvidesClass{cdcalendar}[2023/09/18 CD Calendar 1.4.5 by LianTze LIM (liantze@gmail.com)]
 
 
 \newif\if@smallcal\@smallcalfalse
@@ -84,40 +84,42 @@
     \setlength{\CalPageMargin}{0.3cm}
     \geometry{paperheight=9.5cm,paperwidth=9cm,margin=\CalPageMargin}
     \pgfpagesuselayout{4 on 1}[a4paper]
+    % v1.4.5 Fix border stroke for xelatex
     \pgfpageslogicalpageoptions{1}{
         resized width=9cm,
         resized height=9.5cm,
-        border code=\pgfsetlinewidth{0.4pt}\pgfstroke
+        border code=\pgfsetlinewidth{0.4pt}\color{black}\pgfstroke
     }
     \pgfpageslogicalpageoptions{2}{
         resized width=9cm,
         resized height=9.5cm,
-        border code=\pgfsetlinewidth{0.4pt}\pgfstroke
+        border code=\pgfsetlinewidth{0.4pt}\color{black}\pgfstroke
     }
     \pgfpageslogicalpageoptions{3}{
         resized width=9cm,
         resized height=9.5cm,
-        border code=\pgfsetlinewidth{0.4pt}\pgfstroke
+        border code=\pgfsetlinewidth{0.4pt}\color{black}\pgfstroke
     }
     \pgfpageslogicalpageoptions{4}{
         resized width=9cm,
         resized height=9.5cm,
-        border code=\pgfsetlinewidth{0.4pt}\pgfstroke
+        border code=\pgfsetlinewidth{0.4pt}\color{black}\pgfstroke
     }
   \else
     \setlength{\CalPageMargin}{0.5cm}
     \geometry{paperheight=13.65cm,paperwidth=11.7cm,margin=\CalPageMargin}
     \RequirePackage{pgfpages}
     \pgfpagesuselayout{2 on 1}[a4paper,landscape]
+    % v1.4.5 Fix border stroke for xelatex
     \pgfpageslogicalpageoptions{1}{
         resized width=11.7cm,
         resized height=13.65cm,
-        border code=\pgfsetlinewidth{0.4pt}\pgfstroke
+        border code=\pgfsetlinewidth{0.4pt}\color{black}\pgfstroke
     }
     \pgfpageslogicalpageoptions{2}{
         resized width=11.7cm,
         resized height=13.65cm,
-        border code=\pgfsetlinewidth{0.4pt}\pgfstroke
+        border code=\pgfsetlinewidth{0.4pt}\color{black}\pgfstroke
     }
   \fi
 \fi
