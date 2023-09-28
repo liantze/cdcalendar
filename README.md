@@ -18,27 +18,29 @@ A `landscape` option is available for `giant` and `giantsolo`.
 
 ## Language Localisation
 
-Localisation possible with languages supported by `babel`/`translator`/`datetime2`.
+Localisation possible with languages supported by `babel`/`translator`/`datetime2`. For example with `dutch` and `german`:
+
+<img src="img/dutch.png" width="200px" alt="Calendar in Dutch"/>
+<img src="img/german.png" width="200px" alt="Calendar in German"/>
 
 
 The Chinese example is best compiled with XeLaTeX. The Japanese example is best compiled with LuaLaTeX.
 
-For (partially) unsupported languages or if you'd like to customise the localisations yourself, either because the language isn't supported by babel and translator, or because the language doesn't lend itself well to having the first letter extracted for the week day headings (e.g. Chinese), you can. In this case do your own modifications; see `ChineseCalendar.tex` and `zh-mod.sty` for an example. You'll most likely want to stop `cdcalendar` from loading babel in this case, so use the `nobabel` option:
+For (partially) unsupported languages or if you'd like to customise the localisations yourself, either because the language isn't supported by `babel` and `translator`, or because the language doesn't lend itself well to having the first letter extracted for the week day headings (e.g. Chinese), you can. In this case do your own modifications; see `ChineseCalendar.tex` and `zh-mod.sty` for an example. You'll most likely want to stop `cdcalendar` from loading babel in this case, so use the `nobabel` option:
 
 ```latex
 \documentclass[sundayweek,nobabel]{cdcalendar}
 \usepackage{zh-mod}
 ```
 
-You can still write `\usepackage[...]{babel}` yourself in the preamble (for hyphenations etc), but it won't have any effects on the month and week day names , nor the date localisations; you'll have to provide your own mods. Example for Bahasa Indonesia:
+You can still write `\usepackage[...]{babel}` yourself in the preamble (for hyphenations etc), but it won't have any effects on the month and week day names , nor the date localisations; you'll have to provide your own mods. Example for Bahasa Melayu:
 
 ```latex
 \documentclass[nobabel]{cdcalendar}    % don't load babel yet!
 \usepackage{ms-mod}   % our own Bahasa Melayu localisation
-\usepackage[bahasam]{babel}  % if you need Melayu hyphenation patterns
+\usepackage[bahasam]{babel}  % if you need Bahasa Melayu hyphenation patterns
 ```
 
-I'll add mods for other languages from time to time when I feel like it. ;-)
 
 # Marking Events on the Calendar
 
