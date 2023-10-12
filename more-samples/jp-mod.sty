@@ -42,17 +42,7 @@
 
 \patchcmd{\monthCalendar}{rotate=-90,transform shape,}{}{}{}
 
-\@ifpackagelater{luatexja-core}{2017/09/01}{%
-  \xpatchcmd*{\monthCalendar}
-  {\pgfcalendarmonthname{#2} #1}
-  {\hbox{\tate\pgfcalendarmonthname{#2} #1}}%
-  {}{}
-}{%
-  \xpatchcmd*{\monthCalendar}
-  {\pgfcalendarmonthname{#2} #1}
-  {\rotatebox[origin=tl]{-90}{\tate\pgfcalendarmonthname{#2} #1}}%
-  {}{}
-}
+\xpatchcmd*{\monthCalendar}{\cdc@printmonthname}{\tate\cdc@printmonthname}{}{}
 
 \patchcmd{\monthCalendar}{--}{—}{}{}
 \patchcmd{\monthCalendar}{mainMonthHead.south east}{mainMonthHead.south west}{}{}

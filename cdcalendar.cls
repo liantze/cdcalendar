@@ -1,4 +1,4 @@
-\ProvidesClass{cdcalendar}[2023/09/18 CD Calendar 1.4.5 by LianTze LIM (liantze@gmail.com)]
+\ProvidesClass{cdcalendar}[2023/10/12 CD Calendar 1.4.5 by LianTze LIM (liantze@gmail.com)]
 
 
 \newif\if@smallcal\@smallcalfalse
@@ -226,7 +226,15 @@
       \pgftransformyshift{-\pgf@ya}
       \foreach \n/\d in \@daynumlist {
         \if@babel
-          \StrLeft{\xpgfcalendarweekdayname{\d}}{1}[\theD]
+          % \typeout{Language is \TrackedLanguageFromDialect{\languagename}}
+          \ifcsdef{DTM\TrackedLanguageFromDialect{\languagename}Weekdayname}
+            {\edef\wd@name{\csuse{DTM\TrackedLanguageFromDialect{\languagename}Weekdayname}{\d}}}
+            {\ifcsdef{DTM\TrackedLanguageFromDialect{\languagename}weekdayname}
+              {\edef\wd@name{\csuse{DTM\TrackedLanguageFromDialect{\languagename}weekdayname}{\d}}}
+              {\edef\wd@name{\pgfcalendarweekdayname{\d}}}
+            }
+          \StrLeft{\wd@name}{1}[\theD]
+          % \StrLeft{\xpgfcalendarweekdayname{\d}}{1}[\theD]
         \else
           \def\theD{\pgfcalendarweekdayname{\d}}
         \fi
@@ -310,6 +318,19 @@
 \newwrite\cdcalaux@next@file
 \newwrite\cdcalaux@prev@file
 
+\newcommand{\cdc@printmonthname}[1]{%
+  \if@babel
+  \ifcsdef{DTM\TrackedLanguageFromDialect{\languagename}Monthname}
+    {\csuse{DTM\TrackedLanguageFromDialect{\languagename}Monthname}{#1}}
+    {\ifcsdef{DTM\TrackedLanguageFromDialect{\languagename}monthname}
+      {\csuse{DTM\TrackedLanguageFromDialect{\languagename}monthname}{#1}}
+      {\pgfcalendarmonthname{#1}}%
+    }%
+  \else
+    \pgfcalendarmonthname{#1}%
+  \fi%
+}
+
 \newenvironment{monthCalendar}[2]{%
   % v1.4.5: lazy hack for turning off all the "there is no x in font nullfont" messages
   \tracinglostchars=0\relax%
@@ -329,7 +350,8 @@
     \raggedleft\tiny\color{black!70}
     \begin{tikzpicture}[remember picture]
     \node[rotate=-90,transform shape,monthTitleOptions, inner sep=\CalPageMargin] (mainMonthHead)
-    {\pgfcalendarmonthname{#2} #1};
+    % {\pgfcalendarmonthname{#2} #1};
+      {\cdc@printmonthname{#2} #1};
     \if@giantcal\if@prevnext\begingroup%
     \tikzset{every calendar/.append style={
         day yshift=1.5em,month label above centered,

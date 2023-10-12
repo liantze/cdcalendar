@@ -1,7 +1,3 @@
-%% for use with \documentclass[no{\linewidth}]{cdcalendar}
-% \RequirePackage[match]{luatexja-fontspec}
-% \RequirePackage{luatexja-core}
-
 % modern names
 \deftranslation{January}{一月}
 \deftranslation{February}{二月}
@@ -41,10 +37,7 @@
 \renewcommand{\eventSep}{：}
 
 \patchcmd{\monthCalendar}{rotate=-90,transform shape,}{}{}{}
-\xpatchcmd*{\monthCalendar}
-  {\pgfcalendarmonthname{#2} #1}
-  {\hbox{\tate\adjustbaseline\pgfcalendarmonthname{#2} #1}}%
-  {}{}
+\xpatchcmd*{\monthCalendar}{\cdc@printmonthname{#2} #1}{\hbox{\tate\adjustbaseline\cdc@printmonthname{#2} #1}}{}{}
 % \xpatchcmd*{\monthCalendar}
 %   {every month/.append style={font=\sffamily\mdseries}}
 % 	{every month/.append style={font=\sffamily\mdseries\tate\adjustbaseline}}
