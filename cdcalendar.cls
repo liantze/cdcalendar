@@ -319,15 +319,16 @@
 \newwrite\cdcalaux@prev@file
 
 \newcommand{\cdc@printmonthname}[1]{%
+  \if@giantcal\def\opt@short{}\else\def\opt@short{short}\fi
   \if@babel
-  \ifcsdef{DTM\TrackedLanguageFromDialect{\languagename}Monthname}
-    {\csuse{DTM\TrackedLanguageFromDialect{\languagename}Monthname}{#1}}
-    {\ifcsdef{DTM\TrackedLanguageFromDialect{\languagename}monthname}
-      {\csuse{DTM\TrackedLanguageFromDialect{\languagename}monthname}{#1}}
-      {\pgfcalendarmonthname{#1}}%
+  \ifcsdef{DTM\TrackedLanguageFromDialect{\languagename}\opt@short Monthname}
+    {\csuse{DTM\TrackedLanguageFromDialect{\languagename}\opt@short Monthname}{#1}}
+    {\ifcsdef{DTM\TrackedLanguageFromDialect{\languagename}\opt@short monthname}
+      {\csuse{DTM\TrackedLanguageFromDialect{\languagename}\opt@short monthname}{#1}}
+      {\csuse{pgfcalendarmonth\opt@short name}{#1}}%
     }%
   \else
-    \pgfcalendarmonthname{#1}%
+    \csuse{pgfcalendarmonth\opt@short name}{#1}%
   \fi%
 }
 
@@ -349,7 +350,7 @@
   \begin{textblock*}{\textwidth}[1,1](\paperwidth,\paperheight)
     \raggedleft\tiny\color{black!70}
     \begin{tikzpicture}[remember picture]
-    \node[rotate=-90,transform shape,monthTitleOptions, inner sep=\CalPageMargin] (mainMonthHead)
+    \node[rotate=-90,transform shape,inner sep=\CalPageMargin,monthTitleOptions] (mainMonthHead)
     % {\pgfcalendarmonthname{#2} #1};
       {\cdc@printmonthname{#2} #1};
     \if@giantcal\if@prevnext\begingroup%

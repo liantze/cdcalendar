@@ -1,4 +1,4 @@
-% \title{Desktop Calendar (fits 3.5" floppy disk jewel case)}
+% \title{Desktop Calendar (fits CD jewel case)}
 
 %%% The calendars are printed 2-up to fit CD jewel cases,
 %%% or 4-up to fit 3" floppy disk jewel cases. OR, now a
@@ -6,13 +6,12 @@
 %%%
 %%% Localisation possible with languages supported by
 %%% babel/translator/datetime2.
-\documentclass[9pt,british,small]{cdcalendar}
+\documentclass[12pt,british]{cdcalendar}
 
 %%% Use the sundayweek option for weeks to start on Sundays.
-% \documentclass[9pt,british,small,sundayweek]{cdcalendar}
+% \documentclass[12pt,british,sundayweek]{cdcalendar}
 
-
-%% If using pdfLaTeX %%%%%%%%%%%%%%%%%%%%%%%%%%
+%% If using pdfLaTeX %%%%%%%%%%
 \usepackage[T1]{fontenc}
 
 \usepackage[rm,scale=0.94]{roboto}
@@ -20,11 +19,12 @@
 %% End pdfLaTeX-related font settings %%%%%%%%
 
 
-% %% Compile with xelatex if using fontspec %%%%%%
+% %% Compile with xelatex if using fontspec
 % \usepackage{fontspec}
 % \setmainfont{Gentium}
 % \setsansfont[BoldItalicFont=Fira Sans Italic,BoldFont=Fira Sans]{Fira Sans Light}
-% %% End xelatex-related font settings %%%%%%%%%%%
+% %% End xelatex-related font settings %%%%%%%%
+
 
 \usepackage{graphicx}
 \usepackage{wallpaper}
@@ -33,6 +33,7 @@
 \usepackage[fleqn]{amsmath}
 
 \usepackage{tikzlings,tikzducks}
+
 
 \tikzset{blue icon/.style={text=SkyBlue,font=\Large}}
 \tikzset{pink icon/.style={text=Pink,font=\large}}
@@ -44,16 +45,15 @@
 % Cover
 %%%%%%
 \coverBgColor{RoyalBlue!40!black}
-\coverImage
-  [\color{gray!80}(This is an optional description line for hte cover image.) Here are the actual printed calendars. The smaller calendar (9\,cm $\times$ 9.5\,cm) fits floppy disk jewel cases; while the bigger one (11.7\,cm $\times$ 13.65\,cm) fits CD jewel cases.]
-  {actual-crop.jpg}
-\coverTitle
-  [font=\fontsize{20pt}{22pt}\sffamily\bfseries,text=white,text width=\linewidth,align=flush right]
-  {2024 Calendar}
+\coverImage[\color{gray!50}Here are the actual printed calendars. The smaller calendar (9\,cm $\times$ 9.5\,cm) fits floppy disk jewel cases; while the bigger one (11.7\,cm $\times$ 13.65\,cm) fits CD jewel cases.]
+{actual.jpg}
+\coverTitle[font=\fontsize{30pt}{32pt}\sffamily\bfseries,text=white,text width=\linewidth,align=flush right]{2024 Calendar}
 
 \makeCover
+
 \clearpage
 %%%%
+
 
 %%%%%%
 % Some settings for the monthly calendars
@@ -61,13 +61,13 @@
 % \captionStyle{font=\sffamily\itshape\tiny}
 \dayHeadingStyle{font=\sffamily,text=gray!90}
 \sundayColor{red!80!black}
-\monthTitleStyle{font={\fontsize{26pt}{28pt}\bfseries\sffamily\itshape}, text=red!50!RedViolet}
+\monthTitleStyle{font={\fontsize{48pt}{48pt}\bfseries\sffamily}, text=RoyalBlue!40!white}
 \eventStyle{\scriptsize\sffamily}
 
 % Remove this line if you feel the background pattern is too annoying
 \TileWallPaper{.5\paperwidth}{.5\paperheight}{lightpaperfibers}
 
-% You may find the gap between illustrations and events too narrow;
+% You may find the gap between illustrations and events too narrow
 % Use this length to increase it
 \setlength{\illusSkip}{1em}
 
@@ -175,7 +175,8 @@
 
 \clearpage
 
-\otherstuff{\linewidth}{\tikz[scale=1.5]{\duck[snowduck=white!90!gray,eye=white]};}
+\otherstuff{\linewidth}
+  {\tikz[scale=1.5]{\duck[snowduck=white!90!gray,eye=white]};}
 \begin{monthCalendar}{2024}{11}
 \end{monthCalendar}
 
@@ -184,6 +185,7 @@
 \otherstuff{\linewidth}{\tikz[scale=1.5]{\marmot[santa,wine]};}
 \begin{monthCalendar}{2024}{12}
 \end{monthCalendar}
+
 
 
 \end{document}
