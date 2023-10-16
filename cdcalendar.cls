@@ -5,6 +5,7 @@
 \newif\if@giantcal\@giantcalfalse
 \newif\if@prevnext\@prevnextfalse
 \newif\if@landscapecal\@landscapecalfalse
+\newif\if@lumbakuda\@lumbakudafalse
 
 \DeclareOption{small}{
   \@smallcaltrue
@@ -43,6 +44,8 @@
   \@sundayweektrue
   \def\@daynumlist{0/6,1/0,2/1,3/2,4/3,5/4,6/5}
 }
+
+\DeclareOption{lumbakuda}{\@lumbakudatrue}
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{extarticle}}
 \ProcessOptions\relax
@@ -332,6 +335,83 @@
   \fi%
 }
 
+
+% https://tex.stackexchange.com/a/410071/
+% #1 -- an integer 0-6 representing the day of the week
+% This helper macro shifts the position to the appropriate place to insert a node on the given weekday
+\newcommand\lumbakuda@dayshift[1]{%
+    \pgfmathsetlength\pgf@x{\tikz@lib@cal@xshift}%
+    \pgf@x = #1 \pgf@x 
+    \pgftransformxshift {\pgf@x }%
+}
+
+\newcommand{\lumbakudafiller}{--}
+
+\newcount{\lumbakuda@tmpcount}
+% if sundayweek then 6,0,1,...
+\if@sundayweek
+\tikzset{lumbakuda/.style={
+  execute before day scope={
+    \ifdate{day of month=1}{ % If we are the first day of the month
+      % no dashes need be added if the first day is a Sunday; 
+      \ifnum\pgfcalendarcurrentweekday<6\relax  
+        % Iterate from Sunday to day before current day
+        \foreach \i in {0,...,\the\numexpr\pgfcalendarcurrentweekday}{
+          \lumbakuda@dayshift{\i}% add the appropriate shift
+          \node[every day] {\lumbakudafiller};
+        }
+      \fi
+    }{}
+    \pgfcalendardatetojulian{\pgfcalendarcurrentyear-\pgfcalendarcurrentmonth-last}
+                            {\lumbakuda@tmpcount}
+    \ifnum\pgfcalendarcurrentjulian=\lumbakuda@tmpcount\relax % If last day of the month
+      \ifnum\pgfcalendarcurrentweekday=5\relax\else % If we need to add any dashes
+        % Iterate from next day to Saturday
+        \ifnum\pgfcalendarcurrentweekday=6\relax
+          \foreach \i in {1,...,6}{ 
+            \lumbakuda@dayshift{\i}%
+            \node[every day] {\lumbakudafiller};
+          }
+      \else
+          \foreach \i in {\the\numexpr\pgfcalendarcurrentweekday+2,...,6}{ 
+            \lumbakuda@dayshift{\i}%
+            \node[every day] {\lumbakudafiller};
+          }
+        \fi
+      \fi
+    \fi
+  }
+}
+}
+\else
+\tikzset{lumbakuda/.style={
+  execute before day scope={
+    \ifdate{day of month=1}{ % If we are the first day of the month
+        % no dashes need be added if the first day is a Monday; 
+        \ifnum\pgfcalendarcurrentweekday>0\relax  
+            % Iterate from Monday to day before current day
+            \foreach \i in {0,...,\the\numexpr\pgfcalendarcurrentweekday-1}{
+                \lumbakuda@dayshift{\i}% add the appropriate shift
+                \node[every day] {\lumbakudafiller};
+            }
+        \fi
+    }{}
+    \pgfcalendardatetojulian{\pgfcalendarcurrentyear-\pgfcalendarcurrentmonth-last}
+                            {\lumbakuda@tmpcount}
+    \ifnum\pgfcalendarcurrentjulian=\lumbakuda@tmpcount\relax % If last day of the month
+        \ifnum\pgfcalendarcurrentweekday<6\relax % If we need to add any dashes
+           % Iterate from next day to Sunday
+           \foreach \i in {\the\numexpr\pgfcalendarcurrentweekday+1,...,6}{ 
+                \lumbakuda@dayshift{\i}%
+                \node[every day] {\lumbakudafiller};
+            }
+        \fi
+    \fi
+  }
+}
+}
+\fi
+
 \newenvironment{monthCalendar}[2]{%
   % v1.4.5: lazy hack for turning off all the "there is no x in font nullfont" messages
   \tracinglostchars=0\relax%
@@ -383,7 +463,8 @@
     \if@sundayweek week list sunday\else week list\fi,
     day xshift=2.75em,
     every day/.append style={text height=1.5ex,text depth=0.25ex,text width=1.5em,align=flush center,font={\bfseries}},
-    day letter headings
+    day letter headings,
+    \if@lumbakuda lumbakuda\fi
     ]
     if (Sunday) [\@sundayColor];
   \end{tikzpicture}
@@ -506,7 +587,6 @@
     \makeatother
   \fi
 }
-
 
 \tikzset{default mark/.style={circle,draw=red!50}}
 
