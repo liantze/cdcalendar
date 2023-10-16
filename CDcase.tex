@@ -32,8 +32,6 @@
 \graphicspath{{img/}}
 \usepackage[fleqn]{amsmath}
 
-\usepackage{tikzlings,tikzducks}
-
 
 \tikzset{blue icon/.style={text=SkyBlue,font=\Large}}
 \tikzset{pink icon/.style={text=Pink,font=\large}}
@@ -49,9 +47,8 @@
 {actual.jpg}
 \coverTitle[font=\fontsize{30pt}{32pt}\sffamily\bfseries,text=white,text width=\linewidth,align=flush right]{2024 Calendar}
 
-\makeCover
-
-\clearpage
+% \makeCover
+% \clearpage
 %%%%
 
 
@@ -61,7 +58,7 @@
 % \captionStyle{font=\sffamily\itshape\tiny}
 \dayHeadingStyle{font=\sffamily,text=gray!90}
 \sundayColor{red!80!black}
-\monthTitleStyle{font={\fontsize{48pt}{48pt}\bfseries\sffamily}, text=RoyalBlue!40!white}
+\monthTitleStyle{font={\fontsize{42pt}{42pt}\bfseries\sffamily}, text=RoyalBlue!40!white}
 \eventStyle{\scriptsize\sffamily}
 
 % Remove this line if you feel the background pattern is too annoying
@@ -77,7 +74,7 @@
 %%%%%%
 \illustration
 [Happy TikZ animals! This is an optional description about the illustrations.]
-{0.9\linewidth}{tikzlings}
+{0.95\linewidth}{tikzlings}
 
 \begin{monthCalendar}{2024}{01}
 
@@ -119,73 +116,63 @@
 
 \clearpage
 
-%%% I... I was too tired search for more pics so will just show some cute animals
-\otherstuff{\linewidth}{\tikz[scale=1.5]{\koala[crown]};}
+\illustration{\linewidth}{img/plasma01}
 \begin{monthCalendar}{2024}{03}
 \end{monthCalendar}
 
 \clearpage
 
-\otherstuff{\linewidth}{\tikz[scale=1.5]{\duck[graduate,glasses]};}
+\illustration{\linewidth}{img/plasma02}
 \begin{monthCalendar}{2024}{04}
 \end{monthCalendar}
 
 \clearpage
 
-\otherstuff{\linewidth}{\tikz[scale=1.5]{\mouse[cheese]};}
+\illustration{\linewidth}{img/plasma03}
 \begin{monthCalendar}{2024}{05}
 \end{monthCalendar}
 
 \clearpage
 
-\otherstuff{\linewidth}{\tikz[scale=1.5]{\duck[crozier,strawhat=red!80!white,bowtie=red]};}
+\illustration{\linewidth}{img/plasma04}
 \begin{monthCalendar}{2024}{06}
 \end{monthCalendar}
 
 \clearpage
 
-\otherstuff{\linewidth}{\tikz[scale=1.5]{\sloth[icecream]};}
+\illustration{\linewidth}{img/plasma01}
 \begin{monthCalendar}{2024}{07}
 \end{monthCalendar}
 
 \clearpage
 
-\otherstuff{\linewidth}
-  {\tikz[scale=1.5]{\duck[body=pink!50!white,bill=orange,
-  unicorn=magenta!60!violet, longhair=magenta!60!violet]};}
+\illustration{\linewidth}{img/plasma02}
 \begin{monthCalendar}{2024}{08}
 \end{monthCalendar}
 
 \clearpage
 
-\otherstuff{\linewidth}{\tikz[scale=1.5]{\coati[umbrella=blue!60!black,handbag]};}
-
+\illustration{\linewidth}{img/plasma03}
 \begin{monthCalendar}{2024}{09}
 \end{monthCalendar}
 
 \clearpage
 
-\otherstuff{\linewidth}
-  {\tikz[scale=1.5]{\duck[witch=black!50!gray,
-      longhair=red!80!black,
-      jacket=black!50!gray,
-      magicwand]};}
+\illustration{\linewidth}{img/plasma04}
 \begin{monthCalendar}{2024}{10}
 \end{monthCalendar}
 
 \clearpage
 
-\otherstuff{\linewidth}
-  {\tikz[scale=1.5]{\duck[snowduck=white!90!gray,eye=white]};}
+\illustration{\linewidth}{img/plasma01}
 \begin{monthCalendar}{2024}{11}
 \end{monthCalendar}
 
 \clearpage
 
-\otherstuff{\linewidth}{\tikz[scale=1.5]{\marmot[santa,wine]};}
+\illustration{\linewidth}{img/plasma02}
 \begin{monthCalendar}{2024}{12}
 \end{monthCalendar}
-
 
 
 \end{document}
