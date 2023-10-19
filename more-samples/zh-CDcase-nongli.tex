@@ -1,0 +1,125 @@
+%!TEX program=xelatex
+
+% nobabel means you'll need to provide your own month names, week day headings,
+% etc
+\documentclass[12pt,nobabel,sundayweek]{cdcalendar}
+%% and here we do some settings for a calendar in Chinese
+%% (*not* the nongli calendar! Just localising the Gregorian calendar into
+%% Chinese)
+\usepackage{zh-mod}
+
+%% Use Roboto and Roboto Slab
+\usepackage[rm,light,osf,scale=0.94]{roboto}
+
+% \title{Desktop Calendar (fits CD jewel case) with Chinese Localisation}
+
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage[fleqn]{amsmath}
+
+\graphicspath{{img/}}
+
+%% Define all event mark styles here
+\tikzset{holiday/.style={rectangle,fill=orange!70}}
+\tikzset{pink icon/.style={text=Pink,font=\large}}
+\tikzset{blue icon/.style={text=SkyBlue,font=\large}}
+
+\usepackage{csvsimple,xstring}
+
+\robustify{\\}
+\newcommand{\annotdate}[2]{%
+  \ifboolexpr{ test{\IfBeginWith{#2}{初}}
+            or test{\IfBeginWith{#2}{十}}
+            or test{\IfEndWith{#2}{十}}
+            or test{\IfBeginWith{#2}{廿}}
+  }{\def\extra{}}%
+   {\def\extra{red!70!black}}%
+  \node[font=\tiny\sffamily\CJKspace,\extra,
+  anchor=north,outer sep=0.55ex,align=flush center]
+  at (cdCal-\thepage-#1) {#2};%
+}
+
+\newcommand{\importnongli}[1]{%
+\begin{scope}[on background layer]%
+  %% nongli-2024.csv contains mappings between the Chinese nongli calendar and
+  %% 2024 Gregorian calendar, with columns EVENT and DATE.
+  %% Created with https://github.com/infinet/nongli-calendar; converted to Simplified Chinese;
+  %% converted to .csv with https://www.indigoblue.eu/ics2csv/
+  \csvreader[filter test=\IfBeginWith{\LNDATE}{#1}]
+  {nongli-2024.csv}{EVENT=\LNEVENT,DATE=\LNDATE}
+  {\annotdate{\LNDATE}{\LNEVENT}}
+\end{scope}%
+}
+
+\begin{document}
+
+
+%%%%
+
+% You may find the gap between illustrations and events too narrow;
+% Use this length to incrase it
+\setlength{\illusSkip}{1.5\ccwd}
+
+
+%%%%%%
+% Some settings for the monthly calendars
+%%%%%%
+\dayHeadingStyle{font=\sffamily\color{gray!90},yshift=-1em}
+\sundayColor{red!80!black}
+\monthTitleStyle{font={\fontsize{42pt}{42pt}\bfseries\sffamily\fangsong}, text=RoyalBlue!40!white}
+\eventStyle{\scriptsize\songti\color{black}}
+\renewcommand\printeventname[1]{{\heiti\color{black}#1}}
+\tikzset{every calendar/.append style={day yshift=2.5\ccwd,day xshift=2.75\ccwd},every day/.append style={font=\bfseries}}
+\patchcmd{\monthCalendar}{0pt,\paperheight}{0pt,\dimexpr\paperheight-0.5em\relax}{}{}
+
+
+
+
+%%%%%%
+% January 2024
+%%%%%%
+\illustration
+[Happy TikZ animals! This is an optional description about the illustrations.]
+{\linewidth}{tikzlings}
+
+\begin{monthCalendar}{2024}{01}
+
+%%% events must be given AFTER \begin{monthCalendar}
+%%% Currently you must give events on the same page
+%%% as the monthly calendar.
+
+%% This is an one-day event
+\event[mark style=holiday]{2024-01-01}{}{新年元旦}
+%% This is a 5-day event
+\event[mark style=blue icon,marker=\faBriefcase]{2024-01-30}{5}{ACME大会}
+%% you could also write \event{2024-01-06}{2024-02-03}{ACME 大会}
+
+\importnongli{2024-01}
+\end{monthCalendar}
+
+\clearpage
+
+%%%%%%
+% Feb 2024
+%%%%%%
+
+% Or you can put any stuff, really, with a caption if you want:
+\setlength{\mathindent}{0pt}
+\otherstuff[Fourier Transformation, one of the `math equations that changed the world'. \url{http://news.bitofnews.com/13-math-equations-that-changed-the-world/}]
+{\linewidth}
+{\huge\selectfont
+\[%
+  \hat{f}(\xi) = \int^{\infty}_{-\infty} f(x) e^{-2\pi ix\xi} \mathop{dx}
+\]}
+
+\begin{monthCalendar}{2024}{02}
+
+%% Repeat the event if it spans two months
+\event[mark style=blue icon,marker=\faBriefcase]{2024-01-30}{5}{ACME大会}
+\event[mark style=pink icon,marker=\faBirthdayCake]{2024-02-07}{}{朋友生日}
+\event{2024-02-24}{}{死线！！}
+
+\importnongli{2024-02}
+\end{monthCalendar}
+
+\end{document}

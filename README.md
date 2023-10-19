@@ -2,23 +2,23 @@
 
 The calendars are printed 4-up to fit 3.5" floppy disk jewel cases, or 2-up to fit CD jewel cases, or a fullsize A4 (portrait or landscape) version for wall calendars.
 
-<img src="img/actual.jpg" width="500px" />
+Colours, illustrations, fonts etc are customisable. The calendars can be marked with events with date ranges. See [this blog post](https://www.overleaf.com/blog/217-a-multilingual-customisable-cd-slash-floppy-disk-jewel-case-calendar-with-latex) for more information. [Templates are available on Overleaf.](https://www.overleaf.com/latex/templates/desktop-calendar-with-events/htkctjjgmxjx)
 
-Colours, illustrations, fonts etc are customisable. The calendars can be marked with events with date ranges. See [this blog post](https://www.overleaf.com/blog/217-a-multilingual-customisable-cd-slash-floppy-disk-jewel-case-calendar-with-latex) for more information (syntax of some commands have changed though). [Templates are available on Overleaf.](https://www.overleaf.com/latex/templates/desktop-calendar-with-events/htkctjjgmxjx)
-
-The `giant` document class option i.e. full-sized A4 calendar will have mini-calendars of the previous and next months on each page of `monthCalendar`. Use the `giantsolo` option instead if you do not want these mini-calendars alongside.
-
-<img src="img/calendar2024.png" width="500px" alt="'Giant' calendar format" />
-
-
-A `landscape` option is available for `giant` and `giantsolo`.
-
-<img src="img/calendar2024-ls.png" width="500px" alt="'Giant' landscape calendar format"/>
+## Class options for size and layout
+- (default, no class option): fits CD cases (11.7cm x 13.65cm)
+- `small`: like a floppy disk, 9cm x 7.5cm
+<img src="img/actual.jpg" width="400px" />
+- `giant`: A4 paper, portrait
+<img src="img/calendar2024.png" width="400px" alt="'Giant' calendar format" />
+- `giant,landscape`: A4 paper, landscape
+<img src="img/calendar2024-ls.png" width="400px" alt="'Giant' landscape calendar format"/>
+- `giantsolo` or `giantsolo,landscape`: like above, but without the mini calendars for previous/next months.
+- `kuda`: this will fill the empty day boxes before the first and after the last days of the month with `\kudafiller` (default is an en-dash), like the "kuda" calendars popular in Malaysia and Singapore. 
 
 
 ## Language Localisation
 
-Localisation possible with languages supported by `babel`/`translator`/`datetime2`. For example with `dutch` and `german`:
+Localisation possible with languages supported by `babel`/`translator`/`datetime2` by passing language names as class options. For example with `dutch` and `german`:
 
 <img src="img/dutch.png" width="200px" alt="Calendar in Dutch"/>
 <img src="img/german.png" width="200px" alt="Calendar in German"/>
@@ -33,18 +33,32 @@ For (partially) unsupported languages or if you'd like to customise the localisa
 \usepackage{zh-mod}
 ```
 
+where `zh-mod.sty` contains:
+```latex
+\deftranslation{January}{一月}
+\deftranslation{February}{二月}
+...
+\deftranslation{Jan}{一月}
+\deftranslation{Feb}{二月}
+...
+\deftranslation{Sunday}{日}
+\deftranslation{Monday}{一}
+\deftranslation{Tuesday}{二}
+...
+```
+
 You can still write `\usepackage[...]{babel}` yourself in the preamble (for hyphenations etc), but it won't have any effects on the month and week day names , nor the date localisations; you'll have to provide your own mods. Example for Bahasa Melayu:
 
 ```latex
 \documentclass[nobabel]{cdcalendar}    % don't load babel yet!
 \usepackage{ms-mod}   % our own Bahasa Melayu localisation
-\usepackage[bahasam]{babel}  % if you need Bahasa Melayu hyphenation patterns
+\usepackage[bahasam]{babel}  % if you need Bahasa Melayu hyphenation patterns for events and captions
 ```
 
 
-# Marking Events on the Calendar
+## Marking Events on the Calendar
 
-An example of a month calendar with events (syntax updated in v1.2):
+An example of a month calendar with events:
 
 ```latex
 \begin{monthCalendar}{2015}{10}
@@ -58,7 +72,7 @@ An example of a month calendar with events (syntax updated in v1.2):
 %% You could also write
 %\event{2015-10-26}{2015-10-30}{Autumn half-term holiday}
 \end{monthCalendar}
-\clearpage %% Do remember this; I guess I could have made it automatic but well.
+\clearpage %% Do remember to insert a page break
 ```
 
 The events mark and style can be customised: (All `\tikzset` styles for use with
@@ -114,4 +128,4 @@ There are a few other settings you can set as well. These can be re-issued at an
 
 ## Multiple calendar systems
 
-`ChineseLunarCalendar.tex` demonstrates how another calendar system, e.g. the Chinese lunar calendar, can be incorporated. The mapping between the Chinese lunar calenar and the Gregorian calendar was downloaded from [here](https://github.com/infinet/lunar-calendar/blob/master/chinese_lunar_prev_year_next_year.ics) and then converted to a `.csv` file with [this tool](https://www.indigoblue.eu/ics2csv/).
+`zh-CDcase-nongli.tex` demonstrates how another calendar system, e.g. the Chinese nongli calendar, can be incorporated. The mapping between the Chinese nongli calendar and the Gregorian calendar was downloaded from [here](https://github.com/infinet/lunar-calendar/blob/master/chinese_lunar_prev_year_next_year.ics) and then converted to a `.csv` file with [this tool](https://www.indigoblue.eu/ics2csv/).
