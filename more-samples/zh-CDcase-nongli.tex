@@ -43,7 +43,7 @@
 \begin{scope}[on background layer]%
   %% nongli-2024.csv contains mappings between the Chinese nongli calendar and
   %% 2024 Gregorian calendar, with columns EVENT and DATE.
-  %% Created with https://github.com/infinet/nongli-calendar; converted to Simplified Chinese;
+  %% Created with https://github.com/infinet/lunar-calendar; converted to Simplified Chinese;
   %% converted to .csv with https://www.indigoblue.eu/ics2csv/
   \csvreader[filter test=\IfBeginWith{\LNDATE}{#1}]
   {nongli-2024.csv}{EVENT=\LNEVENT,DATE=\LNDATE}
