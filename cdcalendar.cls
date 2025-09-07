@@ -1,4 +1,4 @@
-\ProvidesClass{cdcalendar}[2023/10/19 CD Calendar 1.5 by LianTze LIM (liantze@gmail.com)]
+\ProvidesClass{cdcalendar}[2025/09/08 CD Calendar 1.5.1 by LianTze LIM (liantze@gmail.com)]
 
 
 \newif\if@smallcal\@smallcalfalse
@@ -223,6 +223,15 @@
   }
 % \fi
 
+% Weekday names from some datetime2 language modules are incorrect. Un-define the commands to fall back to PGF-translator for now.
+\undef\DTMspanishWeekdayname
+\undef\DTMspanishweekdayname
+\undef\DTMportugesWeekdayname
+\undef\DTMportugesweekdayname
+\undef\DTMcroatianWeekdayname
+\undef\DTMcroatianweekdayname
+
+
 %%%%%%%%%
 % Code from http://tex.stackexchange.com/a/10199/226
 \tikzstyle{day heading}=[]
@@ -238,7 +247,7 @@
             {\edef\wd@name{\csuse{DTM\TrackedLanguageFromDialect{\languagename}Weekdayname}{\d}}}
             {\ifcsdef{DTM\TrackedLanguageFromDialect{\languagename}weekdayname}
               {\edef\wd@name{\csuse{DTM\TrackedLanguageFromDialect{\languagename}weekdayname}{\d}}}
-              {\edef\wd@name{\pgfcalendarweekdayname{\d}}}
+              {\edef\wd@name{\xpgfcalendarweekdayname{\d}}}
             }
           \StrLeft{\wd@name}{1}[\theD]
           % \StrLeft{\xpgfcalendarweekdayname{\d}}{1}[\theD]
